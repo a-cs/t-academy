@@ -18,10 +18,8 @@ public class Branch {
     private Long id;
     @NotBlank
     private String name;
-    @NotBlank
     @Min(message = "Minimum accepted number of rows:1;Numero minimo aceito de linhas:1",value = 1)
     private int max_rows;
-    @NotBlank
     @Min(message = "Minimum accepted number of colums:1;Numero minimo aceito de colunass:1",value = 1)
     private int max_columns;
 
