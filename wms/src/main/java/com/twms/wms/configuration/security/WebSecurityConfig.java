@@ -1,4 +1,4 @@
-package com.twms.wms.security.configuration;
+package com.twms.wms.configuration.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
