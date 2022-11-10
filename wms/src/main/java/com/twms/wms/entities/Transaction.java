@@ -17,7 +17,7 @@ public class Transaction {
 
     private int quantity;
 
-    private InventoryBasic inventory;
+    private Inventory inventory;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
