@@ -1,13 +1,11 @@
 package com.twms.wms.services;
 
-import com.twms.wms.dtos.AddressDTO;
 import com.twms.wms.entities.Address;
 import com.twms.wms.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -19,34 +17,22 @@ public class AddressService {
     AddressRepository addressRepository;
 
     @Transactional
-    public AddressDTO post(AddressDTO addressDTO) {
-        Address address = new Address().fromDTO(addressDTO);
-        Address persistedAddress = addressRepository.save(address);
-        AddressDTO persistedAddressDTO = new AddressDTO().fromAddress(persistedAddress);
-        return persistedAddressDTO;
+    public Address post(Address address) {
+        return addressRepository.save(address);
     }
 
-    public List<AddressDTO> getAll() {
-        List<Address> addresses = addressRepository.findAll();
-        List<AddressDTO> addressDTOs = new ArrayList<>();
-        addresses.forEach(address -> addressDTOs.add(new AddressDTO().fromAddress(address)));
-        return addressDTOs;
+    public List<Address> getAll() {
+        return addressRepository.findAll();
     }
 
-    public AddressDTO getById(Long id) {
+    public Address getById(Long id) {
         Optional<Address> possibleAddress = addressRepository.findById(id);
-        Address address = possibleAddress.orElseThrow(() -> new NoSuchElementException("Address does not exists."));
-        return new AddressDTO().fromAddress(address);
+        Address address = possibleAddress.orElseThrow(() -> new NoSuchElementException("Address does not exist."));
+        return address;
     }
 
-    private Address getAddressById(Long id) {
-        Optional<Address> possibleAddress = addressRepository.findById(id);
-        return possibleAddress.orElseThrow();
-    }
-
-    public AddressDTO putById(Long id, AddressDTO addressDTO) {
-        Address persistedAddress = getAddressById(id);
-        Address newAddress = new Address().fromDTO(addressDTO);
+    public Address putById(Long id, Address newAddress) {
+        Address persistedAddress = getById(id);
 
         persistedAddress.setStreet(newAddress.getStreet());
         persistedAddress.setNumber(newAddress.getNumber());
@@ -54,12 +40,12 @@ public class AddressService {
         persistedAddress.setState(newAddress.getState());
         persistedAddress.setZipCode(newAddress.getZipCode());
 
-        return new AddressDTO().fromAddress(addressRepository.save(persistedAddress));
+        return addressRepository.save(persistedAddress);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        Address persistedAddress = getAddressById(id);
+        Address persistedAddress = getById(id);
         addressRepository.delete(persistedAddress);
     }
 }
