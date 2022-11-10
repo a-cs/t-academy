@@ -1,5 +1,6 @@
 package com.twms.wms.entities;
 
+import com.twms.wms.dtos.UserDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,6 @@ public class Client {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserDTO user;
 
 }
