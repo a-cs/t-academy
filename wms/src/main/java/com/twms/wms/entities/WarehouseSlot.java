@@ -7,9 +7,9 @@ import java.time.Instant;
 
 @Data
 @Entity
-public class Inventory {
+public class WarehouseSlot {
     @EmbeddedId
-    private InventoryId inventoryId;
+    private WarehouseId warehouseId;
 
     private int quantity;
 
