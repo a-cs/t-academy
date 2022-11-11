@@ -23,6 +23,6 @@ public class Client {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UserDTO user;
+    private User user;
 
 }
