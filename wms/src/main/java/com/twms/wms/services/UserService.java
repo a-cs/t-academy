@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -19,6 +20,7 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public UserDTO createUser(User user){
         boolean usernameExists = userRepository.findUserByUsername(user.getUsername()).isPresent();
         if(usernameExists){
@@ -28,6 +30,17 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
         return new UserDTO(savedUser);
+    }
+
+    public User createClientUser(String username){
+        User clientUser = new User();
+        clientUser.setUsername(username);
+        //TODO: Auto generate random password
+        String clientPassword = username;
+        clientUser.setPassword(username);
+        User savedClientUser = new User(this.createUser(clientUser));
+        savedClientUser.setPassword(clientPassword);
+        return savedClientUser;
     }
 
     public UserDTO getUserByUsername(String username){

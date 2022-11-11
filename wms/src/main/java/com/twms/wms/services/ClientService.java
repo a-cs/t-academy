@@ -1,6 +1,7 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.Client;
+import com.twms.wms.entities.User;
 import com.twms.wms.exceptions.NoSuchClientException;
 import com.twms.wms.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,20 @@ public class ClientService {
 
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    UserService userService;
 
     @Transactional
-    public Client createClient(Client client){return clientRepository.save(client);}
+    public Client saveClient(Client client){
+        return clientRepository.save(client);
+    }
+    public Client createClient(Client client){
+
+        client.setUser(userService.createClientUser(client.getCNPJ()));
+
+        return this.saveClient(client);
+
+    }
 
     public List<Client> readAllClients(){return clientRepository.findAll();}
 
@@ -34,7 +46,7 @@ public class ClientService {
         oldClient.setCNPJ(client.getCNPJ());
         oldClient.setUser(client.getUser());
 
-        return this.createClient(oldClient);
+        return this.saveClient(oldClient);
     }
 
     @Transactional

@@ -25,14 +25,14 @@ public class TransactionController {
     public ResponseEntity<Transaction> getTransactionById(@PathVariable("idTransaction") Long idTransaction){return ResponseEntity.status(HttpStatus.OK).body(transactionService.readTransactionById(idTransaction));}
 
     @PostMapping
-    public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction client){
-        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(client));
+    public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction){
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transaction));
     }
 
     @PutMapping("/{idTransaction}")
     public ResponseEntity<Transaction> putTransaction(@PathVariable("idTransaction") Long idTransaction,
-                                            @RequestBody Transaction client){
-        return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateTransaction(idTransaction,client));
+                                            @RequestBody Transaction transaction){
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateTransaction(idTransaction,transaction));
     }
 
     @DeleteMapping("/{idTransaction}")

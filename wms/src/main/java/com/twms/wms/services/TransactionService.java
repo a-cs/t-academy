@@ -26,8 +26,8 @@ public class TransactionService {
         return optionalClient.orElseThrow(()->new NoSuchClientException("Branch Not Created or Removed!!"));
     }
 
-    public Transaction updateTransaction(Long clientId, Transaction transaction){
-        Transaction oldTransaction = this.readTransactionById(clientId);
+    public Transaction updateTransaction(Long transactionId, Transaction transaction){
+        Transaction oldTransaction = this.readTransactionById(transactionId);
 
         oldTransaction.setClient(transaction.getClient());
         oldTransaction.setSku(transaction.getSku());
@@ -40,8 +40,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public void deleteTransaction(Long clientId){
-        Transaction toDelete = this.readTransactionById(clientId);
+    public void deleteTransaction(Long transactionId){
+        Transaction toDelete = this.readTransactionById(transactionId);
         transactionRepository.delete(toDelete);
     }
 }
