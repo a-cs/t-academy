@@ -11,13 +11,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
-public class WarehouseId implements Serializable {
+public class WarehouseSlotId implements Serializable {
     @ManyToOne
     private Branch branch;
-    private String bay;
-    private int aisle;
+    private int bay;
+    private String aisle;
 
-    public WarehouseId() {}
+    public WarehouseSlotId() {}
 
     @Override
     public boolean equals(Object o) {
@@ -27,10 +27,10 @@ public class WarehouseId implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        WarehouseId warehouseId = (WarehouseId) o;
-        return Objects.equals(branch, warehouseId.branch) &&
-                Objects.equals(bay, warehouseId.bay) &&
-                Objects.equals(aisle, warehouseId.aisle);
+        WarehouseSlotId warehouseSlotId = (WarehouseSlotId) o;
+        return Objects.equals(branch, warehouseSlotId.branch) &&
+                Objects.equals(bay, warehouseSlotId.bay) &&
+                Objects.equals(aisle, warehouseSlotId.aisle);
     }
 
     @Override
