@@ -1,6 +1,5 @@
 package com.twms.wms.entities;
 
-import com.twms.wms.dtos.UserDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,7 +18,7 @@ public class Client {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address adress;
+    private Address address;
 
     @OneToOne
     @JoinColumn(name = "user_id")

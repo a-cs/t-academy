@@ -29,7 +29,7 @@ public class ClientService {
     public Client updateClient(Long clientId, Client client){
         Client oldClient = this.readClientById(clientId);
 
-        oldClient.setAdress(client.getAdress());
+        oldClient.setAddress(client.getAddress());
         oldClient.setName(client.getName());
         oldClient.setCNPJ(client.getCNPJ());
         oldClient.setUser(client.getUser());
