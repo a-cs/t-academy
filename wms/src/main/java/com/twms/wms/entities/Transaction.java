@@ -1,6 +1,5 @@
 package com.twms.wms.entities;
 
-import com.twms.wms.dtos.UserDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,6 +16,7 @@ public class Transaction {
 
     private int quantity;
 
+    @ManyToOne
     private WarehouseSlot warehouseSlot;
 
     @ManyToOne
@@ -27,6 +27,6 @@ public class Transaction {
     @JoinColumn(name = "sku_id")
     private SKU sku;
 
-    private UserDTO user;
-
+    @ManyToOne
+    private User user;
 }
