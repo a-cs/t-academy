@@ -5,20 +5,19 @@ import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Embeddable
-public class InventoryId implements Serializable {
+public class WarehouseId implements Serializable {
     @ManyToOne
     private Branch branch;
-    private int r;
-    private int c;
+    private String bay;
+    private int aisle;
 
-    public InventoryId() {}
+    public WarehouseId() {}
 
     @Override
     public boolean equals(Object o) {
@@ -28,14 +27,14 @@ public class InventoryId implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        InventoryId inventoryId = (InventoryId) o;
-        return Objects.equals(branch, inventoryId.branch) &&
-                Objects.equals(r, inventoryId.r) &&
-                Objects.equals(c, inventoryId.c);
+        WarehouseId warehouseId = (WarehouseId) o;
+        return Objects.equals(branch, warehouseId.branch) &&
+                Objects.equals(bay, warehouseId.bay) &&
+                Objects.equals(aisle, warehouseId.aisle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(branch, r, c);
+        return Objects.hash(branch, bay, aisle);
     }
 }

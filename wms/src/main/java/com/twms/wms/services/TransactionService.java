@@ -1,6 +1,5 @@
 package com.twms.wms.services;
 
-import com.twms.wms.entities.Client;
 import com.twms.wms.entities.Transaction;
 import com.twms.wms.exceptions.NoSuchClientException;
 import com.twms.wms.repositories.TransactionRepository;
@@ -34,7 +33,7 @@ public class TransactionService {
         oldTransaction.setSku(transaction.getSku());
         oldTransaction.setQuantity(transaction.getQuantity());
         oldTransaction.setDate(transaction.getDate());
-        oldTransaction.setInventory(transaction.getInventory());
+        oldTransaction.setWarehouseSlot(transaction.getWarehouseSlot());
         oldTransaction.setUser(transaction.getUser());
 
         return this.createTransaction(oldTransaction);
