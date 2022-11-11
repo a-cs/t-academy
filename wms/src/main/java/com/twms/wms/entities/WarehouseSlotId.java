@@ -1,5 +1,6 @@
 package com.twms.wms.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @Embeddable
 public class WarehouseSlotId implements Serializable {
     @ManyToOne
