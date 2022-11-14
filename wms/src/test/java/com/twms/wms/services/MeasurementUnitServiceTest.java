@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 @ExtendWith(SpringExtension.class)
 public class MeasurementUnitServiceTest {
     @InjectMocks
@@ -28,10 +30,16 @@ public class MeasurementUnitServiceTest {
     }
     @Test
     public void returnMeasurementUnitWhenCreating() {
-
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
 
         Assertions.assertNotNull(measurementUnitService.create(measurementUnit));
     }
-    
+
+    @Test
+    public void doesNothingWhenDeletingExistingEntity() {
+        Mockito.when(measurementUnitRepository.findById(measurementUnit.getId())).thenReturn(Optional.of(measurementUnit));
+        Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
+
+        Assertions.assertDoesNotThrow(() -> measurementUnitService.delete(measurementUnit.getId()));
+    }
 }
