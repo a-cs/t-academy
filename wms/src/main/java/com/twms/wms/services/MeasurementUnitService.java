@@ -22,11 +22,7 @@ public class MeasurementUnitService {
 
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
-        MeasurementUnit newMeasurementUnit = new MeasurementUnit();
-        newMeasurementUnit.setDescription(measurementUnit.getDescription());
-        newMeasurementUnit.setSymbol(measurementUnit.getSymbol());
-
-        return measurementUnitRepository.save(newMeasurementUnit);
+        return measurementUnitRepository.save(measurementUnit);
     }
 
     public MeasurementUnit update(Long id, MeasurementUnit measurementUnit) {
