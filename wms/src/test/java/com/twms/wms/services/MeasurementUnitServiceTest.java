@@ -3,6 +3,7 @@ package com.twms.wms.services;
 import com.twms.wms.entities.MeasurementUnit;
 import com.twms.wms.repositories.MeasurementUnitRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,14 +18,20 @@ public class MeasurementUnitServiceTest {
     @Mock
     private MeasurementUnitRepository measurementUnitRepository;
 
-    @Test
-    public void returnMeasurementUnitWhenCreating() {
-        MeasurementUnit measurementUnit = new MeasurementUnit();
+    MeasurementUnit measurementUnit;
+    @BeforeEach
+    void setUp() {
+        measurementUnit = new MeasurementUnit();
+        measurementUnit.setId(1L);
         measurementUnit.setDescription("Kilogram");
         measurementUnit.setSymbol("KG");
+    }
+    @Test
+    public void returnMeasurementUnitWhenCreating() {
 
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
 
         Assertions.assertNotNull(measurementUnitService.create(measurementUnit));
     }
+    
 }
