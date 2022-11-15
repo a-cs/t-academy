@@ -1,5 +1,6 @@
 package com.twms.wms.controllers;
 
+import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
@@ -25,12 +26,12 @@ public class WarehouseSlotController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WarehouseSlot>> getAll() {
+    public ResponseEntity<List<WarehouseSlotDTO>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAll());
     }
 
     @GetMapping("/{branchId}/{aisleId}/{bayId}")
-    public ResponseEntity<WarehouseSlot> getByPK(@RequestParam("branchId") Long branchId,
+    public ResponseEntity<WarehouseSlotDTO> getByPK(@RequestParam("branchId") Long branchId,
                                                  @RequestParam("aisleId") String aisleId,
                                                  @RequestParam("bayId") int bayId) {
         System.out.println(branchId);
