@@ -12,11 +12,8 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -43,19 +40,36 @@ public class MeasurementUnitServiceTest {
 
     @Test
     public void doesNothingWhenDeletingExistingEntity() {
-        Mockito.when(measurementUnitRepository.findById(measurementUnit.getId())).thenReturn(Optional.of(measurementUnit));
+        Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
+                                              .thenReturn(Optional.of(measurementUnit));
         Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
 
         Assertions.assertDoesNotThrow(() -> measurementUnitService.delete(measurementUnit.getId()));
     }
 
     @Test
-    public void returnsPageableListWhenReading() {
+    public void returnsPageWhenReading() {
         Page<MeasurementUnit> page = Mockito.mock(Page.class);
         Pageable pageable = PageRequest.of(0,2);
         Mockito.when(measurementUnitRepository.findAll(pageable))
                                                 .thenReturn(page);
 
         Assertions.assertNotNull(measurementUnitService.read(pageable));
+    }
+
+    @Test
+    public void returnsUpdatedEntityWhenUpdating() {
+        Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
+                                              .thenReturn(Optional.of(measurementUnit));
+        Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
+
+        MeasurementUnit newMeasurementUnit = new MeasurementUnit();
+        newMeasurementUnit.setId(1L);
+        newMeasurementUnit.setDescription("KILOGRAM");
+        newMeasurementUnit.setSymbol("KG");
+
+        Assertions.assertNotNull(measurementUnitService.update(measurementUnit.getId(), newMeasurementUnit));
+
+        Assertions.assertEquals("KILOGRAM", measurementUnit.getDescription());
     }
 }
