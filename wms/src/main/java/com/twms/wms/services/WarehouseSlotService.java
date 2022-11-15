@@ -58,7 +58,6 @@ public class WarehouseSlotService {
     }
 
     public void deleteById(WarehouseSlotId wsId) {
-        WarehouseSlot slotToDelete = getByPK(wsId);
-        warehouseSlotRepository.delete(slotToDelete);
+        warehouseSlotRepository.deleteById(wsId);
     }
 }
