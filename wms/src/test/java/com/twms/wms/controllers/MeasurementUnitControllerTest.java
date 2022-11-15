@@ -49,5 +49,11 @@ public class MeasurementUnitControllerTest {
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
+    @Test
+    public void returnsNoContentWhenDeleting() throws Exception{
+        ResultActions resultActions = mockMvc.perform(
+                                MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}", 1L));
+        resultActions.andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 
 }
