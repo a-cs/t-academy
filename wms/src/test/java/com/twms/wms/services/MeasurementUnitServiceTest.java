@@ -9,8 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -41,5 +47,15 @@ public class MeasurementUnitServiceTest {
         Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
 
         Assertions.assertDoesNotThrow(() -> measurementUnitService.delete(measurementUnit.getId()));
+    }
+
+    @Test
+    public void returnsPageableListWhenReading() {
+        Page<MeasurementUnit> page = Mockito.mock(Page.class);
+        Pageable pageable = PageRequest.of(0,2);
+        Mockito.when(measurementUnitRepository.findAll(pageable))
+                                                .thenReturn(page);
+
+        Assertions.assertNotNull(measurementUnitService.read(pageable));
     }
 }
