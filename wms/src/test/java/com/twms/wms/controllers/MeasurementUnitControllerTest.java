@@ -77,7 +77,9 @@ public class MeasurementUnitControllerTest {
     public void throwsEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}", nonExistingId));
-        resultActions.andExpect(res ->
-                Assertions.assertTrue(res.getResolvedException() instanceof EntityNotFoundException));
+        resultActions.andExpect(MockMvcResultMatchers.status().isNotFound());
+
+//        resultActions.andExpect(res ->
+//                Assertions.assertTrue(res.getResolvedException() instanceof EntityNotFoundException));
     }
 }
