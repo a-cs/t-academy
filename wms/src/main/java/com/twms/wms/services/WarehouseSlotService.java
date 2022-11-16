@@ -19,8 +19,9 @@ public class WarehouseSlotService {
     @Autowired
     BranchService branchService;
 
-    public WarehouseSlot post(WarehouseSlot ws) {
-        return warehouseSlotRepository.save(ws);
+    public WarehouseSlotDTO post(WarehouseSlot ws) {
+        WarehouseSlot persisted = warehouseSlotRepository.save(ws);
+        return new WarehouseSlotDTO().fromWarehouseSlot(persisted);
     }
 
     public List<WarehouseSlotDTO> getAll() {
@@ -48,7 +49,7 @@ public class WarehouseSlotService {
         return warehouseSlot;
     }
 
-    public WarehouseSlot putById(WarehouseSlotId wsId, WarehouseSlot newWarehouseSlot) {
+    public WarehouseSlotDTO putById(WarehouseSlotId wsId, WarehouseSlot newWarehouseSlot) {
         WarehouseSlot slotToChange = getByPK(wsId);
         slotToChange.setSku(newWarehouseSlot.getSku());
         slotToChange.setClient(newWarehouseSlot.getClient());
@@ -57,7 +58,6 @@ public class WarehouseSlotService {
     }
 
     public void deleteById(WarehouseSlotId wsId) {
-        WarehouseSlot slotToDelete = getByPK(wsId);
-        warehouseSlotRepository.delete(slotToDelete);
+        warehouseSlotRepository.deleteById(wsId);
     }
 }

@@ -21,7 +21,7 @@ public class WarehouseSlotController {
     WarehouseSlotService warehouseSlotService;
 
     @PostMapping
-    public ResponseEntity<WarehouseSlot> post(@Valid @RequestBody WarehouseSlot ws) {
+    public ResponseEntity<WarehouseSlotDTO> post(@Valid @RequestBody WarehouseSlot ws) {
         return ResponseEntity.status(HttpStatus.CREATED).body(warehouseSlotService.post(ws));
     }
 
@@ -56,7 +56,7 @@ public class WarehouseSlotController {
     }
 
     @PutMapping
-    public ResponseEntity<WarehouseSlot> putById(@RequestBody WarehouseSlotId wsId, @RequestBody WarehouseSlot ws) {
+    public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlotId wsId, @RequestBody WarehouseSlot ws) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(warehouseSlotService.putById(wsId, ws));
     }
 
