@@ -47,4 +47,19 @@ public class CategoryServiceTest {
         Assertions.assertDoesNotThrow(()->service.delete(category.getId()));
         Mockito.verify(repository, Mockito.times(1)).delete(category);
     }
+
+    @Test
+    public void shouldGetOneCategoryWhenReadById(){
+        Category category = new Category();
+        category.setName("NewCategory");
+
+        Mockito.when(repository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        Category response = service.readById(anyLong());
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(category, response);
+        Mockito.verify(repository, Mockito.times(1)).findById(anyLong());
+    }
+
 }
