@@ -27,9 +27,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
 //    =============  Client credentials
-    @Value("client-authorization.id")
+    @Value("${client-authorization.id}")
     private String clientId;
-    @Value("client-authorization.id")
+    @Value("${client-authorization.secret}")
     private String clientSecret;
 //    ==================================
 
@@ -42,8 +42,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("tsystems")
-                .secret(bCryptPasswordEncoder.encode("tsPassword"))
+                .withClient(clientId)
+                .secret(bCryptPasswordEncoder.encode(clientSecret))
                 .scopes("read", "write")
                 .authorizedGrantTypes("password")
                 .accessTokenValiditySeconds(86400);
