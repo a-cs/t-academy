@@ -64,7 +64,7 @@ public class UserService {
 
     public UserDTO updateUserAccessLevel(User user, Long userId){
         User savedUser = userRepository.findById(userId).orElseThrow(
-                ()->new UsernameNotFoundException("User not found.")
+                ()->new EntityNotFoundException("User not found.")
         );
         savedUser.setAccessLevel(user.getAccessLevel());
         return new UserDTO(userRepository.save(savedUser));
