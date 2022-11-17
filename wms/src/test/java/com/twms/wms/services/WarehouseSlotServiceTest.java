@@ -12,9 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -77,26 +77,37 @@ public class WarehouseSlotServiceTest {
     @Test
     public void shouldReturnDTOWhenGetByValidId() {
         // given
-        when(repository.findById(any(WarehouseSlotId.class))).thenReturn(Optional.of(warehouseSlot));
+        when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
+        when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(
+                any(Branch.class),
+                any(String.class),
+                any(Integer.class)
+        )).thenReturn(Optional.of(warehouseSlot));
 
         // assert
-        Assertions.assertDoesNotThrow(() -> service.getByPK(
+        Assertions.assertDoesNotThrow(() -> service.getById(
                 warehouseSlotId.getBranch().getId(),
-                warehouseSlotId.getBay(),
-                warehouseSlotId.getAisle()
+                warehouseSlotId.getAisle(),
+                warehouseSlotId.getBay()
         ));
     }
+
 
     @Test
     public void shouldNotReturnWhenFindByInvalidId() {
         // given
-        when(repository.findById(any(WarehouseSlotId.class))).thenReturn(Optional.empty());
+        when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
+        when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(
+                any(Branch.class),
+                any(String.class),
+                any(Integer.class)
+        )).thenReturn(Optional.empty());
 
         // assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> service.getByPK(
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.getById(
                 warehouseSlotId.getBranch().getId(),
-                warehouseSlotId.getBay(),
-                warehouseSlotId.getAisle()
+                warehouseSlotId.getAisle(),
+                warehouseSlotId.getBay()
         ));
     }
 
