@@ -25,16 +25,4 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-    @ExceptionHandler(NoSuchMeasurementUnitException.class)
-    public ResponseEntity<StandardError> noSuchMeasurementUnitException(NoSuchMeasurementUnitException exception,
-                                                                        HttpServletRequest request) {
-        StandardError error = new StandardError();
-        error.setTimeStamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Entity not found");
-        error.setMessage(exception.getMessage());
-        error.setPath(request.getRequestURI());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
 }
