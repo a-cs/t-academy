@@ -1,13 +1,13 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.MeasurementUnit;
+import com.twms.wms.exceptions.NoSuchMeasurementUnitException;
 import com.twms.wms.repositories.MeasurementUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -36,7 +36,7 @@ public class MeasurementUnitService {
     private MeasurementUnit read(Long id) {
         Optional<MeasurementUnit> optional = measurementUnitRepository.findById(id);
         MeasurementUnit measurementUnit = optional.orElseThrow(
-                                    () -> new EntityNotFoundException("Measurement unit not found"));
+                                    () -> new NoSuchMeasurementUnitException("Measurement unit not found"));
         return measurementUnit;
     }
 
