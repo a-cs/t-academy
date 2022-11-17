@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class SKUServiceTest {
     private SKURepository repository;
 
     @Test
-    public void returnListAfterRead() {
+    public void shouldReturnListAfterRead() {
         List<SKU> list = new ArrayList<>();
 
         Mockito.when(repository.findAll()).thenReturn(list);
@@ -33,7 +34,7 @@ public class SKUServiceTest {
     }
 
     @Test
-    public void returnSKUAfterSave() {
+    public void shouldReturnSKUAfterSave() {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
@@ -41,12 +42,27 @@ public class SKUServiceTest {
 
         Mockito.when(repository.save(sku)).thenReturn(sku);
         Assertions.assertNotNull(service.save(sku));
-        Mockito.verify(repository,Mockito.times(1)).save(sku);
+        Assertions.assertEquals(service.save(sku), sku);
+        Mockito.verify(repository,Mockito.times(2)).save(sku);
+    }
+
+    @Test
+    public void shouldReturnSKUAfterUpdate() {
+        SKU sku = new SKU();
+        sku.setId(1L);
+        sku.setName("testName");
+        sku.setDescription("testDescription");
+
+        Mockito.when(repository.save(sku)).thenReturn(sku);
+        Mockito.when(repository.findById(sku.getId())).thenReturn(Optional.of(sku));
+        Assertions.assertNotNull(service.update(sku.getId(), sku));
+        Assertions.assertEquals(service.update(sku.getId(), sku), sku);
+        Mockito.verify(repository,Mockito.times(2)).save(sku);
     }
 
 
     @Test
-    public void returnNothingAfterDelete() {
+    public void shouldReturnNothingAfterDelete() {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
@@ -57,5 +73,10 @@ public class SKUServiceTest {
         Mockito.doNothing().when(repository).delete(sku);
         Assertions.assertDoesNotThrow(() -> service.delete(sku.getId()));
         Mockito.verify(repository,Mockito.times(1)).delete(sku);
+    }
+
+    @Test
+    public void shouldReturnExceptionWhenIdNotFound() {
+        Assertions.assertThrows(EntityNotFoundException.class,() -> service.findById(1L));
     }
 }
