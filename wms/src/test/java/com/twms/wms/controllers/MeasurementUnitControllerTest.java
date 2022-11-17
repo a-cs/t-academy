@@ -43,7 +43,7 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
-    public void returnsOKWhenReading() throws Exception{
+    public void shouldReturnOKWhenReading() throws Exception{
         ResultActions resultActions = mockMvc.perform(
                         MockMvcRequestBuilders.get("/measurement-unit/read")
                                 .accept(MediaType.APPLICATION_JSON));
@@ -51,7 +51,7 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
-    public void returnsCreatedWhenCreating() throws Exception {
+    public void shouldReturnCreatedWhenCreating() throws Exception {
         MeasurementUnit measurementUnit = new MeasurementUnit();
         //measurementUnit.setId(1L);
         measurementUnit.setDescription("Kilogram");
@@ -66,7 +66,7 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
-    public void returnsNoContentWhenDeleting() throws Exception{
+    public void shouldReturnNoContentWhenDeleting() throws Exception{
         ResultActions resultActions = mockMvc.perform(
                                 MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}",
                                                                 existingId));
@@ -74,7 +74,7 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
-    public void throwsEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
+    public void shouldThrowEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}", nonExistingId));
         resultActions.andExpect(MockMvcResultMatchers.status().isNotFound());
