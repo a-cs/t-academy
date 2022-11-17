@@ -4,6 +4,7 @@ import com.twms.wms.dtos.UserDTO;
 import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
+import com.twms.wms.repositories.RoleRepository;
 import com.twms.wms.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +27,10 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private RoleRepository roleRepository;
     @Mock
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -36,26 +38,18 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup(){
+        Role clientRole = new Role();
+        clientRole.setAuthority(AccessLevel.ROLE_CLIENT);
+
         user = new User();
+        user.setId(1L);
         user.setUsername("userTest");
         user.setPassword("passwordTest");
+        user.addAccessLevel(clientRole);
 
         Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.empty());
-
         Mockito.when(bCryptPasswordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
-    }
-
-    @Test
-    public void returnUserOnCreateClientUser(){
-        User clientUser = new User();
-        clientUser.setUsername(user.getUsername());
-        clientUser.setPassword("encodedPassword");
-
-        Mockito.when(userRepository.save(clientUser)).thenReturn(user);
-
-        Assertions.assertNotNull(userService.createClientUser(user.getUsername()));
-        Assertions.assertEquals(User.class,userService.createClientUser(user.getUsername()).getClass());
-        Mockito.verify(userRepository, Mockito.times(2)).save(any(User.class));
+        Mockito.when(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT)).thenReturn(clientRole);
     }
 
     @Test
@@ -68,6 +62,19 @@ public class UserServiceTest {
         Assertions.assertEquals(responseUserDTO, new UserDTO(user));
 
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
+    }
+
+    @Test
+    public void returnUserOnCreateClientUser(){
+        User clientUser = new User();
+        clientUser.setUsername(user.getUsername());
+        clientUser.setPassword("encodedPassword");
+        clientUser.setAccessLevel(user.getAccessLevel());
+        Mockito.when(userRepository.save(clientUser)).thenReturn(user);
+
+        Assertions.assertNotNull(userService.createClientUser(user.getUsername()));
+        Assertions.assertEquals(User.class,userService.createClientUser(user.getUsername()).getClass());
+        Mockito.verify(userRepository, Mockito.times(2)).save(any(User.class));
     }
 
     @Test
@@ -91,21 +98,23 @@ public class UserServiceTest {
     public void throwsExceptionWhenUserNotFoundById(){
 
         Assertions.assertThrows(EntityNotFoundException.class,
-                () ->userService.updateUserAccessLevel(user,-1L));
+                () ->userService.updateUserAccessLevel(new Role(),-1L));
     }
-//    @Test
-//    public void returnUserDTOWithUpdatedAcessLevel(){
-//        Long userId = 1L;
-//        user.addAccessLevel(new Role(AccessLevel.ROLE_ADMIN));
-//        User userWithNewRole = new User();
-//        userWithNewRole.addAccessLevel(new Role(AccessLevel.ROLE_ADMIN));
-//
-//        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-//        Mockito.when(userRepository.save(user)).thenReturn(user);
-//
-//        Assertions.assertEquals(new UserDTO(user), userService.updateUserAccessLevel(userWithNewRole, userId));
-//
-//        Mockito.verify(userRepository, Mockito.times(1)).save(user);
-//
-//    }
+    @Test
+    public void returnUserDTOWithUpdatedAcessLevel(){
+        Long userId = 1L;
+        Role role = new Role(1L, AccessLevel.ROLE_ADMIN);
+
+        User userWithNewRole = new User();
+        userWithNewRole.setAccessLevel(user.getAccessLevel());
+
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(roleRepository.findById(role.getId())).thenReturn(Optional.of(role));
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        Assertions.assertEquals(new UserDTO(user), userService.updateUserAccessLevel(role, userId));
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+
+    }
 }

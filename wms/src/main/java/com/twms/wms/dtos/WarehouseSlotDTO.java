@@ -4,6 +4,8 @@ import com.twms.wms.entities.WarehouseSlot;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class WarehouseSlotDTO {
@@ -19,7 +21,7 @@ public class WarehouseSlotDTO {
     private Instant arrivalDate;
 
 
-    public WarehouseSlotDTO fromWarehouseSlot(WarehouseSlot warehouseSlot) {
+    public static WarehouseSlotDTO fromWarehouseSlot(WarehouseSlot warehouseSlot) {
         WarehouseSlotDTO warehouseSlotDTO = new WarehouseSlotDTO();
 
         warehouseSlotDTO.setBranchName(warehouseSlot.getWarehouseSlotId().getBranch().getName());
@@ -33,5 +35,13 @@ public class WarehouseSlotDTO {
         warehouseSlotDTO.setArrivalDate(warehouseSlot.getArrivalDate());
 
         return warehouseSlotDTO;
+    }
+
+    public static List<WarehouseSlotDTO> fromListWarehouseSlot(List<WarehouseSlot> warehouseSlots) {
+        List<WarehouseSlotDTO> warehouseSlotDTOs = new ArrayList<>();
+        for (WarehouseSlot ws : warehouseSlots) {
+           warehouseSlotDTOs.add(WarehouseSlotDTO.fromWarehouseSlot(ws));
+        }
+        return warehouseSlotDTOs;
     }
 }

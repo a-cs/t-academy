@@ -14,9 +14,9 @@ public class MeasurementUnit {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Missing field")
     private String description;
-    @NotBlank
+    @NotBlank(message = "Missing field")
     private String symbol;
 
 }
