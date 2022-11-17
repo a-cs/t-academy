@@ -1,6 +1,8 @@
 package com.twms.wms.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twms.wms.entities.Category;
+import com.twms.wms.entities.MeasurementUnit;
 import com.twms.wms.entities.SKU;
 import com.twms.wms.services.SKUService;
 import org.junit.jupiter.api.Test;
@@ -39,8 +41,14 @@ public class SKUControllerTest {
     @Test
     public void shouldReturnCreatedAfterPost() throws Exception{
         SKU sku = new SKU();
+        Category cat = new Category();
+        MeasurementUnit unit = new MeasurementUnit();
+        cat.setId(1L);
+        unit.setId(1L);
         sku.setId(1L);
         sku.setName("testName");
+        sku.setCategory(cat);
+        sku.setMeasurementUnit(unit);
 
         String skuString = objectMapper.writeValueAsString(sku);
 
@@ -57,8 +65,14 @@ public class SKUControllerTest {
     @Test
     public void shouldReturnOKAfterPut() throws Exception{
         SKU sku = new SKU();
+        Category cat = new Category();
+        MeasurementUnit unit = new MeasurementUnit();
+        cat.setId(1L);
+        unit.setId(1L);
         sku.setId(1L);
         sku.setName("testName");
+        sku.setCategory(cat);
+        sku.setMeasurementUnit(unit);
         String skuString = objectMapper.writeValueAsString(sku);
 
         Mockito.when(service.update(1L ,sku)).thenReturn(sku);
