@@ -15,9 +15,6 @@ public class SKU {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private String description;
-
     @ManyToOne
     private Category category;
 

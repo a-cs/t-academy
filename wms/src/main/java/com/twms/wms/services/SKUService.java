@@ -30,7 +30,6 @@ public class SKUService {
     public SKU update(Long id, SKU sku){
         SKU s = this.findById(id);
         s.setName(sku.getName());
-        s.setDescription(sku.getDescription());
         s.setCategory(sku.getCategory());
         s.setMeasurementUnit(sku.getMeasurementUnit());
         return this.save(s);
