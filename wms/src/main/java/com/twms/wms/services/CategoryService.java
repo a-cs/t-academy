@@ -2,6 +2,7 @@ package com.twms.wms.services;
 
 import com.twms.wms.entities.Category;
 import com.twms.wms.repositories.CategoryRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,12 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @SneakyThrows
     @Transactional
     public Category createGategory(Category category){
+        if(categoryRepository.findByName(category.getName()) != null){
+            throw new SQLIntegrityConstraintViolationException("Category already exists");
+        }
         return categoryRepository.save(category);
     }
 

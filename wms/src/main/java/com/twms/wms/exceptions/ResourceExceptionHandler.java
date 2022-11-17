@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,19 @@ public class ResourceExceptionHandler {
                 }
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInformation);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<StandardError> IntegrityConstraintViolationException(SQLIntegrityConstraintViolationException exception,
+                                                        HttpServletRequest request) {
+        StandardError error = new StandardError();
+        error.setTimeStamp(Instant.now());
+        error.setStatus(HttpStatus.IM_USED.value());
+        error.setError("Violation unique variable.");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
