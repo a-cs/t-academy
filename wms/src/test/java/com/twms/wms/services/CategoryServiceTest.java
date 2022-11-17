@@ -63,9 +63,4 @@ public class CategoryServiceTest {
         Mockito.verify(repository, Mockito.times(1)).findById(anyLong());
     }
 
-    @Test
-    public void returnOKWhenReadById(){
-
-    }
-
 }
