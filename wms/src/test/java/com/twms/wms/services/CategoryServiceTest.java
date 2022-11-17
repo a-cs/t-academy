@@ -1,5 +1,6 @@
 package com.twms.wms.services;
 
+import com.twms.wms.entities.Address;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.Category;
 import com.twms.wms.repositories.CategoryRepository;
@@ -12,6 +13,8 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -61,6 +64,15 @@ public class CategoryServiceTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(category, response);
         Mockito.verify(repository, Mockito.times(1)).findById(anyLong());
+    }
+
+    @Test
+    void shouldGetAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        Mockito.when(repository.findAll()).thenReturn(categories);
+
+        Assertions.assertNotNull(service.readCategories());
+        Mockito.verify(repository).findAll();
     }
 
 }
