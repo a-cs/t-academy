@@ -2,11 +2,14 @@ package com.twms.wms.services;
 
 import com.twms.wms.entities.Branch;
 import com.twms.wms.repositories.BranchRepository;
+import lombok.SneakyThrows;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +18,11 @@ public class BranchService {
     @Autowired
     BranchRepository branchRepository;
 
+    @SneakyThrows
     @Transactional
     public Branch createBranch(Branch branch){
+        List<Branch> branchesWithSameName = branchRepository.findByName(branch.getName());
+        if(branchesWithSameName.size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
         return branchRepository.save(branch);
     }
 

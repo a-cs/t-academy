@@ -3,6 +3,7 @@ package com.twms.wms.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twms.wms.entities.Branch;
+import com.twms.wms.entities.Client;
 import com.twms.wms.services.BranchService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +34,7 @@ public class BranchControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    public void MustReturnCreatedAfterTheCreationOfBranch() throws Exception {
+    public void shouldReturnCreatedAfterTheCreationOfBranch() throws Exception {
         Branch branch = new Branch();
         branch.setName("Test");
 
@@ -47,17 +50,33 @@ public class BranchControllerTest {
     }
 
     @Test
-    public void MustReturnOkAfterGettingAllBranchs() throws Exception {
+    public void shouldReturnOkAfterGettingAllBranchs() throws Exception {
         ResultActions resultActions = mockMvc.perform(get("/branch")
                                                       .accept(MediaType.APPLICATION_JSON));
         resultActions.andExpect(status().isOk());
     }
 
     @Test
-    public void MustReturnVoidAfterDeletingABranch() throws Exception {
+    public void shouldReturnVoidAfterDeletingABranch() throws Exception {
         ResultActions resultActions = mockMvc.perform(delete("/branch/{idcategoria}",1L)
                                                       .accept(MediaType.APPLICATION_JSON));
         resultActions.andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldReturnTheModifiedBranchAfterUpdate() throws Exception {
+        Branch branch = new Branch();
+        branch.setName("Test");
+
+        String branchString = objectMapper.writeValueAsString(branch);
+
+        Mockito.when(service.updateBranch(eq(1L),any())).thenReturn(branch);
+        ResultActions resultActions = mockMvc.perform(put("/branch/{idClient}",1L)
+                .content(branchString)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Test"));
     }
 
 }

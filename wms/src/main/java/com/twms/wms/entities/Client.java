@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -11,9 +12,11 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Name must bot be blank!")
     private String name;
+
     @NotBlank
+    @Pattern(regexp="\\d{14}")
     private String CNPJ;
 
     @OneToOne
