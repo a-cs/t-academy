@@ -52,7 +52,7 @@ public class CategoryControllerTest {
         category.setName("CategoryName");
 
         String categoryString = objectMapper.writeValueAsString(category);
-
+        Mockito.when(service.createGategory(any())).thenReturn(category);
 
         ResultActions result = mockMvc.perform(post("/category")
                 .content(categoryString)
