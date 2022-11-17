@@ -33,7 +33,7 @@ public class MeasurementUnitService {
         return this.create(newMeasurementUnit);
     }
 
-    private MeasurementUnit read(Long id) {
+    public MeasurementUnit read(Long id) {
         Optional<MeasurementUnit> optional = measurementUnitRepository.findById(id);
         MeasurementUnit measurementUnit = optional.orElseThrow(
                                     () -> new EntityNotFoundException("Measurement unit not found"));

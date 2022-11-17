@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -32,14 +33,14 @@ public class MeasurementUnitServiceTest {
         measurementUnit.setSymbol("KG");
     }
     @Test
-    public void returnMeasurementUnitWhenCreating() {
+    public void shouldReturnMeasurementUnitWhenCreating() {
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
 
         Assertions.assertNotNull(measurementUnitService.create(measurementUnit));
     }
 
     @Test
-    public void doesNothingWhenDeletingExistingEntity() {
+    public void shouldDoNothingWhenDeletingExistingEntity() {
         Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
                                               .thenReturn(Optional.of(measurementUnit));
         Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
@@ -48,7 +49,7 @@ public class MeasurementUnitServiceTest {
     }
 
     @Test
-    public void returnsPageWhenReading() {
+    public void shouldReturnPageWhenReading() {
         Page<MeasurementUnit> page = Mockito.mock(Page.class);
         Pageable pageable = PageRequest.of(0,2);
         Mockito.when(measurementUnitRepository.findAll(pageable))
@@ -58,7 +59,7 @@ public class MeasurementUnitServiceTest {
     }
 
     @Test
-    public void returnsUpdatedEntityWhenUpdating() {
+    public void shouldReturnUpdatedEntityWhenUpdating() {
         Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
                                               .thenReturn(Optional.of(measurementUnit));
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
@@ -71,5 +72,10 @@ public class MeasurementUnitServiceTest {
         Assertions.assertNotNull(measurementUnitService.update(measurementUnit.getId(), newMeasurementUnit));
 
         Assertions.assertEquals("KILOGRAM", measurementUnit.getDescription());
+    }
+
+    @Test
+    public void shouldThrowEntityNotFoundExceptionWhenIdNotFound() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> measurementUnitService.read(1L));
     }
 }

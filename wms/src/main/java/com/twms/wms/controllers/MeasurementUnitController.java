@@ -29,7 +29,8 @@ public class MeasurementUnitController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MeasurementUnit> update(@PathVariable("id") Long id, @Valid @RequestBody MeasurementUnit measurementUnit) {
+    public ResponseEntity<MeasurementUnit> update(@PathVariable("id") Long id,
+                                                  @Valid @RequestBody MeasurementUnit measurementUnit) {
         return ResponseEntity.status(HttpStatus.OK).body(measurementUnitService.update(id, measurementUnit));
     }
 

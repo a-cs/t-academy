@@ -53,6 +53,8 @@ public class CategoryControllerTest {
 
         String categoryString = objectMapper.writeValueAsString(category);
 
+        Mockito.when(service.createGategory(category)).thenReturn(category);
+
         ResultActions result = mockMvc.perform(post("/category")
                 .content(categoryString)
                 .contentType(MediaType.APPLICATION_JSON));
