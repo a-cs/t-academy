@@ -17,12 +17,12 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Address> post(@RequestBody @Valid Address address) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.post(address));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Address>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.getAll());
     }

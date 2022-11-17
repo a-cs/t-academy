@@ -1,9 +1,9 @@
 package com.twms.wms.enums;
 
 public enum AccessLevel {
-    CLIENT,
-    OPERATOR,
-    BRANCH_MANAGER,
-    MANAGER,
-    ADMIN,
+    ROLE_CLIENT,
+    ROLE_OPERATOR,
+    ROLE_BRANCH_MANAGER,
+    ROLE_MANAGER,
+    ROLE_ADMIN,
 }

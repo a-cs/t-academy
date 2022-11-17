@@ -1,12 +1,12 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.Transaction;
-import com.twms.wms.exceptions.NoSuchClientException;
 import com.twms.wms.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class TransactionService {
 
     public Transaction readTransactionById(Long transactionId){
         Optional<Transaction> optionalClient = transactionRepository.findById(transactionId);
-        return optionalClient.orElseThrow(()->new NoSuchClientException("Branch Not Created or Removed!!"));
+        return optionalClient.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
     }
 
     public Transaction updateTransaction(Long transactionId, Transaction transaction){
