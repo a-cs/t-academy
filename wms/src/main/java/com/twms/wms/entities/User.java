@@ -3,14 +3,21 @@ package com.twms.wms.entities;
 import com.twms.wms.dtos.UserDTO;
 import com.twms.wms.enums.AccessLevel;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -21,7 +28,14 @@ public class User {
     @NotBlank
     @Size(min = 5)
     private String password;
-    private AccessLevel accessLevel = AccessLevel.OPERATOR;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> accessLevel = new HashSet<>();
+    private boolean enabled = true;
 
     public User() {
     }
@@ -32,4 +46,36 @@ public class User {
         this.accessLevel = userDTO.getAccessLevel();
     }
 
+    public void addAccessLevel(Role role){
+        this.accessLevel.add(role);
+    }
+    public void revokeAccessLevel(Role role){
+        this.accessLevel.remove(role);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return accessLevel.stream().map(role ->
+                new SimpleGrantedAuthority(role.getAuthority().name())).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

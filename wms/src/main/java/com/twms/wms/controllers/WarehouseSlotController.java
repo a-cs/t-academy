@@ -1,5 +1,6 @@
 package com.twms.wms.controllers;
 
+import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
@@ -20,17 +21,17 @@ public class WarehouseSlotController {
     WarehouseSlotService warehouseSlotService;
 
     @PostMapping
-    public ResponseEntity<WarehouseSlot> post(@Valid @RequestBody WarehouseSlot ws) {
+    public ResponseEntity<WarehouseSlotDTO> post(@Valid @RequestBody WarehouseSlot ws) {
         return ResponseEntity.status(HttpStatus.CREATED).body(warehouseSlotService.post(ws));
     }
 
     @GetMapping
-    public ResponseEntity<List<WarehouseSlot>> getAll() {
+    public ResponseEntity<List<WarehouseSlotDTO>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAll());
     }
 
     @GetMapping("/{branchId}/{aisleId}/{bayId}")
-    public ResponseEntity<WarehouseSlot> getByPK(@RequestParam("branchId") Long branchId,
+    public ResponseEntity<WarehouseSlotDTO> getByPK(@RequestParam("branchId") Long branchId,
                                                  @RequestParam("aisleId") String aisleId,
                                                  @RequestParam("bayId") int bayId) {
         System.out.println(branchId);
@@ -55,7 +56,7 @@ public class WarehouseSlotController {
     }
 
     @PutMapping
-    public ResponseEntity<WarehouseSlot> putById(@RequestBody WarehouseSlotId wsId, @RequestBody WarehouseSlot ws) {
+    public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlotId wsId, @RequestBody WarehouseSlot ws) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(warehouseSlotService.putById(wsId, ws));
     }
 
