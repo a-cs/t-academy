@@ -16,10 +16,10 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.awt.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.web.servlet.function.RequestPredicates.accept;
@@ -54,6 +54,25 @@ public class CategoryControllerTest {
                 .content(categoryString)
                 .contentType(MediaType.APPLICATION_JSON));
         result.andExpect(status().isCreated());
+        result.andExpect(jsonPath("$.name").exists());
+        result.andExpect(jsonPath("$.name").value("CategoryName"));
+    }
+
+    @Test
+    public void shouldReturnOkWhenUpdateCategory() throws Exception {
+        Category category = new Category();
+        category.setName("CategoryName");
+
+        Mockito.when(service.update(eq(1L),any())).thenReturn(category);
+
+        String categoryString = objectMapper.writeValueAsString(category);
+
+        ResultActions result = mockMvc.perform(put("/category/{idCategoy}", 1L)
+                .content(categoryString)
+                .contentType(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.name").exists());
+        result.andExpect(jsonPath("$.name").value("CategoryName"));
     }
 
     @Test

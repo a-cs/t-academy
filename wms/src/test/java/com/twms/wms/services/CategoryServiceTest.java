@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -60,6 +61,11 @@ public class CategoryServiceTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(category, response);
         Mockito.verify(repository, Mockito.times(1)).findById(anyLong());
+    }
+
+    @Test
+    public void returnOKWhenReadById(){
+
     }
 
 }
