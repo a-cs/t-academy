@@ -1,12 +1,12 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.Branch;
-import com.twms.wms.exceptions.NoSuchBranchException;
 import com.twms.wms.repositories.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ public class BranchService {
 
     public Branch readBranchById(Long branchId){
         Optional<Branch> opt = branchRepository.findById(branchId);
-        Branch branch = opt.orElseThrow(()->new NoSuchBranchException("Branch Not Created or Removed!!"));
+        Branch branch = opt.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
         return branch;
     }
 

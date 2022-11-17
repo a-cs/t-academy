@@ -22,11 +22,7 @@ public class MeasurementUnitService {
 
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
-        MeasurementUnit newMeasurementUnit = new MeasurementUnit();
-        newMeasurementUnit.setDescription(measurementUnit.getDescription());
-        newMeasurementUnit.setSymbol(measurementUnit.getSymbol());
-
-        return measurementUnitRepository.save(newMeasurementUnit);
+        return measurementUnitRepository.save(measurementUnit);
     }
 
     public MeasurementUnit update(Long id, MeasurementUnit measurementUnit) {
@@ -37,7 +33,7 @@ public class MeasurementUnitService {
         return this.create(newMeasurementUnit);
     }
 
-    private MeasurementUnit read(Long id) {
+    public MeasurementUnit read(Long id) {
         Optional<MeasurementUnit> optional = measurementUnitRepository.findById(id);
         MeasurementUnit measurementUnit = optional.orElseThrow(
                                     () -> new EntityNotFoundException("Measurement unit not found"));
