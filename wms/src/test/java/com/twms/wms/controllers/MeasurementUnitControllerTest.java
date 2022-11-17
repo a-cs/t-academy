@@ -3,7 +3,7 @@ package com.twms.wms.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twms.wms.entities.MeasurementUnit;
 import com.twms.wms.services.MeasurementUnitService;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,10 +14,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.persistence.EntityNotFoundException;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -45,41 +49,58 @@ public class MeasurementUnitControllerTest {
     @Test
     public void shouldReturnOKWhenReading() throws Exception{
         ResultActions resultActions = mockMvc.perform(
-                        MockMvcRequestBuilders.get("/measurement-unit/read")
+                        get("/measurement-unit")
                                 .accept(MediaType.APPLICATION_JSON));
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions.andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturnCreatedWhenCreating() throws Exception {
         MeasurementUnit measurementUnit = new MeasurementUnit();
-        //measurementUnit.setId(1L);
         measurementUnit.setDescription("Kilogram");
         measurementUnit.setSymbol("KG");
 
         String measurementUnitString = objectMapper.writeValueAsString(measurementUnit);
         ResultActions resultActions = mockMvc.perform(
-                                MockMvcRequestBuilders.post("/measurement-unit/create")
+                                post("/measurement-unit")
                                         .content(measurementUnitString)
                                         .contentType(MediaType.APPLICATION_JSON));
-        resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
+        resultActions.andExpect(status().isCreated());
     }
 
     @Test
     public void shouldReturnNoContentWhenDeleting() throws Exception{
         ResultActions resultActions = mockMvc.perform(
-                                MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}",
+                                delete("/measurement-unit/{id}",
                                                                 existingId));
-        resultActions.andExpect(MockMvcResultMatchers.status().isNoContent());
+        resultActions.andExpect(status().isNoContent());
     }
 
     @Test
     public void shouldThrowEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.delete("/measurement-unit/delete/{id}", nonExistingId));
-        resultActions.andExpect(MockMvcResultMatchers.status().isNotFound());
+                delete("/measurement-unit/{id}", nonExistingId));
+        resultActions.andExpect(status().isNotFound());
+    }
 
-//        resultActions.andExpect(res ->
-//                Assertions.assertTrue(res.getResolvedException() instanceof EntityNotFoundException));
+    @Test
+    public void shouldReturnOKWhenUpdating() throws Exception {
+        MeasurementUnit measurementUnit = new MeasurementUnit();
+        measurementUnit.setId(existingId);
+        measurementUnit.setDescription("Kilogram");
+        measurementUnit.setSymbol("KG");
+
+        Mockito.when(measurementUnitService.update(eq(measurementUnit.getId()),
+                                                   any())).thenReturn(measurementUnit);
+
+        String measurementUnitString = objectMapper.writeValueAsString(measurementUnit);
+        ResultActions resultActions = mockMvc.perform(put(
+                                             "/measurement-unit/{id}", measurementUnit.getId())
+                                             .content(measurementUnitString)
+                                             .contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.description").exists());
+        resultActions.andExpect(jsonPath("$.description").value("Kilogram"));
+
     }
 }
