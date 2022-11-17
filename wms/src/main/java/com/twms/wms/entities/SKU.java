@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -15,9 +16,11 @@ public class SKU {
     @NotBlank
     private String name;
 
+    @NotNull
     @ManyToOne
     private Category category;
 
+    @NotNull
     @ManyToOne
     private MeasurementUnit measurementUnit;
 
