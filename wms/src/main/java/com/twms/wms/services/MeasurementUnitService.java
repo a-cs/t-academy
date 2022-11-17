@@ -22,6 +22,12 @@ public class MeasurementUnitService {
 
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
+        if(measurementUnit.getDescription() == null) {
+            throw new IllegalArgumentException("Measurement unit description is missing");
+        }
+        if(measurementUnit.getSymbol() == null) {
+            throw new IllegalArgumentException("Measurement unit symbol is missing");
+        }
         return measurementUnitRepository.save(measurementUnit);
     }
 
