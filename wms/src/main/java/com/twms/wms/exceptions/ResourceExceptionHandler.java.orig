@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,29 +22,13 @@ public class ResourceExceptionHandler {
                                                         HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimeStamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setStatus(HttpStatus.IM_USED.value());
         error.setError("Entity not found");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
-
-<<<<<<< HEAD
-    @ExceptionHandler(NoSuchMeasurementUnitException.class)
-    public ResponseEntity<StandardError> noSuchMeasurementUnitException(NoSuchMeasurementUnitException exception,
-                                                                        HttpServletRequest request) {
-        StandardError error = new StandardError();
-        error.setTimeStamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Entity not found");
-        error.setMessage(exception.getMessage());
-        error.setPath(request.getRequestURI());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
-=======
->>>>>>> 0e0e2a7d4ce43591998d395566b22cb168abedd1
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<InvalidArgumentDTO>> handleMethodArgumetNotValid(MethodArgumentNotValidException e) {
@@ -59,5 +44,27 @@ public class ResourceExceptionHandler {
                 }
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInformation);
+    }
+
+<<<<<<< HEAD
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<StandardError> entityNotFound(SQLIntegrityConstraintViolationException exception,
+=======
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> entityNotFound(IllegalArgumentException exception,
+>>>>>>> 747f763113b455964acc8b5dce05e386bc693e29
+                                                        HttpServletRequest request) {
+        StandardError error = new StandardError();
+        error.setTimeStamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+<<<<<<< HEAD
+        error.setError("Violation Unique Variable");
+=======
+        error.setError("Invalid argument.");
+>>>>>>> 747f763113b455964acc8b5dce05e386bc693e29
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

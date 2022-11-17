@@ -41,7 +41,7 @@ public class SKUControllerTest {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
-        sku.setDescription("testDescription");
+
         String skuString = objectMapper.writeValueAsString(sku);
 
         Mockito.when(service.save(sku)).thenReturn(sku);
@@ -51,7 +51,6 @@ public class SKUControllerTest {
         result.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("testName"))
-                .andExpect(jsonPath("$.description").value("testDescription"))
                 ;
     }
 
@@ -60,7 +59,6 @@ public class SKUControllerTest {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
-        sku.setDescription("testDescription");
         String skuString = objectMapper.writeValueAsString(sku);
 
         Mockito.when(service.update(1L ,sku)).thenReturn(sku);
@@ -70,7 +68,6 @@ public class SKUControllerTest {
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("testName"))
-                .andExpect(jsonPath("$.description").value("testDescription"))
         ;
     }
 

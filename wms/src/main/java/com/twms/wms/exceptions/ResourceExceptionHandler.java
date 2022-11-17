@@ -46,8 +46,8 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInformation);
     }
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<StandardError> entityNotFound(SQLIntegrityConstraintViolationException exception,
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> entityNotFound(IllegalArgumentException exception,
                                                         HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimeStamp(Instant.now());

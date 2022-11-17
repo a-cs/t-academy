@@ -38,7 +38,6 @@ public class SKUServiceTest {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
-        sku.setDescription("testDescription");
 
         Mockito.when(repository.save(sku)).thenReturn(sku);
         Assertions.assertNotNull(service.save(sku));
@@ -51,7 +50,6 @@ public class SKUServiceTest {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
-        sku.setDescription("testDescription");
 
         Mockito.when(repository.save(sku)).thenReturn(sku);
         Mockito.when(repository.findById(sku.getId())).thenReturn(Optional.of(sku));
@@ -66,7 +64,6 @@ public class SKUServiceTest {
         SKU sku = new SKU();
         sku.setId(1L);
         sku.setName("testName");
-        sku.setDescription("testDescription");
 
         Mockito.when(repository.findById(sku.getId())).thenReturn(Optional.of(sku));
 

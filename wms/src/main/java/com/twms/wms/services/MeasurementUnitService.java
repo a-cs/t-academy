@@ -22,6 +22,12 @@ public class MeasurementUnitService {
 
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
+        if(measurementUnit.getDescription() == null) {
+            throw new IllegalArgumentException("Measurement unit description is missing");
+        }
+        if(measurementUnit.getSymbol() == null) {
+            throw new IllegalArgumentException("Measurement unit symbol is missing");
+        }
         return measurementUnitRepository.save(measurementUnit);
     }
 
@@ -33,7 +39,7 @@ public class MeasurementUnitService {
         return this.create(newMeasurementUnit);
     }
 
-    private MeasurementUnit read(Long id) {
+    public MeasurementUnit read(Long id) {
         Optional<MeasurementUnit> optional = measurementUnitRepository.findById(id);
         MeasurementUnit measurementUnit = optional.orElseThrow(
                                     () -> new EntityNotFoundException("Measurement unit not found"));
