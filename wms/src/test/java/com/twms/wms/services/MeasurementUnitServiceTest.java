@@ -32,14 +32,14 @@ public class MeasurementUnitServiceTest {
         measurementUnit.setSymbol("KG");
     }
     @Test
-    public void returnMeasurementUnitWhenCreating() {
+    public void shouldReturnMeasurementUnitWhenCreating() {
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
 
         Assertions.assertNotNull(measurementUnitService.create(measurementUnit));
     }
 
     @Test
-    public void doesNothingWhenDeletingExistingEntity() {
+    public void shouldDoNothingWhenDeletingExistingEntity() {
         Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
                                               .thenReturn(Optional.of(measurementUnit));
         Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
@@ -48,7 +48,7 @@ public class MeasurementUnitServiceTest {
     }
 
     @Test
-    public void returnsPageWhenReading() {
+    public void shouldReturnPageWhenReading() {
         Page<MeasurementUnit> page = Mockito.mock(Page.class);
         Pageable pageable = PageRequest.of(0,2);
         Mockito.when(measurementUnitRepository.findAll(pageable))
@@ -58,7 +58,7 @@ public class MeasurementUnitServiceTest {
     }
 
     @Test
-    public void returnsUpdatedEntityWhenUpdating() {
+    public void shouldReturnUpdatedEntityWhenUpdating() {
         Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
                                               .thenReturn(Optional.of(measurementUnit));
         Mockito.when(measurementUnitRepository.save(measurementUnit)).thenReturn(measurementUnit);
