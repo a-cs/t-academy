@@ -36,17 +36,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-//        if(Arrays.asList(env.getActiveProfiles()).contains("test")){
-//            http.headers().frameOptions().disable();
-//        }
-        http
-//                .cors().and()
-//                .csrf().disable()
-//                .httpBasic().disable();
+        if(Arrays.asList(env.getActiveProfiles()).contains("test")){
+            http
+                    .authorizeRequests()
+                    .anyRequest()
+                    .permitAll();
+        } else if(Arrays.asList(env.getActiveProfiles()).contains("dev")){
+            http
+                    .authorizeRequests()
+                    .antMatchers(PUBLIC).permitAll()
+                    .antMatchers(ADMIN).hasRole("ADMIN")
+                    .anyRequest().authenticated();
+        }
 
-                .authorizeRequests().anyRequest().permitAll();
-//                .antMatchers(PUBLIC).permitAll()
-//                .antMatchers(ADMIN).hasRole("ADMIN")
-//                .anyRequest().authenticated();
     }
+
 }
