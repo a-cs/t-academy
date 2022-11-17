@@ -3,6 +3,8 @@ package com.twms.wms.services;
 import com.twms.wms.entities.Category;
 import com.twms.wms.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,8 @@ public class CategoryService {
 
     public void delete(Long id){
         // Disable if someone is already using it #
-        categoryRepository.deleteById(id);
+        Category category = this.readById(id);
+
+        categoryRepository.delete(category);
     }
 }
