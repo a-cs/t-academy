@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -71,5 +72,10 @@ public class MeasurementUnitServiceTest {
         Assertions.assertNotNull(measurementUnitService.update(measurementUnit.getId(), newMeasurementUnit));
 
         Assertions.assertEquals("KILOGRAM", measurementUnit.getDescription());
+    }
+
+    @Test
+    public void shouldThrowEntityNotFoundExceptionWhenIdNotFound() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> measurementUnitService.read(1L));
     }
 }
