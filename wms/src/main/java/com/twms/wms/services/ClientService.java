@@ -23,17 +23,19 @@ public class ClientService {
     @Autowired
     AddressService addressService;
 
-    @SneakyThrows
+
     @Transactional
     public Client saveClient(Client client){
-        if(clientRepository.findByCNPJ(client.getCNPJ()).size()>0) throw new SQLIntegrityConstraintViolationException("CNPJ is a unique field!!");
-        if(clientRepository.findByName(client.getName()).size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
-        if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
+
         return clientRepository.save(client);
     }
+    @SneakyThrows
     public Client createClient(Client client){
 
         client.setUser(userService.createClientUser(client.getCNPJ()));
+        if(clientRepository.findByCNPJ(client.getCNPJ()).size()>0) throw new SQLIntegrityConstraintViolationException("CNPJ is a unique field!!");
+        if(clientRepository.findByName(client.getName()).size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
+        if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
 
         return this.saveClient(client);
 

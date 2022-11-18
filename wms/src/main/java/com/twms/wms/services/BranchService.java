@@ -47,7 +47,7 @@ public class BranchService {
         oldBranch.setMax_rows(branch.getMax_rows());
         oldBranch.setMax_columns(branch.getMax_columns());
 
-        return this.createBranch(oldBranch);
+        return branchRepository.save(oldBranch);
     }
 
     @Transactional

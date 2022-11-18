@@ -1,8 +1,10 @@
 package com.twms.wms.services;
 
 
+import com.twms.wms.entities.Address;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.Client;
+import com.twms.wms.repositories.AddressRepository;
 import com.twms.wms.repositories.BranchRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,12 +26,23 @@ public class BranchServiceTest {
     @Mock
     private BranchRepository repository;
 
+    @Mock
+    private AddressService addressService;
+
     @Test
     public void shouldRespondNotNullToSaveBranch(){
         Branch branch = new Branch();
         branch.setName("Teste");
 
+        Address address = new Address();
+        address.setId(1L);
+
+        branch.setAddress(address);
+
         Mockito.when(repository.save(branch)).thenReturn(branch);
+
+        Mockito.when(addressService.getById(branch.getAddress().getId())).thenReturn(new Address());
+
         Assertions.assertNotNull(service.createBranch(branch));
 
         Mockito.verify(repository, Mockito.times(1)).save(branch);
@@ -62,7 +75,15 @@ public class BranchServiceTest {
         branch.setName("Teste");
         branch.setId(1L);
 
-        Mockito.when(service.createBranch(branch)).thenReturn(branch);
+        Address address = new Address();
+        address.setId(1L);
+
+        branch.setAddress(address);
+
+        Mockito.when(repository.save(branch)).thenReturn(branch);
+
+
+
         Mockito.when(repository.findById(branch.getId())).thenReturn(Optional.of(branch));
 
         Assertions.assertDoesNotThrow(()->service.updateBranch(branch.getId(), branch));

@@ -1,10 +1,7 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
-import com.twms.wms.entities.Branch;
-import com.twms.wms.entities.Client;
-import com.twms.wms.entities.Role;
-import com.twms.wms.entities.User;
+import com.twms.wms.entities.*;
 import com.twms.wms.enums.AccessLevel;
 import com.twms.wms.repositories.ClientRepository;
 import com.twms.wms.repositories.RoleRepository;
@@ -19,10 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -38,6 +32,8 @@ public class ClientServiceTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private AddressService addressService;
 
     @Test
     public void ShouldRespondNotNullWhenSavingClient(){
@@ -50,7 +46,18 @@ public class ClientServiceTest {
         user.setUsername("userTest");
         user.setPassword("passwordTest");
 
+        Address address = new Address();
+        address.setId(1L);
+
+        client.setAddress(address);
+
         Mockito.when(userService.createClientUser(client.getCNPJ())).thenReturn(user);
+
+        Mockito.when(repository.findByCNPJ(client.getCNPJ())).thenReturn(new ArrayList<Client>());
+
+        Mockito.when(repository.findByName(client.getName())).thenReturn(new ArrayList<Client>());
+
+        Mockito.when(addressService.getById(client.getAddress().getId())).thenReturn(new Address());
 
         Mockito.when(clientService.saveClient(client)).thenReturn(client);
 
@@ -93,7 +100,7 @@ public class ClientServiceTest {
         client.setCNPJ("00623904000173");
         client.setId(1L);
 
-        Mockito.when(clientService.saveClient(client)).thenReturn(client);
+        Mockito.when(clientService.saveClient(any())).thenReturn(client);
         Mockito.when(repository.findById(client.getId())).thenReturn(Optional.of(client));
 
         Assertions.assertDoesNotThrow(()->clientService.updateClient(client.getId(), client));
