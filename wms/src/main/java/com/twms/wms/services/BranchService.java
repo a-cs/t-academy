@@ -42,7 +42,7 @@ public class BranchService {
 
     public Branch updateBranch(Long branchId, Branch branch){
         Branch oldBranch = this.readBranchById(branchId);
-        oldBranch.setAddress(branch.getAddress());
+        //oldBranch.setAddress(branch.getAddress());
         oldBranch.setName(branch.getName());
         oldBranch.setMax_rows(branch.getMax_rows());
         oldBranch.setMax_columns(branch.getMax_columns());
