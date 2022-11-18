@@ -5,6 +5,7 @@ import com.twms.wms.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,7 +28,7 @@ public class AddressService {
 
     public Address getById(Long id) {
         Optional<Address> possibleAddress = addressRepository.findById(id);
-        Address address = possibleAddress.orElseThrow(() -> new NoSuchElementException("Address does not exist."));
+        Address address = possibleAddress.orElseThrow(() -> new EntityNotFoundException("Address does not exist."));
         return address;
     }
 

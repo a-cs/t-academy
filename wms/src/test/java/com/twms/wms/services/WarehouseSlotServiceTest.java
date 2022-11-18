@@ -29,6 +29,12 @@ public class WarehouseSlotServiceTest {
     private BranchService branchService;
 
     @Mock
+    private SKUService skuService;
+
+    @Mock
+    private ClientService clientService;
+
+    @Mock
     private WarehouseSlotRepository repository;
 
 

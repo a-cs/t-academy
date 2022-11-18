@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -80,17 +81,9 @@ public class AddressServiceTest {
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
 
         // then
-        Assertions.assertThrows(NoSuchElementException.class, () -> service.getById(anyLong()));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.getById(anyLong()));
         verify(repository, times(1)).findById(anyLong());
     }
-
-//    @Test
-//    void shouldModifyAddress() {
-//        Address toBeModifiedAndPersisted = address;
-//        when(repository.save(toBeModifiedAndPersisted)).thenReturn(toBeModifiedAndPersisted);
-//        verify(repository, times(1)).save(toBeModifiedAndPersisted);
-//    }
-
 
     @Test
     void shoudDeleteValidId() {
@@ -109,7 +102,34 @@ public class AddressServiceTest {
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
 
         // then
-        Assertions.assertThrows(NoSuchElementException.class, () -> service.deleteById(anyLong()));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.deleteById(anyLong()));
         verify(repository, times(0)).delete(address);
+    }
+
+    @Test
+    void shouldPutByValidId() {
+        // given
+        when(repository.findById(anyLong())).thenReturn(Optional.of(address));
+
+        // when
+        service.putById(anyLong(), address);
+
+        // then
+        verify(repository, times(1)).save(address);
+
+    }
+
+
+    @Test
+    void shouldNotPutByInvalidId() {
+        // given
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // then
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> service.putById(anyLong(), address)
+        );
+        verify(repository, times(0)).save(address);
+
     }
 }
