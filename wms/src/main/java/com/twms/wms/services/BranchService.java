@@ -18,11 +18,15 @@ public class BranchService {
     @Autowired
     BranchRepository branchRepository;
 
+    @Autowired
+    AddressService addressService;
+
     @SneakyThrows
     @Transactional
     public Branch createBranch(Branch branch){
         List<Branch> branchesWithSameName = branchRepository.findByName(branch.getName());
         if(branchesWithSameName.size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
+        if(addressService.getById(branch.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address does'nt exist!!");
         return branchRepository.save(branch);
     }
 
