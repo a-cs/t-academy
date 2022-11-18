@@ -71,10 +71,6 @@ public class WarehouseSlotService {
         return post(toChange);
     }
 
-    public void deleteById(WarehouseSlotId wsId) {
-        warehouseSlotRepository.deleteById(wsId);
-    }
-
     public void deleteById(Long branchId, String aisleId, int bayId) {
         Branch branch = branchService.readBranchById(branchId);
         WarehouseSlotId id = new WarehouseSlotId(branch, bayId, aisleId);

@@ -49,7 +49,7 @@ public class WarehouseSlotServiceTest {
     }
 
     @Test
-    public void shouldSaveAndReturnAsDTO() {
+    public void shouldSaveEntityToDatabase() {
         // given
         Mockito.when(repository.save(warehouseSlot)).thenReturn(warehouseSlot);
 
@@ -62,7 +62,7 @@ public class WarehouseSlotServiceTest {
     }
 
     @Test
-    public void shouldGetAllWarehouseSlotsAndReturnAsWarehouseSlotDTO() {
+    public void shouldReturnAllEntities() {
         // given
         when(repository.findAll()).thenReturn(List.of(warehouseSlot));
 
@@ -75,7 +75,36 @@ public class WarehouseSlotServiceTest {
     }
 
     @Test
-    public void shouldReturnDTOWhenGetByValidId() {
+    public void shouldReturnAllEntitiesFromBranch() {
+        // given
+        when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
+        when(repository.findAllByWarehouseSlotIdBranch(any(Branch.class))).thenReturn(List.of(warehouseSlot));
+
+        // when
+        List<WarehouseSlotDTO> response = service.getAllById(branch.getId());
+
+        // assert
+        Assertions.assertNotNull(response);
+        verify(repository).findAllByWarehouseSlotIdBranch(branch);
+    }
+
+
+    @Test
+    public void shouldReturnAllEntitiesFromClient() {
+        // given
+        when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
+        when(repository.findByClientId(any(Long.class))).thenReturn(List.of(warehouseSlot));
+
+        // when
+        List<WarehouseSlotDTO> response = service.getByClientId(any(Long.class));
+
+        // assert
+        Assertions.assertNotNull(response);
+        verify(repository).findByClientId(any(Long.class));
+    }
+
+    @Test
+    public void shouldNotThrowEntityNotFoundWhenGivenValidId() {
         // given
         when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
         when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(
@@ -94,7 +123,7 @@ public class WarehouseSlotServiceTest {
 
 
     @Test
-    public void shouldNotReturnWhenFindByInvalidId() {
+    public void shouldThrowEntityNotFoundWhenGivenInvalidId() {
         // given
         when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
         when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(
@@ -117,7 +146,11 @@ public class WarehouseSlotServiceTest {
         doNothing().when(repository).deleteById(any());
 
         // when
-        service.deleteById(any());
+        service.deleteById(
+                warehouseSlotId.getBranch().getId(),
+                warehouseSlotId.getAisle(),
+                warehouseSlotId.getBay()
+        );
 
         // assert
         verify(repository, times(1)).deleteById(any());
