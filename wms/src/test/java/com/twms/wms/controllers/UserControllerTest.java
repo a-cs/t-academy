@@ -95,9 +95,9 @@ public class UserControllerTest {
 
         String rolestr = objectMapper.writeValueAsString(role);
 
-        Mockito.when(userService.updateUserAccessLevel(any(), eq(1L))).thenReturn(new UserDTO(user));
+        Mockito.when(userService.updateUserAccessLevel(any(), eq(1L), eq(true))).thenReturn(new UserDTO(user));
 
-        ResultActions result = mockMvc.perform(put("/user/permissions/1")
+        ResultActions result = mockMvc.perform(put("/user/permissions/add/1")
                 .content(rolestr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -107,5 +107,32 @@ public class UserControllerTest {
         result.andExpect(jsonPath("$.accessLevel[0].authority").value(role.getAuthority().name()));
 
     }
+    @Test
+    public void shouldReturnOkWhenRevokingUserAccessLevel() throws Exception {
+        Role role = new Role(1L, AccessLevel.ROLE_CLIENT);
 
+        String rolestr = objectMapper.writeValueAsString(role);
+
+        Mockito.when(userService.updateUserAccessLevel(any(), eq(1L), eq(false))).thenReturn(new UserDTO(user));
+
+        ResultActions result = mockMvc.perform(put("/user/permissions/revoke/1")
+                .content(rolestr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.username").value("userTest"));
+        result.andExpect(jsonPath("$.accessLevel").isEmpty());
+    }
+    @Test
+    public void shouldReturnOkWhenUpdatingUserIsEnabled() throws Exception {
+
+        Mockito.when(userService.updateUserIsEnable(eq(1L), eq(true))).thenReturn(new UserDTO(user));
+
+        ResultActions result = mockMvc.perform(put("/user/1/enable/true")
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.username").value("userTest"));
+    }
 }

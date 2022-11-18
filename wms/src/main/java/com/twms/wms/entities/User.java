@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
@@ -22,11 +23,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @Size(min = 3)
+    @NotNull(message = "User cannot be Null")
+    @Size(min = 3, max = 32)
     private String username;
+    @Size(min = 5, max = 128)
+    @NotNull(message = "Password cannot be Null")
     @NotBlank
-    @Size(min = 5)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

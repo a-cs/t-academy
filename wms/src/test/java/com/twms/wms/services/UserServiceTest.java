@@ -98,21 +98,31 @@ public class UserServiceTest {
     public void throwsExceptionWhenUserNotFoundById(){
 
         Assertions.assertThrows(EntityNotFoundException.class,
-                () ->userService.updateUserAccessLevel(new Role(),-1L));
+                () ->userService.updateUserAccessLevel(new Role(),-1L, true));
     }
     @Test
     public void returnUserDTOWithUpdatedAcessLevel(){
-        Long userId = 1L;
         Role role = new Role(1L, AccessLevel.ROLE_ADMIN);
 
         User userWithNewRole = new User();
         userWithNewRole.setAccessLevel(user.getAccessLevel());
 
-        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Mockito.when(roleRepository.findById(role.getId())).thenReturn(Optional.of(role));
         Mockito.when(userRepository.save(user)).thenReturn(user);
 
-        Assertions.assertEquals(new UserDTO(user), userService.updateUserAccessLevel(role, userId));
+        Assertions.assertEquals(new UserDTO(user), userService.updateUserAccessLevel(role, user.getId(), true));
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+
+    }
+    @Test
+    public void returnUserDTOWithUpdatedIsEnabled(){
+
+        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        Assertions.assertEquals(new UserDTO(user), userService.updateUserIsEnable(user.getId(), true));
 
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
 

@@ -6,6 +6,7 @@ import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
 import com.twms.wms.repositories.RoleRepository;
 import com.twms.wms.repositories.UserRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +29,12 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    @SneakyThrows
     @Transactional
     public UserDTO createUser(User user){
         boolean usernameExists = userRepository.findUserByUsername(user.getUsername()).isPresent();
         if(usernameExists){
-            throw new IllegalStateException("Username already registered.");
+            throw new SQLIntegrityConstraintViolationException("Username already registered.");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.addAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
@@ -52,7 +54,9 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO getUserByUsername(String username){
-        User user = (User) this.loadUserByUsername(username);
+        User user = userRepository.findUserByUsername(username).orElseThrow(
+                ()->new EntityNotFoundException("User " + username + " do not exist")
+        );
         return new UserDTO(user);
     }
 
@@ -62,14 +66,26 @@ public class UserService implements UserDetailsService {
         return userDTOList;
     }
 
-    public UserDTO updateUserAccessLevel(Role role, Long userId){
+    public UserDTO updateUserAccessLevel(Role role, Long userId, boolean isAdding){
         User savedUser = userRepository.findById(userId).orElseThrow(
                 ()->new EntityNotFoundException("User not found.")
         );
-        Role newRole = roleRepository.findById(role.getId()).orElseThrow(
+        Role thisRole = roleRepository.findById(role.getId()).orElseThrow(
                 ()->new EntityNotFoundException("Role with id:" + role.getId() +" do not exist.")
         );
-        savedUser.addAccessLevel(newRole);
+        if(isAdding){
+            savedUser.addAccessLevel(thisRole);
+        } else {
+            savedUser.revokeAccessLevel(thisRole);
+        }
+        return new UserDTO(userRepository.save(savedUser));
+    }
+
+    public UserDTO updateUserIsEnable(Long userId, boolean isActivating){
+        User savedUser = userRepository.findById(userId).orElseThrow(
+                ()->new EntityNotFoundException("User not found.")
+        );
+        savedUser.setEnabled(isActivating);
         return new UserDTO(userRepository.save(savedUser));
     }
 
