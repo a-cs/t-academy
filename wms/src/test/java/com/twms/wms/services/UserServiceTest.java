@@ -80,7 +80,7 @@ public class UserServiceTest {
     @Test
     public void throwsExceptionWhenUserNotFoundByUsername(){
 
-        Assertions.assertThrows(UsernameNotFoundException.class,
+        Assertions.assertThrows(EntityNotFoundException.class,
                 () ->userService.getUserByUsername("notRegisteredUsername"));
     }
 
