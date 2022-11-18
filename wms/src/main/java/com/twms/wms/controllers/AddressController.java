@@ -1,6 +1,5 @@
 package com.twms.wms.controllers;
 
-import com.twms.wms.dtos.AddressDTO;
 import com.twms.wms.entities.Address;
 import com.twms.wms.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +17,25 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @PostMapping("/")
-    public ResponseEntity<AddressDTO> post(@RequestBody @Valid AddressDTO address) {
+    @PostMapping
+    public ResponseEntity<Address> post(@RequestBody @Valid Address address) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.post(address));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<AddressDTO>> getAll() {
+    @GetMapping
+    public ResponseEntity<List<Address>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.getAll());
     }
 
     @GetMapping("/{addressId}")
-    public ResponseEntity<AddressDTO> getById(@PathVariable("addressId") Long addressId) {
+    public ResponseEntity<Address> getById(@PathVariable("addressId") Long addressId) {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.getById(addressId));
     }
 
     @PutMapping("/{addressId}")
-    public ResponseEntity<AddressDTO> put(@PathVariable("addressId") Long addressId,
-                                          @Valid @RequestBody AddressDTO addressDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(addressService.putById(addressId, addressDTO));
+    public ResponseEntity<Address> put(@PathVariable("addressId") Long addressId,
+                                       @Valid @RequestBody Address address) {
+        return ResponseEntity.status(HttpStatus.OK).body(addressService.putById(addressId, address));
     }
 
     @DeleteMapping("/{addressId}")

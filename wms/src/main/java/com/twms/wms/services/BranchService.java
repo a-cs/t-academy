@@ -1,0 +1,60 @@
+package com.twms.wms.services;
+
+import com.twms.wms.entities.Branch;
+import com.twms.wms.repositories.BranchRepository;
+import lombok.SneakyThrows;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class BranchService {
+    @Autowired
+    BranchRepository branchRepository;
+
+    @Autowired
+    AddressService addressService;
+
+    @SneakyThrows
+    @Transactional
+    public Branch createBranch(Branch branch){
+        List<Branch> branchesWithSameName = branchRepository.findByName(branch.getName());
+        if(branchesWithSameName.size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
+        if(addressService.getById(branch.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address does'nt exist!!");
+        return branchRepository.save(branch);
+    }
+
+    public List<Branch> readAllBranchs(){
+        return branchRepository.findAll();
+    }
+
+    public Branch readBranchById(Long branchId){
+        Optional<Branch> opt = branchRepository.findById(branchId);
+        Branch branch = opt.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
+        return branch;
+    }
+
+    public Branch updateBranch(Long branchId, Branch branch){
+        Branch oldBranch = this.readBranchById(branchId);
+        //oldBranch.setAddress(branch.getAddress());
+        oldBranch.setName(branch.getName());
+        oldBranch.setMax_rows(branch.getMax_rows());
+        oldBranch.setMax_columns(branch.getMax_columns());
+
+        return branchRepository.save(oldBranch);
+    }
+
+    @Transactional
+    public void deleteBranch(Long branchId){
+        Branch toDelete = this.readBranchById(branchId);
+        branchRepository.delete(toDelete);
+    }
+
+
+}

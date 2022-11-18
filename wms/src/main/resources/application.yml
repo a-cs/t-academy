@@ -1,10 +1,3 @@
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
-  datasource:
-    host: jdbc:mysql://localhost:3306
-    username: root
-    password: admin
-    url: jdbc:mysql://localhost:3306/twms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: test
