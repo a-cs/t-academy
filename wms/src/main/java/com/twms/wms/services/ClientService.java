@@ -2,11 +2,13 @@ package com.twms.wms.services;
 
 import com.twms.wms.entities.Client;
 import com.twms.wms.repositories.ClientRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +20,15 @@ public class ClientService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressService addressService;
+
+    @SneakyThrows
     @Transactional
     public Client saveClient(Client client){
+        if(clientRepository.findByCNPJ(client.getCNPJ()).size()>0) throw new SQLIntegrityConstraintViolationException("CNPJ is a unique field!!");
+        if(clientRepository.findByName(client.getName()).size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
+        if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
         return clientRepository.save(client);
     }
     public Client createClient(Client client){
