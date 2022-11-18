@@ -28,16 +28,6 @@ public class WarehouseSlotController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAll());
     }
 
-//    @GetMapping("/{branchId}/{aisleId}/{bayId}")
-//    public ResponseEntity<WarehouseSlotDTO> getByPK(@RequestParam("branchId") Long branchId,
-//                                                 @RequestParam("aisleId") String aisleId,
-//                                                 @RequestParam("bayId") int bayId) {
-//        System.out.println(branchId);
-//        System.out.println(aisleId);
-//        System.out.println(bayId);
-//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByPK(branchId, bayId, aisleId));
-//    }
-
     @GetMapping("/branch/{branchId}")
     public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId) {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(branchId));
@@ -63,7 +53,7 @@ public class WarehouseSlotController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId));
     }
 
-    @PutMapping
+    @PutMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
     public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlot ws,
                                                     @PathVariable("branchId") Long branchId,
                                                     @PathVariable("aisleId") String aisledId,

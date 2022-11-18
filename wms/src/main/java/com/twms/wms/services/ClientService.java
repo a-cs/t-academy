@@ -34,7 +34,7 @@ public class ClientService {
 
     public Client readClientById(Long clientId){
         Optional<Client> optionalClient = clientRepository.findById(clientId);
-        return optionalClient.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
+        return optionalClient.orElseThrow(()->new EntityNotFoundException("Client Not Created or Removed!!"));
     }
 
     public Client updateClient(Long clientId, Client client){
