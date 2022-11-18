@@ -13,12 +13,14 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class CategoryServiceTest {
@@ -73,6 +75,18 @@ public class CategoryServiceTest {
 
         Assertions.assertNotNull(service.readCategories());
         Mockito.verify(repository).findAll();
+    }
+
+    @Test
+    void shouldNotPutByInvalidId() {
+        Category category = new Category();
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> service.update(anyLong(), category)
+        );
+
+        verify(repository, times(0)).save(category);
     }
 
 }
