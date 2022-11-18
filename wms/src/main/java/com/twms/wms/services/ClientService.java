@@ -52,7 +52,7 @@ public class ClientService {
         oldClient.setAddress(client.getAddress());
         oldClient.setName(client.getName());
         oldClient.setCNPJ(client.getCNPJ());
-        oldClient.setUser(client.getUser());
+        //oldClient.setUser(client.getUser());
 
         return this.saveClient(oldClient);
     }
