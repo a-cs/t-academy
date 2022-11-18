@@ -3,6 +3,7 @@ package com.twms.wms.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.twms.wms.entities.Address;
 import com.twms.wms.services.AddressService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import javax.persistence.EntityNotFoundException;
 import java.awt.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,26 +39,95 @@ public class AddressControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    final Address address = new Address(1L,
-            "Rua João da Costa",
-            "999",
-            "Brasília",
-            "DF",
-            "7777777"
-    );
+    final Address address = new Address();
+
+    @BeforeEach
+    void setUp() {
+        address.setStreet("Rua João da Costa");
+        address.setNumber("999");
+        address.setCity("Brasília");
+        address.setState("DF");
+        address.setZipCode("01234567");
+    }
 
     @Test
-    public void contextLoads(){}
-
-    @Test
-    public void shouldReturnCreatedWhenCreatingNewAddress() throws Exception {
+    public void shouldReturnOkWhenAddressIsValid() throws Exception {
         String addressAsString = objectMapper.writeValueAsString(address);
-
         ResultActions result = mockMvc.perform(post("/address")
                 .content(addressAsString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+    }
 
+    @Test
+    public void shouldReturnBadRequestWhenStreetIsBlank() throws Exception {
+        address.setStreet("");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenNumberIsBlank() throws Exception {
+        address.setNumber("");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenStateIsOver2Characters() throws Exception {
+        address.setState("ABC");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenStateIsUnder2Characters() throws Exception {
+        address.setState("A");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenZipIsOver8Characters() throws Exception {
+        address.setZipCode("0123456789");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    public void shouldReturnBadRequestWhenZipIsUnder8Characters() throws Exception {
+        address.setZipCode("0123456");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenCityIsBlank() throws Exception {
+        address.setCity("");
+        String addressAsString = objectMapper.writeValueAsString(address);
+        ResultActions result = mockMvc.perform(post("/address")
+                        .content(addressAsString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -75,6 +146,16 @@ public class AddressControllerTest {
                 .andExpect(status().isOk());
     }
 
+
+    @Test
+    public void shouldReturnNotFoundWhenGettingByInvalidId() throws Exception {
+        Mockito.when(service.getById(anyLong())).thenThrow(EntityNotFoundException.class);
+
+        mockMvc.perform(get("/address/{addressId}", anyLong())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     @Test
     public void shouldReturnNoContentWhenDelettingByValidId() throws Exception {
         Mockito.when(service.getById(anyLong())).thenReturn(address);
@@ -82,7 +163,5 @@ public class AddressControllerTest {
         mockMvc.perform(delete("/address/{addressId}", anyLong())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-
     }
-
 }
