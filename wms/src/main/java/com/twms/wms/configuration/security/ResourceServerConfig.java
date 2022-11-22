@@ -38,6 +38,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         if(Arrays.asList(env.getActiveProfiles()).contains("test")){
             http
+                    .cors().and()
+                    .csrf().disable()
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
