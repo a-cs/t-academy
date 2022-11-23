@@ -1,6 +1,9 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
+import com.twms.wms.email.EmailSender;
+import com.twms.wms.email.EmailService;
+import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
@@ -17,7 +20,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,23 +33,42 @@ public class UserService implements UserDetailsService {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
+    ConfirmationTokenService confirmationTokenService;
+    @Autowired
+    EmailService emailSender;
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @SneakyThrows
     @Transactional
     public UserDTO createUser(User user){
         boolean usernameExists = userRepository.findUserByUsername(user.getUsername()).isPresent();
+        boolean emailExists = userRepository.findUserByEmail(user.getEmail()).isPresent();
         if(usernameExists){
-            throw new SQLIntegrityConstraintViolationException("Username already registered.");
+            throw new SQLIntegrityConstraintViolationException("Username already taken.");
+        } else if(emailExists){
+            throw new SQLIntegrityConstraintViolationException("Email already registered.");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.addAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(2),
+                savedUser
+        );
+        emailSender.send(user.getEmail(),
+                "<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
         return new UserDTO(savedUser);
     }
 
-    public User createClientUser(String username){
+    public User createClientUser(String username, String clientEmail){
         User clientUser = new User();
         clientUser.setUsername(username);
+        clientUser.setEmail(clientEmail);
         //TODO: Auto generate random password
         String clientPassword = username;
         clientUser.setPassword(clientPassword);
@@ -87,6 +111,23 @@ public class UserService implements UserDetailsService {
         );
         savedUser.setEnabled(isActivating);
         return new UserDTO(userRepository.save(savedUser));
+    }
+
+//    public String verificationEmailSender(){
+//        return "ok";
+//    }
+
+    public String userConfirmation(String token){
+        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
+        if (confirmationToken.getConfirmedAt() != null){
+            throw new IllegalArgumentException("Email has already been confirmed");
+        }
+        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("Token has expired");
+        }
+        confirmationToken.setConfirmedAt(LocalDateTime.now());
+        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
+        return "User has been confirmed";
     }
 
     @Override

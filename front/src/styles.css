@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #E20074;
+    --secondary-color: #FBD9EA;
+    --background-color: white;
+    --text-tittle-color: white;
+    --border-color: #D9D9D9;
+    --text-primary-color: black;
+    --text-secondary-color: #9B9B9B;
+    --footer-color: #383838;
+
+}
+
+html, body {
+    background-color: var(--color-background);
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+.capitalize {
+    display: inline-block;
+}
+
+.capitalize::first-letter {
+    text-transform: capitalize;
+}

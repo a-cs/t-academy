@@ -1,0 +1,22 @@
+footer{
+    width: 100%;
+    height: 10vh;
+    background-image: url("../../../assets/images/footer_background.jpg");
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+}
+
+.logo{
+    color: white;
+    font-size: 5rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+nav{
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
+}

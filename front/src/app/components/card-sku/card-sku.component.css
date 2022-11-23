@@ -1,0 +1,49 @@
+
+.card{
+    border: 4px var(--border-color) solid;
+    margin: 16px 8px;
+    min-width: 300px;
+    max-width: 450px;
+    height: 300px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* flex: 0 0 300px; */
+}
+
+.card .title{
+    margin: 1rem 0;
+    font-size: 2rem;
+    line-height: 3.25rem;
+    text-align: center;
+    color: var(--primary-color);
+    width: 85%;
+    border: 3px var(--primary-color) solid;
+    border-radius: 32px;
+    padding: 8px 0px;
+}
+
+.left {
+    color: var(--text-secondary-color);
+    font-size: 1.2rem;
+    align-self: flex-start;
+    margin: 0 1rem;
+}
+
+.left p{
+    margin-bottom: 0.5rem;
+}
+
+.card button {
+    color: var(--text-tittle-color);
+    width: 85%;
+    height: 12%;
+    background-color: var(--primary-color);
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 32px;
+    margin: 8px 12px;
+}
+

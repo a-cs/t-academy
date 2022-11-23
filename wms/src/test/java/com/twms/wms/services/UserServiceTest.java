@@ -1,6 +1,8 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
+import com.twms.wms.email.EmailSender;
+import com.twms.wms.email.EmailService;
 import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -44,6 +47,7 @@ public class UserServiceTest {
         user = new User();
         user.setId(1L);
         user.setUsername("userTest");
+        user.setEmail("user@email.com");
         user.setPassword("passwordTest");
         user.addAccessLevel(clientRole);
 
@@ -72,8 +76,8 @@ public class UserServiceTest {
         clientUser.setAccessLevel(user.getAccessLevel());
         Mockito.when(userRepository.save(clientUser)).thenReturn(user);
 
-        Assertions.assertNotNull(userService.createClientUser(user.getUsername()));
-        Assertions.assertEquals(User.class,userService.createClientUser(user.getUsername()).getClass());
+        Assertions.assertNotNull(userService.createClientUser(user.getUsername(), user.getEmail()));
+        Assertions.assertEquals(User.class,userService.createClientUser(user.getUsername(), user.getEmail()).getClass());
         Mockito.verify(userRepository, Mockito.times(2)).save(any(User.class));
     }
 
