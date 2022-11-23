@@ -41,6 +41,7 @@ public class ClientServiceTest {
 
         client.setName("Teste");
         client.setCNPJ("00623904000173");
+        client.setEmail("client@email.com");
 
         User user = new User();
         user.setUsername("userTest");
@@ -51,7 +52,7 @@ public class ClientServiceTest {
 
         client.setAddress(address);
 
-        Mockito.when(userService.createClientUser(client.getCNPJ())).thenReturn(user);
+        Mockito.when(userService.createClientUser(client.getCNPJ(), client.getEmail())).thenReturn(user);
 
         Mockito.when(repository.findByCNPJ(client.getCNPJ())).thenReturn(new ArrayList<Client>());
 

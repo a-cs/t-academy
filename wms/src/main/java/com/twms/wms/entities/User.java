@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +27,9 @@ public class User implements UserDetails {
     @NotNull(message = "User cannot be Null")
     @Size(min = 3, max = 32)
     private String username;
+    @NotNull
+    @Email
+    private String email;
     @Size(min = 5, max = 128)
     @NotNull(message = "Password cannot be Null")
     @NotBlank
@@ -37,7 +41,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> accessLevel = new HashSet<>();
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     public User() {
     }
@@ -46,6 +50,7 @@ public class User implements UserDetails {
         this.username = userDTO.getUsername();
         this.id = userDTO.getId();
         this.accessLevel = userDTO.getAccessLevel();
+        this.email = userDTO.getEmail();
     }
 
     public void addAccessLevel(Role role){

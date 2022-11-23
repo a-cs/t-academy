@@ -3,6 +3,7 @@ package com.twms.wms.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -18,6 +19,10 @@ public class Client {
     @NotBlank
     @Pattern(regexp="\\d{14}")
     private String CNPJ;
+
+    @NotBlank(message = "Email must bot be blank!")
+    @Email
+    private String email;
 
     @OneToOne
     @JoinColumn(name = "address_id")

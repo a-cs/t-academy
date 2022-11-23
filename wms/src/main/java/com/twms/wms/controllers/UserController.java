@@ -48,4 +48,9 @@ public class UserController {
                                                   @PathVariable("enabled") boolean enabled){
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserIsEnable(userId, enabled));
     }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmUserEmail(@RequestParam("token") String token){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
+    }
 }
