@@ -32,7 +32,7 @@ public class ClientService {
     @SneakyThrows
     public Client createClient(Client client){
 
-        client.setUser(userService.createClientUser(client.getCNPJ()));
+        client.setUser(userService.createClientUser(client.getCNPJ(), client.getEmail()));
         if(clientRepository.findByCNPJ(client.getCNPJ()).size()>0) throw new SQLIntegrityConstraintViolationException("CNPJ is a unique field!!");
         if(clientRepository.findByName(client.getName()).size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
         if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
@@ -54,6 +54,7 @@ public class ClientService {
         //oldClient.setAddress(client.getAddress());
         oldClient.setName(client.getName());
         oldClient.setCNPJ(client.getCNPJ());
+        oldClient.setEmail(client.getEmail());
         //oldClient.setUser(client.getUser());
 
         return this.saveClient(oldClient);
