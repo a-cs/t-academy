@@ -1,11 +1,11 @@
 <div class="card">
     <div class="title">
-        <p>Nome Grandão</p>
+        <p class="capitalize">{{sku.name || ""}}</p>
     </div>
     <div class="left">
-        <p><b>Description:</b> Descript ionDescri ptionDesc riptionDescription Description </p>
-        <p><b>Category: Food</b> </p>
-        <p><b>Unit: KG</b> </p>
+        <p><b>Description: </b> <span class="capitalize">{{sku.name || ""}}</span> </p>
+        <p><b>Category: </b><span class="capitalize">{{sku.category.name || ""}}</span> </p>
+        <p><b>Unit: </b><span class="capitalize">{{sku.measurementUnit.symbol || ""}}</span> </p>
     </div>
     <button>Show More</button>
 </div>
