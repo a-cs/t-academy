@@ -1,14 +1,16 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import ISku from 'src/app/interfaces/ISku';
+import { ModalUpdateSkuComponent } from 'src/app/modal-update-sku/modal-update-sku.component';
 import { capitalize } from 'src/app/utils/functions';
 @Component({
   selector: 'app-card-sku',
   templateUrl: './card-sku.component.html',
   styleUrls: ['./card-sku.component.css']
 })
-export class CardSkuComponent implements OnInit {
+export class CardSkuComponent {
 
- 
+
  @Input() sku: ISku ={
   name: "",
   category: {
@@ -22,13 +24,18 @@ export class CardSkuComponent implements OnInit {
   }
 
 }
- 
-  constructor() { }
 
-  ngOnInit(): void {
-   
-  }
+constructor(public dialog: MatDialog) {}
 
-  
-   
+openDialog(sku : ISku) {
+  console.log(sku)
+  const dialogRef = this.dialog.open(ModalUpdateSkuComponent,{
+    width: "400px",
+    height: "400px",
+    data:sku
+  });
+
+}
+
+
 }
