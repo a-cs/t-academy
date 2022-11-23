@@ -24,6 +24,10 @@
     padding: 8px 0px;
 }
 
+.title p {
+  margin: 0;
+}
+
 .left {
     color: var(--text-secondary-color);
     font-size: 1.2rem;

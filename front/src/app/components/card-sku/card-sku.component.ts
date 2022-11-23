@@ -30,8 +30,8 @@ constructor(public dialog: MatDialog) {}
 openDialog(sku : ISku) {
   console.log(sku)
   const dialogRef = this.dialog.open(ModalUpdateSkuComponent,{
-    width: "400px",
-    height: "400px",
+    width: "600px",
+    height: "600px",
     data:sku
   });
 
