@@ -30,7 +30,7 @@ nav{
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: repeat(1, 100%);
     align-items: center;
-   justify-items: center;
+    justify-items: center;
 }
 
 .grid-footer-title{
@@ -54,4 +54,40 @@ ul, ul li{
 
 ul li:last-child{
     margin-right: 0;
+}
+
+@media (max-width: 650px){
+    footer{
+        height: 40vh;
+        display: grid;
+        grid-template-columns: repeat(1, 100%);
+        grid-template-rows: repeat(2, 50%);
+    }
+
+    nav{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    li:first-child{
+        margin-left: 8px;
+    }
+
+    ul{
+        grid-column-start: 1;
+        grid-row-start: 2;
+        grid-row-end: 2;
+    }
+
+
+}
+
+
+
+@media (min-width:651px) and (max-width:1001px){
+    nav{
+        width: 50%;
+    }
 }
