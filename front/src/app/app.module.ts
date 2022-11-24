@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CardSkuComponent } from './components/card-sku/card-sku.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalUpdateSkuComponent } from './modal-update-sku/modal-update-sku.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -16,14 +20,18 @@ import { CardSkuComponent } from './components/card-sku/card-sku.component';
     ProductComponent,
     HeaderComponent,
     FooterComponent,
-    CardSkuComponent
+    CardSkuComponent,
+    ModalUpdateSkuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
