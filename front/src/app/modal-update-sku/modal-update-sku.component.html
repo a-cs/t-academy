@@ -14,24 +14,35 @@
            matInput
            name="selectedCategoryId"
            formControlName="category"
-           [matAutocomplete]="auto"
+           [matAutocomplete]="categoryAutoComplete"
            (blur)="categoryFallback()"
            >
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-autocomplete #categoryAutoComplete="matAutocomplete" [displayWith]="displayCategory">
       <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
         {{category.name}}
       </mat-option>
     </mat-autocomplete>
   </div>
 
-  <!-- <div class="row">
+  <div class="row">
     <label for="unit">Unit</label>
-    <input type="text" placeholder="Type a unit" name="unit" formControlName="measurementUnit">
-  </div> -->
+    <input type="text"
+     placeholder="Type a unit"
+     name="unit"
+     formControlName="measurementUnit"
+     [matAutocomplete]="unitAutoComplete"
+     (blur)="unitFallback()"
+     >
+    <mat-autocomplete #unitAutoComplete="matAutocomplete" [displayWith]="displayUnit">
+      <mat-option *ngFor="let unit of filteredUnits | async" [value]="unit">
+        {{unit.description}} - {{unit.symbol}}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
 
   <div class="buttons">
     <button mat-dialog-close>Cancel</button>
-    <button>Update</button>
+    <button [disabled]="form.invalid">Update</button>
   </div>
   {{data.name}}
 </form>

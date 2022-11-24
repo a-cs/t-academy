@@ -1,51 +1,53 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from "@angular/material/dialog"
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"
 import ICategory from '../interfaces/ICategory';
 import IMeasurementUnit from '../interfaces/IMeasurementUnit';
 import ISku from '../interfaces/ISku';
 import { CategoryService } from '../service/category.service';
 import { MeasurementUnitService } from '../service/measurement-unit.service';
-import {filter, map, startWith} from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { filter, map, startWith } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocomplete } from '@angular/material/autocomplete';
+import { SkuService } from '../service/sku.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-modal-update-sku',
   templateUrl: './modal-update-sku.component.html',
   styleUrls: ['./modal-update-sku.component.css']
 })
-export class ModalUpdateSkuComponent {
+export class ModalUpdateSkuComponent{
   form: FormGroup
   sku: ISku
   categories: ICategory[]
-  filteredCategories: Observable<ICategory[]>;
   units: IMeasurementUnit[]
-  selectedCategory: ICategory
-  selectedUnit: IMeasurementUnit
-  @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete
+  filteredCategories: Observable<ICategory[]>;
+  filteredUnits: Observable<IMeasurementUnit[]>;
+  firstCategory: ICategory;
+  firstUnit: IMeasurementUnit;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ISku,
-  private categoryService: CategoryService,
-  private measurementUnitService: MeasurementUnitService,
-  private formBuilder: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA)
+    public data: ISku,
+    private router: Router,
+    private categoryService: CategoryService,
+    private measurementUnitService: MeasurementUnitService,
+    private skuService: SkuService,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<ModalUpdateSkuComponent>
   ) {
 
     this.sku = Object.assign({}, this.data)
-    this.selectedCategory = Object.assign({}, this.sku.category)
-    this.selectedUnit = Object.assign({}, this.sku.measurementUnit)
   }
 
   ngOnInit(): void {
     this.categoryService.get().subscribe(
       res => {
         this.categories = res
-        console.log(this.categories)
       }
     )
     this.measurementUnitService.get().subscribe(
       res => {
         this.units = res
-        console.log(this.units)
       }
     )
 
@@ -53,55 +55,67 @@ export class ModalUpdateSkuComponent {
 
     this.filteredCategories = this.form.controls["category"].valueChanges.pipe(
       map((value: any) => {
-        // console.log(value)
         const name = value = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.categories.slice();
+        return name ? this._filterCategoiries(name as string) : this.categories.slice();
       }),
-      );
+    );
 
-    console.log("selectedCategory", this.selectedCategory)
+    this.filteredUnits = this.form.controls["measurementUnit"].valueChanges.pipe(
+      map((value: any) => {
+        const str = value = typeof value === 'string' ? value : value?.description;
+        return str ? this._filterUnits(str as string) : this.units.slice();
+      }),
+    );
+
+    this.filteredCategories.subscribe(ele => this.firstCategory=ele[0])
+
+    this.filteredUnits.subscribe(ele => this.firstUnit=ele[0])
   }
 
-  private _filter(name: string): ICategory[] {
+  private _filterCategoiries(name: string): ICategory[] {
     const filterValue = name.toLowerCase();
-
     return this.categories.filter(category => category.name?.toLowerCase().includes(filterValue));
+  }
+
+  private _filterUnits(description: string): IMeasurementUnit[] {
+    const filterValue = description.toLowerCase().replace(" ", "").split("-");
+    return this.units.filter(unit => (unit.description?.toLowerCase().includes(filterValue[0]) || unit.symbol?.toLowerCase().includes(filterValue[0])));
   }
 
   configureForm() {
     this.form = this.formBuilder.group({
-      name: [this.sku.name, null],
-      category: [this.sku.category, null],
-      measurementUnit: [this.sku.measurementUnit, null]
+      name: [this.sku.name, [Validators.required]],
+      category: [this.sku.category, [Validators.required]],
+      measurementUnit: [this.sku.measurementUnit, [Validators.required]]
     })
   }
 
-  categoryFallback() {
-    console.log("cat", this.form.value.category)
-    // this.matAutocomplete.options.first.select();
-    let filtered
-    this.filteredCategories.subscribe(category => {
-      console.log("fcat",category)
-      filtered = category
-    })
-    console.log("filtered",filtered)
-    console.log("cat atualizado", this.form.value.category)
-    // this.form.value.category = this.filteredCategories[0]
 
-  }
-
-  validate(){
-    // if(typeof this.form.value.category === 'string')
-    //   return false
-    // return true
-  }
-  update() {
-    console.log(this.form.value)
-    console.log("selecedCategoryId", this.selectedCategory)
-  }
-
-  displayFn(category: ICategory): string {
+  displayCategory(category: ICategory): string {
     return category && category.name ? category.name : '';
   }
 
+  displayUnit(unit: IMeasurementUnit): string {
+    return unit && unit.description ? `${unit.description} - ${unit.symbol}` : '';
+  }
+
+  categoryFallback() {
+    console.log("cat", this.firstCategory)
+    this.form.controls['category'].setValue(this.firstCategory)
+  }
+
+  unitFallback() {
+    console.log("unit", this.firstUnit)
+    this.form.controls['measurementUnit'].setValue(this.firstUnit)
+  }
+
+  update() {
+    console.log(this.form.value)
+    console.log("form error", this.form.errors)
+    const newSku: ISku = { id: this.sku.id, name: this.form.value.name, category: this.form.value.category, measurementUnit: this.form.value.measurementUnit }
+    this.skuService.update(this.sku.id as number, newSku).subscribe(response =>{window.location.reload()}, error =>  {console.log("err!",error)})
+
+    // this.dialogRef.close(newSku)
+    // window.location.reload()
+  }
 }

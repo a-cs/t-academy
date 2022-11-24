@@ -22,6 +22,7 @@ export class SkuService {
   }
 
   update(id:number, data: ISku){
+    console.log("json!",data)
     return this.http.put<ISku>(`http://localhost:8080/sku/${id}`, data)
   }
 

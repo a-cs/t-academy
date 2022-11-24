@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import ISku from 'src/app/interfaces/ISku';
 import { ModalUpdateSkuComponent } from 'src/app/modal-update-sku/modal-update-sku.component';
 @Component({
@@ -24,7 +25,8 @@ export class CardSkuComponent {
 
 }
 
-constructor(public dialog: MatDialog) {}
+constructor(public dialog: MatDialog,
+  private router: Router ) {}
 
 openDialog(sku : ISku) {
   console.log(sku)
@@ -33,6 +35,14 @@ openDialog(sku : ISku) {
     height: "600px",
     data:sku
   });
+  dialogRef.afterClosed().subscribe(
+    data => {
+      console.log("sku1", sku)
+      sku = data
+      console.log("sku2", sku)
+      this.router.navigate(["/product"])
+    }
+)
 
 }
 
