@@ -1,6 +1,8 @@
 <app-header></app-header>
 <div class="container">
-    <h1>Barra de pesquisa</h1>
+    <div class="search-bar">
+        <app-search-bar></app-search-bar>
+    </div>
     <div class="cards">
         <app-card-create-sku></app-card-create-sku>
         <app-card-sku *ngFor="let sku of skus" [sku]="sku"></app-card-sku>

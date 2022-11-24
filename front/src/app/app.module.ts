@@ -14,7 +14,7 @@ import { ModalUpdateSkuComponent } from './modal-update-sku/modal-update-sku.com
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
