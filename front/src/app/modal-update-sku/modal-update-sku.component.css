@@ -52,6 +52,10 @@ form input {
 
 }
 
+form input:focus-visible{
+  border: 2px var(--secondary-color) solid;
+}
+
 .buttons {
   margin-top: 2rem;
   width: 100%;
