@@ -9,12 +9,12 @@ import { SkuService } from 'src/app/service/sku.service';
 })
 export class ProductComponent implements OnInit {
   skus: ISku[] = []
-  constructor(private service:SkuService) {
+  constructor(private skuService:SkuService) {
 
   }
 
   ngOnInit(): void {
-    this.service.get().subscribe(
+    this.skuService.get().subscribe(
       data => {
         this.skus = data
         console.log(this.skus)
