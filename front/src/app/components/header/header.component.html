@@ -1,11 +1,19 @@
 <header>
     <div class="logo">T-WMS</div>
-    <nav>
+    
+    <div class="menu" [class.is-open] = "isMenuOpen">
         <ul>
-            <li>Texto</li>
-            <li>Texto</li>
-            <li>Texto</li>
-            <li>Texto</li>
+            <a href="#"><li class="item">Home</li></a>
+            <div class="line"></div>
+            <li class="item">Sku</li>
+            <div class="line"></div>
+            <li class="item">Texto</li>
+            <div class="line"></div>
+            <li class="item">Sign out</li>
         </ul>
-    </nav>
+    </div>
+    <div class="burguer" (click)="toggleMenu()">
+        <i class="material-icons">{{ isMenuOpen ? "close" : "menu"}}</i>
+    </div>
+
 </header>
