@@ -1,6 +1,7 @@
 package com.twms.wms.controllers;
 
 import com.twms.wms.entities.MeasurementUnit;
+import com.twms.wms.entities.SKU;
 import com.twms.wms.services.MeasurementUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/measurement-unit")
@@ -19,6 +21,10 @@ public class MeasurementUnitController {
     MeasurementUnitService measurementUnitService;
 
     @GetMapping
+    public ResponseEntity<List<MeasurementUnit>> read() {
+        return ResponseEntity.status(HttpStatus.OK).body(measurementUnitService.read());
+    }
+    @GetMapping("/pages")
     public ResponseEntity<Page<MeasurementUnit>> read(Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(measurementUnitService.read(pageable));
     }

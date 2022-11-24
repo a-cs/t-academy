@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +21,9 @@ public class MeasurementUnitService {
         return  measurementUnitRepository.findAll(pageable);
     }
 
+    public List<MeasurementUnit> read() {
+        return measurementUnitRepository.findAll();
+    }
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
         return measurementUnitRepository.save(measurementUnit);
