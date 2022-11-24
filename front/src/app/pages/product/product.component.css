@@ -1,5 +1,5 @@
 .container{
-    min-height: 80vh;
+    min-height: 78vh;
     width: 100%;
     
 }
@@ -12,4 +12,8 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+}
+
+.search-bar{
+    margin-top: 2vh;
 }

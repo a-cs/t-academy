@@ -7,6 +7,7 @@ header{
     align-items: center;
     justify-content: space-between;
     padding: 0 3rem;
+   
 }
 
 .logo{
@@ -14,4 +15,60 @@ header{
     font-size: 5rem;
     font-weight: bold;
     white-space: nowrap;
+}
+
+.burguer{
+    cursor: pointer;   
+}
+
+.material-icons{
+    font-size: 3rem;
+}
+
+.line{
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    margin-bottom: 2rem;
+}
+
+ul{
+    list-style-type: none;
+}
+
+@media (min-width: 0px) {
+    .menu{
+        display: none;
+        text-align: center; 
+    }
+
+    .menu.is-open{
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 10vh;
+        height: 50%;
+        width: 30%;
+        background-color: var(--primary-color);
+        border-radius: 0 0 0 32px;
+        color: var(--text-primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 8px 8px 200px 10px rgba(0,0,0,0.2);
+    }
+
+    .menu.is-open li{
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: white;
+    }
+
+    @media (max-width: 1000px) {
+        .menu.is-open{
+            height: 90%;
+            width: 75%;
+        }
+    }
+ 
 }

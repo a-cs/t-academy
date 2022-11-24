@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalUpdateSkuComponent } from './modal-update-sku/modal-update-sku.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {MatIconModule} from '@angular/material/icon';
     HeaderComponent,
     FooterComponent,
     CardSkuComponent,
-    ModalUpdateSkuComponent
+    ModalUpdateSkuComponent,
+    CardCreateSkuComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
