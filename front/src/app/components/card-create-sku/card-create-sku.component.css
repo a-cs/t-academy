@@ -13,12 +13,19 @@
 
 .center{
     margin: auto;
+    border: 4px var(--primary-color) solid;
+    border-radius: 32px;
 }
 
 i{
     font-size: 14rem;
     color: var(--primary-color);
     font-weight: lighter;
+}
+
+.card:hover{
+    cursor: pointer;
+    background-color: var(--secondary-color);
 }
 
 .card:hover{

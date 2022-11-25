@@ -1,5 +1,5 @@
 <div class="search-wrapper">
-    <input type="search" placeholder="Search here ...">
+    <input type="search" [(ngModel)]="enteredSearchValue" placeholder="Search here ..." (input)="onSearchTextChanged()">
     <span>
         <i class="material-icons">search</i>
     </span>
