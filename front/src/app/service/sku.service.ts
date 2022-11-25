@@ -20,12 +20,13 @@ export class SkuService {
   delete(id:number){
     return this.http.delete(`http://localhost:8080/sku/${id}`)
   }
-  
-  update(id:number, dados: ISku){
-    return this.http.put<ISku>(`http://localhost:8080/sku/${id}`, dados)
+
+  update(id:number, data: ISku){
+    console.log("json!",data)
+    return this.http.put<ISku>(`http://localhost:8080/sku/${id}`, data)
   }
-  
-  create(dados:ISku){
-    return this.http.post<ISku>("http://localhost:8080/sku",dados)
+
+  create(data:ISku){
+    return this.http.post<ISku>("http://localhost:8080/sku",data)
   }
 }

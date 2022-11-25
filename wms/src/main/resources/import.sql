@@ -15,3 +15,18 @@ insert into tb_user_roles(user_id, role_id) values (2, 2)
 insert into tb_user_roles(user_id, role_id) values (3, 3)
 insert into tb_user_roles(user_id, role_id) values (4, 4)
 insert into tb_user_roles(user_id, role_id) values (5, 5)
+
+insert into measurement_unit (description,symbol) values ("kilogram", "kg")
+insert into measurement_unit (description,symbol) values  ("liters", "l")
+insert into measurement_unit (description,symbol) values ("unit", "un")
+
+insert into category (name) values ("food")
+insert into category (name) values ("beverages")
+insert into category (name) values ("clothes")
+
+insert into sku (name, category_id, measurement_unit_id) values ("corn", 1, 1)
+insert into sku (name, category_id, measurement_unit_id) values ("rice", 1, 1)
+insert into sku (name, category_id, measurement_unit_id) values ("beans", 1, 1)
+insert into sku (name, category_id, measurement_unit_id) values ("coke", 2, 3)
+insert into sku (name, category_id, measurement_unit_id) values ("fanta", 2, 3)
+insert into sku (name, category_id, measurement_unit_id) values ("pepsi", 2, 3)
