@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,5 +50,10 @@ public class SKUService {
     public void delete(Long id){
         SKU s = this.findById(id);
         skuRepository.delete(s);
+    }
+
+    public List<SKU> searchTerm(String searchTerm){
+        String terms = searchTerm.replace("-", " ");
+        return skuRepository.findByNameContainingIgnoreCase(terms);
     }
 }
