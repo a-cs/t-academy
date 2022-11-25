@@ -7,7 +7,10 @@ header{
     align-items: center;
     justify-content: space-between;
     padding: 0 3rem;
-    z-index: 9999;
+}
+
+a{
+    cursor: pointer;
 }
 
 .logo{
@@ -19,10 +22,11 @@ header{
 
 .burguer{
     cursor: pointer;
+    color: var(--background-color);
 }
 
 .material-icons{
-    font-size: 3rem;
+    font-size: 5rem;
 }
 
 .line{
