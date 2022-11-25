@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalAddSkuComponent } from 'src/app/modal-add-sku/modal-add-sku.component';
+import { ModalAddSkuComponent } from 'src/app/components/modal-add-sku/modal-add-sku.component';
 
 @Component({
   selector: 'app-card-create-sku',

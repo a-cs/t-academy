@@ -19,7 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { ModalAddSkuComponent } from './modal-add-sku/modal-add-sku.component';
+import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ModalAddSkuComponent } from './modal-add-sku/modal-add-sku.component';
     ModalConfirmComponent,
     CardCreateSkuComponent,
     SearchBarComponent,
-    ModalAddSkuComponent
+    ModalAddSkuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

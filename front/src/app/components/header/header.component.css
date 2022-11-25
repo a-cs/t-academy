@@ -7,7 +7,7 @@ header{
     align-items: center;
     justify-content: space-between;
     padding: 0 3rem;
-   
+    z-index: 9999;
 }
 
 .logo{
@@ -18,7 +18,7 @@ header{
 }
 
 .burguer{
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .material-icons{
@@ -36,10 +36,14 @@ ul{
     list-style-type: none;
 }
 
+ul a {
+  cursor: pointer;
+}
+
 @media (min-width: 0px) {
     .menu{
         display: none;
-        text-align: center; 
+        text-align: center;
     }
 
     .menu.is-open{
@@ -70,5 +74,5 @@ ul{
             width: 75%;
         }
     }
- 
+
 }

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import ICategory from '../interfaces/ICategory';
-import IMeasurementUnit from '../interfaces/IMeasurementUnit';
-import ISku from '../interfaces/ISku';
-import { CategoryService } from '../service/category.service';
-import { MeasurementUnitService } from '../service/measurement-unit.service';
-import { SkuService } from '../service/sku.service';
+import ICategory from '../../interfaces/ICategory';
+import IMeasurementUnit from '../../interfaces/IMeasurementUnit';
+import ISku from '../../interfaces/ISku';
+import { CategoryService } from '../../service/category.service';
+import { MeasurementUnitService } from '../../service/measurement-unit.service';
+import { SkuService } from '../../service/sku.service';
 
 @Component({
   selector: 'app-modal-add-sku',
