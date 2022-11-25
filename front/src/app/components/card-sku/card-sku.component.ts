@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import {MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import ISku from 'src/app/interfaces/ISku';
-import { ModalUpdateSkuComponent } from 'src/app/modal-update-sku/modal-update-sku.component';
+import { ModalUpdateSkuComponent } from 'src/app/components/modal-update-sku/modal-update-sku.component';
 @Component({
   selector: 'app-card-sku',
   templateUrl: './card-sku.component.html',

@@ -10,14 +10,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CardSkuComponent } from './components/card-sku/card-sku.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ModalUpdateSkuComponent } from './modal-update-sku/modal-update-sku.component';
+import { ModalUpdateSkuComponent } from './components/modal-update-sku/modal-update-sku.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
-import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ModalAddSkuComponent } from './modal-add-sku/modal-add-sku.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     ModalUpdateSkuComponent,
     ModalConfirmComponent,
     CardCreateSkuComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ModalAddSkuComponent
   ],
   imports: [
     BrowserModule,

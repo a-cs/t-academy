@@ -121,3 +121,7 @@ form input:focus-visible{
 .buttons .sucessButton:hover{
   background-color: var(--sucess-color-lighter);
 }
+
+.buttons .sucessButton:disabled{
+  background-color: var(--text-secondary-color);
+}

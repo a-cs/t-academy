@@ -9,6 +9,7 @@
     flex-direction: column;
     align-items: center;
     transition: 0.2s all;
+    background-color: transparent;
 }
 
 .center{
