@@ -16,6 +16,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     FooterComponent,
     CardSkuComponent,
     ModalUpdateSkuComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    CardCreateSkuComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,

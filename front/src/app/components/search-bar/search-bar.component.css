@@ -1,0 +1,39 @@
+.search-wrapper{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+input {
+    width: 60%;
+    height: 32px;
+    border-radius: 32px 0 0 32px;
+    border: 2px solid black;
+    border-right: 0;
+    padding: 16px;
+}
+
+input:focus{
+    border-right: 0;
+}
+
+span{
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: repeat(1, 100%);
+}
+
+i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    border-radius: 0px 32px 32px 0px;
+    border: 2px solid black;
+    padding: 16px;
+    background-color: var(--primary-color);
+}
+
+.icon{
+    margin: auto;
+}
