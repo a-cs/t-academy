@@ -9,10 +9,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ModalConfirmComponent{
 
   constructor(@Inject(MAT_DIALOG_DATA)
-  public obs: any) { }
+  public data: any) { }
 
   buttonPressed(){
-    // console.log(this.obs.obs)
-    this.obs.obs.subscribe((response:any) => { window.location.reload() }, (error:any) => { console.log("err!", error) })
+    // console.log(this.data)
+    this.data.subscribe((response:any) => { window.location.reload() }, (error:any) => { console.log("err!", error) })
   }
 }

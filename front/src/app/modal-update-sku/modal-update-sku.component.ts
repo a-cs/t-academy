@@ -68,9 +68,15 @@ export class ModalUpdateSkuComponent {
       }),
     );
 
+    this.firstCategory = this.sku.category
+
+    this.firstUnit = this.sku.measurementUnit
+
     this.filteredCategories.subscribe(ele => this.firstCategory = ele[0])
 
     this.filteredUnits.subscribe(ele => this.firstUnit = ele[0])
+
+
   }
 
   private _filterCategoiries(name: string): ICategory[] {
@@ -124,9 +130,8 @@ export class ModalUpdateSkuComponent {
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       width: "600px",
       height: "600px",
-      data: {
-        obs: this.skuService.delete(this.sku.id as number)
-      }
+      data: this.skuService.delete(this.sku.id as number)
+
     });
   }
 }

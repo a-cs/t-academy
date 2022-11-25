@@ -52,6 +52,12 @@
   margin: 0;
 }
 
+.middle {
+  text-align: center;
+  font-size: 2rem;
+  line-height: 3.25rem;
+}
+
 .buttons {
   width: 100%;
   display: flex;
