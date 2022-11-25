@@ -19,5 +19,5 @@ export class SearchBarComponent implements OnInit {
 
   onSearchTextChanged(){
     this.searchTextChanged.emit(this.enteredSearchValue);
-  }
+  } // Modified with endpoint use this ->[onSearchTextEntered]
 }

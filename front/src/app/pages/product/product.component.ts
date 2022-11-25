@@ -26,6 +26,6 @@ export class ProductComponent implements OnInit {
 
   onSearchTextEntered(searchValue: string){
     this.searchText = searchValue;
-    console.log(this.searchText);
+    this.skuService.getByLikeName(this.searchText).subscribe(data => this.skus = data)
   }
 }

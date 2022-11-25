@@ -9,6 +9,10 @@ export class SkuService {
 
   constructor(private http: HttpClient) { }
 
+  getByLikeName(name:string){
+    return this.http.get<ISku[]>(`http://localhost:8080/sku/search?term=${name}`)
+  }
+
   get(){
     return this.http.get<ISku[]>("http://localhost:8080/sku")
   }

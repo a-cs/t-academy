@@ -6,11 +6,13 @@
 
 input {
     width: 60%;
-    height: 32px;
+    height: 4rem;
     border-radius: 32px 0 0 32px;
     border: 2px solid black;
     border-right: 0;
+    font-size: 2rem;
     padding: 16px;
+    padding-left: 2rem;
 }
 
 input:focus{
@@ -27,7 +29,7 @@ i{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 32px;
+    height: 4rem;
     border-radius: 0px 32px 32px 0px;
     border: 2px solid black;
     padding: 16px;
