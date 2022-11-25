@@ -1,15 +1,15 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog"
-import ICategory from '../interfaces/ICategory';
-import IMeasurementUnit from '../interfaces/IMeasurementUnit';
-import ISku from '../interfaces/ISku';
-import { CategoryService } from '../service/category.service';
-import { MeasurementUnitService } from '../service/measurement-unit.service';
+import ICategory from '../../interfaces/ICategory';
+import IMeasurementUnit from '../../interfaces/IMeasurementUnit';
+import ISku from '../../interfaces/ISku';
+import { CategoryService } from '../../service/category.service';
+import { MeasurementUnitService } from '../../service/measurement-unit.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { SkuService } from '../service/sku.service';
+import { SkuService } from '../../service/sku.service';
 import { Router } from '@angular/router';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 @Component({
