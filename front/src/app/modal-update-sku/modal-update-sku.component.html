@@ -1,5 +1,11 @@
-<div class="title">
-  <p class="capitalize">SKU</p>
+
+<div class="top">
+  <div class="title">
+    <p class="capitalize">SKU</p>
+  </div>
+  <button mat-icon-button (click)="openConfirmDialog()">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
 </div>
 <form [formGroup]="form" (ngSubmit)="update()">
   <div class="row">
@@ -9,14 +15,8 @@
 
   <div class="row">
     <label for="category">Category</label>
-    <input type="text"
-           placeholder="Select a category"
-           matInput
-           name="selectedCategoryId"
-           formControlName="category"
-           [matAutocomplete]="categoryAutoComplete"
-           (blur)="categoryFallback()"
-           >
+    <input type="text" placeholder="Select a category" matInput name="selectedCategoryId" formControlName="category"
+      [matAutocomplete]="categoryAutoComplete" (blur)="categoryFallback()">
     <mat-autocomplete #categoryAutoComplete="matAutocomplete" [displayWith]="displayCategory">
       <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
         {{category.name}}
@@ -26,13 +26,8 @@
 
   <div class="row">
     <label for="unit">Unit</label>
-    <input type="text"
-     placeholder="Type a unit"
-     name="unit"
-     formControlName="measurementUnit"
-     [matAutocomplete]="unitAutoComplete"
-     (blur)="unitFallback()"
-     >
+    <input type="text" placeholder="Type a unit" name="unit" formControlName="measurementUnit"
+      [matAutocomplete]="unitAutoComplete" (blur)="unitFallback()">
     <mat-autocomplete #unitAutoComplete="matAutocomplete" [displayWith]="displayUnit">
       <mat-option *ngFor="let unit of filteredUnits | async" [value]="unit">
         {{unit.description}} - {{unit.symbol}}
@@ -41,8 +36,7 @@
   </div>
 
   <div class="buttons">
-    <button mat-dialog-close>Cancel</button>
-    <button [disabled]="form.invalid">Update</button>
+    <button mat-dialog-close mat-raised-button class="cancelButton"> Cancel</button>
+    <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Update</button>
   </div>
-  {{data.name}}
 </form>

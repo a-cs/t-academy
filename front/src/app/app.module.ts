@@ -14,6 +14,8 @@ import { ModalUpdateSkuComponent } from './modal-update-sku/modal-update-sku.com
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonModule} from '@angular/material/button';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     HeaderComponent,
     FooterComponent,
     CardSkuComponent,
-    ModalUpdateSkuComponent
+    ModalUpdateSkuComponent,
+    ModalConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     BrowserAnimationsModule,
     MatDialogModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,10 @@
     --secondary-color: #FBD9EA;
     --background-color: white;
     --text-tittle-color: white;
+    --danger-color: #e8200b;
+    --danger-color-lighter: #f06c5e;
+    --sucess-color: #2cbf4e;
+    --sucess-color-lighter: #57cc72;
     --border-color: #D9D9D9;
     --text-primary-color: black;
     --text-secondary-color: #9B9B9B;
@@ -12,7 +16,7 @@
 }
 
 html, body {
-    background-color: var(--color-background);
+    background-color: var(--background-color);
     min-height: 100vh;
     font-size: 16px;
 }
