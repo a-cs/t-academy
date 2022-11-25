@@ -21,6 +21,11 @@ public class SKUController {
     public ResponseEntity<List<SKU>> read() {
         return ResponseEntity.status(HttpStatus.OK).body(service.read());
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<SKU>> searchSku(@RequestParam String term) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.searchTerm(term));
+    }
 
     @PostMapping
     public ResponseEntity<SKU> create(@Valid @RequestBody SKU sku) {
