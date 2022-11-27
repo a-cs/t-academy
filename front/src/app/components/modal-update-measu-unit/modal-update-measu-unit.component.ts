@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
 import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'app-modal-update-measu-unit',
@@ -43,6 +44,14 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
                                .subscribe(response => {
                                 window.location.reload()
                                })
+  }
+
+  openConfirmDialog() {
+    this.dialog.open(ModalConfirmComponent, {
+      width: "600px",
+      height: "600px",
+      data: this.measurementUnitService.delete(this.measurementUnit.id as number)
+    })
   }
 
 }
