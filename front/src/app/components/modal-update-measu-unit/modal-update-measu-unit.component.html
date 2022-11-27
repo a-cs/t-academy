@@ -1,0 +1,21 @@
+<div class="top">
+    <div class="title">
+      <p class="capitalize">Measurement Unit</p>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="update()">
+    <div class="row">
+      <label for="name">Description</label>
+      <input type="text" placeholder="Type a description" name="description" formControlName="description">
+    </div>
+
+    <div class="row">
+        <label for="name">Symbol</label>
+        <input type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+      </div>
+  
+    <div class="buttons">
+      <button mat-dialog-close mat-raised-button class="cancelButton"> Cancel</button>
+      <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Update</button>
+    </div>
+  </form>

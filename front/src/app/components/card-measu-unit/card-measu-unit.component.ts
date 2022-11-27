@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
+import { ModalUpdateMeasuUnitComponent } from '../modal-update-measu-unit/modal-update-measu-unit.component';
 
 @Component({
   selector: 'app-card-measu-unit',
@@ -10,9 +12,16 @@ export class CardMeasuUnitComponent implements OnInit {
 
   @Input() measurementUnit: IMeasurementUnit
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  openUpdateDialog(measurementUnit: IMeasurementUnit) {
+    this.dialog.open(ModalUpdateMeasuUnitComponent, {
+      width: "600px",
+      height: "600px",
+      data: measurementUnit
+    })
+  }
 }

@@ -1,5 +1,5 @@
 export default interface IMeasurementUnit {
   id?: number,
-  description?: string,
-  symbol?: string
+  description: string,
+  symbol: string
 }

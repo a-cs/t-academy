@@ -23,6 +23,7 @@ import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.c
 import { HomeComponent } from './pages/home/home.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
+import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-
     ModalAddSkuComponent,
     HomeComponent,
     MeasurementUnitComponent,
-    CardMeasuUnitComponent
+    CardMeasuUnitComponent,
+    ModalUpdateMeasuUnitComponent
   ],
   imports: [
     BrowserModule,
