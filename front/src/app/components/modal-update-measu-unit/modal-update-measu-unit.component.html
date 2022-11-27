@@ -9,12 +9,12 @@
   <form [formGroup]="form" (ngSubmit)="update()">
     <div class="row">
       <label for="name">Description</label>
-      <input type="text" placeholder="Type a description" name="description" formControlName="description">
+      <input id="name" type="text" placeholder="Type a description" name="description" formControlName="description">
     </div>
 
     <div class="row">
-        <label for="name">Symbol</label>
-        <input type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+        <label for="symbol">Symbol</label>
+        <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
       </div>
   
     <div class="buttons">

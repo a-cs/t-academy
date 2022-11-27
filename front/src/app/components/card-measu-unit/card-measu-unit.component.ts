@@ -19,6 +19,7 @@ export class CardMeasuUnitComponent implements OnInit {
 
   openUpdateDialog(measurementUnit: IMeasurementUnit) {
     this.dialog.open(ModalUpdateMeasuUnitComponent, {
+      autoFocus: "input",
       width: "600px",
       height: "600px",
       data: measurementUnit
