@@ -3,5 +3,9 @@
     <div class="search-bar">
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
+    <div class="cards">
+        
+        <app-card-measu-unit *ngFor="let measurementUnit of measurementUnits" [measurementUnit]="measurementUnit"></app-card-measu-unit>
+    </div>
 </div>
 <app-footer></app-footer>

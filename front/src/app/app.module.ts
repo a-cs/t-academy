@@ -22,6 +22,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
+import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-u
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
-    MeasurementUnitComponent
+    MeasurementUnitComponent,
+    CardMeasuUnitComponent
   ],
   imports: [
     BrowserModule,
