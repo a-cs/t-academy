@@ -37,7 +37,7 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
     const newMeasurementUnit: IMeasurementUnit = { 
       id: this.measurementUnit.id,
       description: this.form.value.description.toLowerCase(),
-      symbol: this.form.value.symbol
+      symbol: this.form.value.symbol.toLowerCase()
     }
     this.measurementUnitService.update(this.measurementUnit.id as number, newMeasurementUnit)
                                .subscribe(response => {
