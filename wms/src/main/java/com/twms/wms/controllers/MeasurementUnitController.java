@@ -29,6 +29,11 @@ public class MeasurementUnitController {
         return ResponseEntity.status(HttpStatus.OK).body(measurementUnitService.read(pageable));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<MeasurementUnit>> search(@RequestParam String term) {
+        return ResponseEntity.status(HttpStatus.OK).body(measurementUnitService.searchTerm(term));
+    }
+
     @PostMapping
     public ResponseEntity<MeasurementUnit> create(@Valid @RequestBody MeasurementUnit measurementUnit) {
         return ResponseEntity.status(HttpStatus.CREATED).body(measurementUnitService.create(measurementUnit));

@@ -17,6 +17,10 @@ export class MeasurementUnitService {
     return this.http.get<IMeasurementUnit>(`http://localhost:8080/measurement-unit/${id}`)
   }
 
+  getByLikeName(likeName: string) {
+    return this.http.get<IMeasurementUnit[]>(`http://localhost:8080/measurement-unit/search?term=${likeName}`)
+  }
+
   delete(id:number){
     return this.http.delete(`http://localhost:8080/measurement-unit/${id}`)
   }
