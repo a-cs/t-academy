@@ -1,5 +1,6 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.ListIdsDTO;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.repositories.BranchRepository;
 import lombok.SneakyThrows;
@@ -38,6 +39,11 @@ public class BranchService {
         Optional<Branch> opt = branchRepository.findById(branchId);
         Branch branch = opt.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
         return branch;
+    }
+
+    public List<Branch> getBranchesByIds(ListIdsDTO ids) {
+        List<Long> idsAsLong = ids.getIds();
+        return branchRepository.findByIdIn(idsAsLong);
     }
 
     public Branch updateBranch(Long branchId, Branch branch){

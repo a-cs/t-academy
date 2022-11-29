@@ -4,6 +4,7 @@ import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,5 +17,7 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
                                                                                                      int bay);
 
      List<WarehouseSlot> findByClientId(Long clientId);
+
+     List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchIn(Long clientId, List<Branch> branches);
 
 }

@@ -1,5 +1,6 @@
 package com.twms.wms.controllers;
 
+import com.twms.wms.dtos.ListIdsDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.services.WarehouseSlotService;
@@ -52,6 +53,13 @@ public class WarehouseSlotController {
     public ResponseEntity<List<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId) {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId));
     }
+
+    @GetMapping("/client/{clientId}/filterByBranches")
+    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
+                                                                       @RequestBody ListIdsDTO branchIdList) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIdList));
+    }
+
 
     @PutMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
     public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlot ws,
