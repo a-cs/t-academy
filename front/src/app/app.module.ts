@@ -21,11 +21,17 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
+
 import { CategoryItemCardComponent } from './components/CategoryComponents/category-item-card/category-item-card.component';
 import { CategoryUpdateFormComponent } from './components/CategoryComponents/catogory-update-form/catogory-update-form.component';
 import { CategoryCreateFormComponent } from './components/CategoryComponents/category-create-form/category-create-form.component';
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
+import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
+import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
+import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/modal-add-measu-unit.component';
+
 
 @NgModule({
   declarations: [
@@ -40,11 +46,16 @@ import { CategoryComponent } from './pages/category/category.component';
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    MeasurementUnitComponent,
+    CardMeasuUnitComponent,
+    ModalUpdateMeasuUnitComponent,
+    ModalAddMeasuUnitComponent,
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
     CategoryComponent,
+
   ],
   imports: [
     BrowserModule,

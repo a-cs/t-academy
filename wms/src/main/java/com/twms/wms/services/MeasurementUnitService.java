@@ -24,6 +24,12 @@ public class MeasurementUnitService {
     public List<MeasurementUnit> read() {
         return measurementUnitRepository.findAll();
     }
+
+    public List<MeasurementUnit> searchTerm(String searchTerm) {
+        String terms = searchTerm.replace("-", " ");
+        return this.measurementUnitRepository.findByDescriptionContainingIgnoreCaseOrSymbolContainingIgnoreCase(terms, terms);
+    }
+
     @Transactional
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
         return measurementUnitRepository.save(measurementUnit);
