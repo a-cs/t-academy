@@ -4,7 +4,7 @@
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
     <div class="cards">
-        
+        <button (click)="openAddDialog()">Add</button>
         <app-card-measu-unit *ngFor="let measurementUnit of measurementUnits" [measurementUnit]="measurementUnit"></app-card-measu-unit>
     </div>
 </div>

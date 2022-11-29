@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalAddMeasuUnitComponent } from 'src/app/components/modal-add-measu-unit/modal-add-measu-unit.component';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
 import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
 
@@ -12,7 +14,7 @@ export class MeasurementUnitComponent implements OnInit {
   measurementUnits: IMeasurementUnit[]
   searchText: string
 
-  constructor(private measurementUnitService: MeasurementUnitService) { }
+  constructor(private measurementUnitService: MeasurementUnitService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.measurementUnitService.get().subscribe(
@@ -29,7 +31,12 @@ export class MeasurementUnitComponent implements OnInit {
         console.log(this.measurementUnits)
       }
       )
-    
-}
+  }
 
+  openAddDialog() {
+    const dialogRef = this.dialog.open(ModalAddMeasuUnitComponent,{
+      width: "600px",
+      height: "600px"
+    });
+  }
 }

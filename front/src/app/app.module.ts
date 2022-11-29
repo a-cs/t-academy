@@ -24,6 +24,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
 import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
+import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/modal-add-measu-unit.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-u
     HomeComponent,
     MeasurementUnitComponent,
     CardMeasuUnitComponent,
-    ModalUpdateMeasuUnitComponent
+    ModalUpdateMeasuUnitComponent,
+    ModalAddMeasuUnitComponent
   ],
   imports: [
     BrowserModule,
