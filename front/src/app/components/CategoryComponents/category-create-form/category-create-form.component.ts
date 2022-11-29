@@ -5,16 +5,16 @@ import ICategory from 'src/app/interfaces/ICategory';
 import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
-  selector: 'app-category-item-create-form',
-  templateUrl: './category-item-create-form.component.html',
-  styleUrls: ['./category-item-create-form.component.css'],
+  selector: 'app-category-create-form',
+  templateUrl: './category-create-form.component.html',
+  styleUrls: ['./category-create-form.component.css'],
 })
-export class CategoryItemCreateFormComponent implements OnInit {
+export class CategoryCreateFormComponent implements OnInit {
   createForm: FormGroup;
 
   constructor(
     private categoryService: CategoryService,
-    private dialogRef: MatDialogRef<CategoryItemCreateFormComponent>
+    private dialogRef: MatDialogRef<CategoryCreateFormComponent>
   ) {}
 
   ngOnInit(): void {

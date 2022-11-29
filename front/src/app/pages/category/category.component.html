@@ -12,11 +12,11 @@
     <app-category-item-create-card
       (onItemAdded)="refreshComponent()"
     ></app-category-item-create-card>
-    <app-category-item
+    <app-category-item-card
       (onItemUpdatedOrDeleted)="refreshComponent()"
       *ngFor="let c of categories"
       [category]="c"
-    ></app-category-item>
+    ></app-category-item-card>
   </div>
 </div>
 <app-footer></app-footer>

@@ -5,22 +5,29 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
 import { CategoryService } from 'src/app/service/category.service';
+import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
-  selector: 'app-catogory-item-update-form',
-  templateUrl: './catogory-item-update-form.component.html',
-  styleUrls: ['./catogory-item-update-form.component.css'],
+  selector: 'app-catogory-update-form',
+  templateUrl: './catogory-update-form.component.html',
+  styleUrls: ['./catogory-update-form.component.css'],
 })
-export class CategoryItemUpdateFormComponent implements OnInit {
+export class CategoryUpdateFormComponent implements OnInit {
   updateForm: FormGroup;
   formBuilder: FormBuilder = new FormBuilder();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public categoryToUpdate: ICategory,
-    private dialogRef: MatDialogRef<CategoryItemUpdateFormComponent>,
+    private dialogRef: MatDialogRef<CategoryUpdateFormComponent>,
+    public confirmDialog: MatDialog,
     private categoryService: CategoryService
   ) {}
 
@@ -53,7 +60,26 @@ export class CategoryItemUpdateFormComponent implements OnInit {
 
   onDeleteItem() {
     const formSubmmited: boolean = true;
+
+    // const confirmDialogRef = this.confirmDialog.open(
+    // ModalConfirmComponent,
+    // this.getDialogConfiguration()
+    // );
+
+    // confirmDialogRef.afterClosed().subscribe(() => {
+    // console.log('deleted');
+    // });
     this.categoryService.delete(this.categoryToUpdate.id as number).subscribe();
     this.dialogRef.close(formSubmmited);
+  }
+
+  getDialogConfiguration(): MatDialogConfig {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.categoryToUpdate;
+    dialogConfig.autoFocus = false;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '600px';
+    dialogConfig.height = '600px';
+    return dialogConfig;
   }
 }

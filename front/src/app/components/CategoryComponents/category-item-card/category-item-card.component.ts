@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
-import { CategoryItemUpdateFormComponent } from '../catogory-item-update-form/catogory-item-update-form.component';
+import { CategoryUpdateFormComponent } from '../catogory-update-form/catogory-update-form.component';
 
 @Component({
-  selector: 'app-category-item',
-  templateUrl: './category-item.component.html',
-  styleUrls: ['./category-item.component.css'],
+  selector: 'app-category-item-card',
+  templateUrl: './category-item-card.component.html',
+  styleUrls: ['./category-item-card.component.css'],
 })
-export class CategoryItemComponent implements OnInit {
+export class CategoryItemCardComponent implements OnInit {
   @Output() onItemUpdatedOrDeleted = new EventEmitter<void>();
   @Input() category: ICategory;
 
@@ -20,7 +20,7 @@ export class CategoryItemComponent implements OnInit {
     const dialogConfig = this.getDialogConfiguration();
 
     const dialogRef = this.dialogRef.open(
-      CategoryItemUpdateFormComponent,
+      CategoryUpdateFormComponent,
       dialogConfig
     );
 
