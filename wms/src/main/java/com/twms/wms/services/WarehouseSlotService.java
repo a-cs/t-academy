@@ -1,5 +1,6 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.ListIdsDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.WarehouseSlot;
@@ -56,6 +57,13 @@ public class WarehouseSlotService {
     public List<WarehouseSlotDTO> getByClientId(Long clientId) {
         List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientId(clientId);
         return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+    }
+
+    public List<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsDTO branchIdList) {
+        List<Branch> branches = branchService.getBranchesByIds(branchIdList);
+
+        List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchIn(clientId, branches);
+       return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
     }
 
     public WarehouseSlotDTO putById(WarehouseSlot ws, Long branchId, String aisleId, int bayId) {
