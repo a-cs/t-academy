@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalAddMeasuUnitComponent } from 'src/app/components/modal-add-measu-unit/modal-add-measu-unit.component';
+import { ModalAddMeasuUnitComponent } from 'src/app/components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
 import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
 
