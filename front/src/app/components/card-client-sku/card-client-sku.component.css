@@ -93,3 +93,16 @@
 .grid-button button{
     height: 70%;
 }
+
+@media (max-width: 1200px) {
+    .card{
+        border: 4px var(--border-color) solid;
+        margin: 16px 8px;
+        min-width: 350px;
+        height: 100px;
+        border-radius: 32px;
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: repeat(1, 100%);
+    }
+}

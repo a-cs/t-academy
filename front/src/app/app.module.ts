@@ -23,6 +23,7 @@ import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.c
 import { HomeComponent } from './pages/home/home.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CardClientSkuComponent } from './components/card-client-sku/card-client
     MatIconModule,
     MatAutocompleteModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

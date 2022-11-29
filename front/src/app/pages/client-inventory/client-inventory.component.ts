@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import IBranch from 'src/app/interfaces/IBranch';
 import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
+import { BranchService } from 'src/app/service/branch.service';
 import { WarehouseSlotService } from 'src/app/service/warehouse-slot.service';
+import { Observable } from 'rxjs';
+import { FormControl, FormGroup} from '@angular/forms';
+import { map } from 'rxjs/operators';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-client-inventory',
@@ -9,7 +15,9 @@ import { WarehouseSlotService } from 'src/app/service/warehouse-slot.service';
 })
 export class ClientInventoryComponent implements OnInit {
   client_wareshouses_slots: IWarehouseSlot[] = []
-  constructor(private warehouseSlotService: WarehouseSlotService) { }
+  branches?: IBranch[]
+  branchesList: IBranch[]
+  constructor(private warehouseSlotService: WarehouseSlotService, private branchService: BranchService) { }
 
   ngOnInit(): void {
     this.warehouseSlotService.getByIdClient(1).subscribe(
@@ -18,8 +26,24 @@ export class ClientInventoryComponent implements OnInit {
         console.log(this.warehouseSlotService)
       }
     )
+
+    this.branchService.get().subscribe(
+      res => {
+        this.branches = res
+      }
+    )
+
+    this.branchesForm.valueChanges.subscribe(branches => {
+      this.branches = branches as unknown as IBranch[]
+    }
+    )
   }
 
+  refreshWarehouseSlot(){
+
+  }
+  branchesForm = new FormControl('');
+ 
   searchText: string = "";
   branch: string = "";
 
