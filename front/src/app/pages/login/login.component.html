@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="right-content">
+    <img src="../../../assets/images/loginImg.svg" alt="Login Image">
+
+  </div>
+
+  <div class="left-content">
+    <div class="title">Login into your account</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="login()">
+      <div class="group">
+
+        <div class="row">
+          <label for="email">Email</label>
+          <div class="input">
+            <input type="email" placeholder="Type your email" name="email" formControlName="email" #email>
+            <button type="button" class="icon" (click)="email.focus()">
+              <i class="material-icons">mail</i>
+            </button>
+          </div>
+          <p *ngIf="form.controls['email'].errors?.['required']">Email is required</p>
+          <p *ngIf="form.controls['email'].errors?.['email']">Invalid Email</p>
+
+        </div>
+        <div class="row">
+          <label for="password">Password</label>
+          <div class="input">
+            <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password" formControlName="password" #password>
+            <button type="button" class="icon" (click)="togglePasswordVisibility(password)">
+              <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
+            </button>
+          </div>
+          <a href="/login" id="forgotPassword">Forgot Password?</a>
+          <p *ngIf="form.controls['password'].errors?.['required']">Password is required</p>
+          <p *ngIf="form.controls['password'].errors?.['minlength']">Password needs at least 5 characters</p>
+          <p *ngIf="form.controls['password'].errors?.['maxlength']">Password needs at most 20 characters</p>
+        </div>
+      </div>
+
+      <button [disabled]="form.invalid" id="loginButton">Login now</button>
+      <!-- <button id="loginButton">Login now</button> -->
+    </form>
+  </div>
+</div>
