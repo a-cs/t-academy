@@ -17,4 +17,5 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
 
      List<WarehouseSlot> findByClientId(Long clientId);
 
+
 }

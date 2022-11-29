@@ -21,6 +21,8 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
+import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { HomeComponent } from './pages/home/home.component';
     CardCreateSkuComponent,
     SearchBarComponent,
     ModalAddSkuComponent,
-    HomeComponent
+    HomeComponent,
+    ClientInventoryComponent,
+    CardClientSkuComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,95 @@
+.card{
+    border: 4px var(--border-color) solid;
+    margin: 16px 8px;
+    min-width: 700px;
+    max-width: 950px;
+    height: 100px;
+    border-radius: 32px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: repeat(1, 100%);
+}
+
+.left-side{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.right-side{
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: repeat(2, 50%);
+}
+
+.border{
+    border: 2px solid var(--primary-color);
+    height: 60%;
+    width: 70%;
+    margin: auto;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+}
+
+.left-side p{
+    margin: 0;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.right-side p{
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 4%;
+}
+
+.right-side button{
+    width: 80%;
+    height: 40%;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 32px;
+    margin: auto;
+}
+
+.grid-right-side{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+}
+
+.grid-p{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.grid-button{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.grid-button button{
+    height: 70%;
+}

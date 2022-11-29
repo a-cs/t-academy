@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="container">
+    <div class="left-side">
+        <div class="top-left-side">
+            <app-search-bar (searchTextChanged)="onSearchTextEnteredByBranch($event)"></app-search-bar>
+        </div>
+    </div>
+
+    <div class="top-right-side">
+        <div class="center">
+            <app-search-bar (searchTextChanged)="onSearchTextEnteredSKUWareHouse"></app-search-bar>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="cards">
+            <app-card-client-sku *ngFor="let warehouseSlot of client_wareshouses_slots" [warehouseSlot]="warehouseSlot"></app-card-client-sku>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
