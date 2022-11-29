@@ -18,4 +18,8 @@ export class HomeComponent implements OnInit {
   navigateToCategories() {
     this.router.navigate(['/categories']);
   }
+
+  navigateToMeasurementUnits() {
+    this.router.navigate(['/measurement-units']);
+  }
 }
