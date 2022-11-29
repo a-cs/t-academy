@@ -13,6 +13,6 @@ export class ModalConfirmComponent{
 
   buttonPressed(){
     // console.log(this.data)
-    this.data.subscribe((response:any) => { window.location.reload() }, (error:any) => { console.log("err!", error) })
+    this.data.observable.subscribe((response:any) => { window.location.reload() }, (error:any) => { console.log("err!", error) })
   }
 }

@@ -50,7 +50,10 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
     this.dialog.open(ModalConfirmComponent, {
       width: "600px",
       height: "600px",
-      data: this.measurementUnitService.delete(this.measurementUnit.id as number)
+      data: {
+        observable: this.measurementUnitService.delete(this.measurementUnit.id as number),
+        object: "measurement unit"
+      }
     })
   }
 

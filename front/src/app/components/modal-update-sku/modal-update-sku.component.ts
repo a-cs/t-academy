@@ -130,7 +130,10 @@ export class ModalUpdateSkuComponent {
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       width: "600px",
       height: "600px",
-      data: this.skuService.delete(this.sku.id as number)
+      data: {
+        observable: this.skuService.delete(this.sku.id as number),
+        object: "SKU"
+      }
 
     });
   }
