@@ -37,7 +37,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER"]
+    }
   }
 ];
 
