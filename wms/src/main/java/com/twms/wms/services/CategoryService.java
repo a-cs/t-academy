@@ -53,4 +53,9 @@ public class CategoryService {
 
         categoryRepository.delete(category);
     }
+
+    public List<Category> searchTerm(String searchTerm) {
+        String terms = searchTerm.replace("-", " ");
+        return categoryRepository.findByNameContainingIgnoreCase(terms);
+    }
 }

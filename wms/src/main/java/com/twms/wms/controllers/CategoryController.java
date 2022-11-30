@@ -43,4 +43,9 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Category>> searchCategory(@RequestParam String term) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.searchTerm(term));
+    }
+
 }
