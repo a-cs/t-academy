@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 import { ProductComponent } from './pages/product/product.component';
 import { UserComponent } from './pages/user/user.component';
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'categories',
     component: CategoryComponent,
+  },
+  {
+  path: 'login',
+  component: LoginComponent
   },
   {
     path: '',

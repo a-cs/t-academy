@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
     --primary-color: #E20074;
+    --primary-hover-color: #e65ba2;
     --secondary-color: #FBD9EA;
     --background-color: white;
     --text-tittle-color: white;

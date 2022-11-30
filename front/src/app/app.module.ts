@@ -21,6 +21,7 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 import { UserComponent } from './pages/user/user.component';
 import { CardUserComponent } from './components/card-user/card-user.component';
 import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
@@ -37,6 +38,7 @@ import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/c
 import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
 import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +52,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    LoginComponent,
     UserComponent,
     CardUserComponent,
     ModalUpdateUserComponent,
@@ -63,7 +66,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
-    CategoryComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
