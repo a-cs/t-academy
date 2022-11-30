@@ -31,6 +31,11 @@ import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-u
 import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
 import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
 import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/modal-add-measu-unit.component';
+import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
+import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
+import { ClientComponent } from './pages/client/client.component';
+import { ModalAddClientComponent } from './components/ClientComponents/modal-add-client/modal-add-client.component';
+import { ModalCreateClientComponent } from './components/ClientComponents/modal-create-client/modal-create-client.component';
 
 
 @NgModule({
@@ -55,6 +60,11 @@ import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/mo
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
     CategoryComponent,
+    CardClientComponent,
+    ModalUpdateClientComponent,
+    ClientComponent,
+    ModalAddClientComponent,
+    ModalCreateClientComponent,
 
   ],
   imports: [
