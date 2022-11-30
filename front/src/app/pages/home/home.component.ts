@@ -28,6 +28,6 @@ export class HomeComponent implements OnInit {
   }
 
   navigateUser(){
-    this.router.navigate([""])
+    this.router.navigate(["/users"])
   }
 }
