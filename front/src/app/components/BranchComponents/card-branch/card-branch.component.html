@@ -5,6 +5,6 @@
     <div class="left">
         <p><b>Location: </b> <span class="capitalize">{{branch.address.city}}, {{branch.address.state || ""}}</span> </p>
     </div>
-    <button>Update</button>
+    <button (click)="openShowMoreDialog(branch)">Show more</button>
 </div>
 
