@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 import { ProductComponent } from './pages/product/product.component';
 import { UserComponent } from './pages/user/user.component';
+import { AuthGuardService } from './service/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -35,7 +36,8 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

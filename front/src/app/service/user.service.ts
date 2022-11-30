@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import IAccessLevel from '../interfaces/IAccessLevel';
+import IOAuthResponse from '../interfaces/IOAuthResponse';
 import IUser from '../interfaces/IUser';
 
 @Injectable({
@@ -35,14 +36,14 @@ export class UserService {
     return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`)
   }
 
-login() {
+login(username: string, password: string) {
   const body = new HttpParams()
-    .set("username", "operator_user")
-    .set("password", "123456")
+    .set("username", username)
+    .set("password", password)
     .set("grant_type",  'password')
-     
+
      // const body = new HttpParams().set("username", username).set("password", password)
-     return this.http.post<any>(`
+     return this.http.post<IOAuthResponse>(`
         http://localhost:8080/oauth/token`,
         body.toString(), {
           headers: new HttpHeaders()
