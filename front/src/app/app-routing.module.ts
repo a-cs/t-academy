@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BranchComponent } from './pages/branch/branch.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -26,8 +27,12 @@ const routes: Routes = [
     component: CategoryComponent,
   },
   {
-  path: 'login',
-  component: LoginComponent
+    path: 'branches',
+    component: BranchComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '',

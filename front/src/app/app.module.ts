@@ -37,6 +37,9 @@ import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-u
 import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/card-measu-unit/card-measu-unit.component';
 import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
 import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
+import { CardBranchComponent } from './components/BranchComponents/card-branch/card-branch.component';
+import { BranchComponent } from './pages/branch/branch.component';
+import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 
 
 @NgModule({
@@ -66,6 +69,9 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
+    CardBranchComponent,
+    BranchComponent,
+    ModalShowMoreComponent,
     CategoryComponent
   ],
   imports: [

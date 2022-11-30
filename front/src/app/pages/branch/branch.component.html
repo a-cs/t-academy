@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="container">
+    <div class="search-bar">
+        
+    </div>
+    <div class="cards">
+        <button>Add</button>
+        <app-card-branch *ngFor="let branch of branches" [branch]="branch"></app-card-branch>
+    </div>
+</div>
+<app-footer></app-footer>
