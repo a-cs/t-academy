@@ -4,6 +4,12 @@ insert into role(authority) values (2);
 insert into role(authority) values (3);
 insert into role(authority) values (4);
 
+insert into user(username, password, email, enabled, access_level_id) values ('client_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','client_user@mail.com', true, 1)
+insert into user(username, password, email, enabled, access_level_id) values ('operator_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true, 2)
+insert into user(username, password, email, enabled, access_level_id) values ('branch_manager_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','branch_manager_user@mail.com', true, 3)
+insert into user(username, password, email, enabled, access_level_id) values ('manager_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','manager_user@mail.com', true, 4)
+insert into user(username, password, email, enabled, access_level_id) values ('admin_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','admin_user@mail.com', true, 5)
+
 insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Costa", "999", "Brasília", "DF", "12345678")
 insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Silva", "123", "São José dos Campos", "SP", "12345678")
 insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Cunha", "777", "Rondonópolis", "MT", "12345678")
@@ -11,18 +17,6 @@ insert into address(street, number, city, state, zip_code) values ("Rua Exemplo 
 insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade Brasília", 1)
 insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade SP", 2)
 insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade MT", 3)
-
-insert into user(username, password, email, enabled) values ('client_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','client_user@mail.com', true)
-insert into user(username, password, email, enabled) values ('operator_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true)
-insert into user(username, password, email, enabled) values ('branch_manager_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','branch_manager_user@mail.com', true)
-insert into user(username, password, email, enabled) values ('manager_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','manager_user@mail.com', true)
-insert into user(username, password, email, enabled) values ('admin_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','admin_user@mail.com', true)
-
-insert into tb_user_roles(user_id, role_id) values (1, 1)
-insert into tb_user_roles(user_id, role_id) values (2, 2)
-insert into tb_user_roles(user_id, role_id) values (3, 3)
-insert into tb_user_roles(user_id, role_id) values (4, 4)
-insert into tb_user_roles(user_id, role_id) values (5, 5)
 
 insert into measurement_unit (description,symbol) values ("kilogram", "kg")
 insert into measurement_unit (description,symbol) values  ("liters", "l")

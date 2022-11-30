@@ -21,10 +21,12 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
+import { UserComponent } from './pages/user/user.component';
+import { CardUserComponent } from './components/card-user/card-user.component';
+import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
 import { MatSelectModule } from '@angular/material/select';
-
 import { CategoryItemCardComponent } from './components/CategoryComponents/category-item-card/category-item-card.component';
 import { CategoryUpdateFormComponent } from './components/CategoryComponents/catogory-update-form/catogory-update-form.component';
 import { CategoryCreateFormComponent } from './components/CategoryComponents/category-create-form/category-create-form.component';
@@ -34,7 +36,6 @@ import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-u
 import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/card-measu-unit/card-measu-unit.component';
 import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
 import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
-
 
 @NgModule({
   declarations: [
@@ -49,6 +50,9 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    UserComponent,
+    CardUserComponent,
+    ModalUpdateUserComponent,
     ClientInventoryComponent,
     CardClientSkuComponent,
     MeasurementUnitComponent,
