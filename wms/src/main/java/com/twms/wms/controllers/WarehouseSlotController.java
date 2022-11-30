@@ -1,6 +1,8 @@
 package com.twms.wms.controllers;
 
+import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
+import com.twms.wms.dtos.BranchIdsProductIdsFilterDTO;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.services.WarehouseSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,19 @@ public class WarehouseSlotController {
     public ResponseEntity<List<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId) {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId));
     }
+
+    @GetMapping("/client/{clientId}/filterByBranches")
+    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
+                                                                       @RequestBody ListIdsFilterDTO branchIds) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds));
+    }
+    @GetMapping("/client/{clientId}/filterByBranchesAndProducts")
+    public ResponseEntity<List<WarehouseSlotDTO>> getByClientBranchAndProduct(@PathVariable Long clientId,
+                                                                       @RequestBody BranchIdsProductIdsFilterDTO branchIdsAndProductIds) {
+        System.out.println(branchIdsAndProductIds);
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientBranchAndProduct(clientId, branchIdsAndProductIds));
+    }
+
 
     @PutMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
     public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlot ws,
