@@ -21,6 +21,9 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
+import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
+import { MatSelectModule } from '@angular/material/select';
 
 import { CategoryItemCardComponent } from './components/CategoryComponents/category-item-card/category-item-card.component';
 import { CategoryUpdateFormComponent } from './components/CategoryComponents/catogory-update-form/catogory-update-form.component';
@@ -46,6 +49,8 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    ClientInventoryComponent,
+    CardClientSkuComponent
     MeasurementUnitComponent,
     CardMeasuUnitComponent,
     ModalUpdateMeasuUnitComponent,
@@ -55,7 +60,6 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
     CategoryComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],
