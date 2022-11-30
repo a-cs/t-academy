@@ -13,18 +13,34 @@ const routes: Routes = [
   {
     path: 'products',
     component: ProductComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR"]
+    }
   },
   {
     path: 'client-inventory',
-    component: ClientInventoryComponent
+    component: ClientInventoryComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN", "ROLE_MANAGER","ROLE_CLIENT"]
+    }
   },
   {
     path: 'measurement-units',
-    component: MeasurementUnitComponent
+    component: MeasurementUnitComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER","ROLE_OPERATOR"]
+    }
   },
   {
     path: 'categories',
     component: CategoryComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR"]
+    }
   },
   {
   path: 'login',
@@ -32,7 +48,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"]
+    }
   },
   {
     path: 'users',

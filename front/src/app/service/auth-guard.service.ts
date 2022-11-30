@@ -19,13 +19,12 @@ export class AuthGuardService implements CanActivate{
     if(token){
 
       const tokenPayload:ITokenPayload = decode(token);
-      console.log("expectedRoles.includes(tokenPayload.authorities[0])", expectedRoles.includes(tokenPayload.authorities[0]))
       if(!this.auth.isAuthenticated()){
         this.router.navigate(['/login']);
         return false;
       }
       if (!expectedRoles.includes(tokenPayload.authorities[0])) {
-        this.router.navigate(['/products']);
+        this.router.navigate(['']);
         return false;
       }
       return true;
