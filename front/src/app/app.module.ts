@@ -21,21 +21,33 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
-
+import { LoginComponent } from './pages/login/login.component';
+import { UserComponent } from './pages/user/user.component';
+import { CardUserComponent } from './components/card-user/card-user.component';
+import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
+import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
+import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
+import { MatSelectModule } from '@angular/material/select';
 import { CategoryItemCardComponent } from './components/CategoryComponents/category-item-card/category-item-card.component';
 import { CategoryUpdateFormComponent } from './components/CategoryComponents/catogory-update-form/catogory-update-form.component';
 import { CategoryCreateFormComponent } from './components/CategoryComponents/category-create-form/category-create-form.component';
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
-import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
-import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
-import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/modal-add-measu-unit.component';
+
+
 import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
 import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
 import { ClientComponent } from './pages/client/client.component';
 import { ModalAddClientComponent } from './components/ClientComponents/modal-add-client/modal-add-client.component';
 import { ModalCreateClientComponent } from './components/ClientComponents/modal-create-client/modal-create-client.component';
+
+import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/card-measu-unit/card-measu-unit.component';
+import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
+import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
+import { CardBranchComponent } from './components/BranchComponents/card-branch/card-branch.component';
+import { BranchComponent } from './pages/branch/branch.component';
+import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 
 
 @NgModule({
@@ -51,6 +63,12 @@ import { ModalCreateClientComponent } from './components/ClientComponents/modal-
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    LoginComponent,
+    UserComponent,
+    CardUserComponent,
+    ModalUpdateUserComponent,
+    ClientInventoryComponent,
+    CardClientSkuComponent,
     MeasurementUnitComponent,
     CardMeasuUnitComponent,
     ModalUpdateMeasuUnitComponent,
@@ -58,13 +76,16 @@ import { ModalCreateClientComponent } from './components/ClientComponents/modal-
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,
-    CategoryComponent,
+    CategoryCreateCardComponent,    
     CardClientComponent,
     ModalUpdateClientComponent,
     ClientComponent,
     ModalAddClientComponent,
     ModalCreateClientComponent,
+    CardBranchComponent,
+    BranchComponent,
+    ModalShowMoreComponent,
+    CategoryComponent
 
   ],
   imports: [
@@ -78,6 +99,7 @@ import { ModalCreateClientComponent } from './components/ClientComponents/modal-
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

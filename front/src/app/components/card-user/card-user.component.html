@@ -1,0 +1,13 @@
+<div class="card" [ngClass]="{'user-enabled': user.enabled, 'user-disabled': !user.enabled}">
+    <div class="picture">
+
+    </div>
+    <div class="username">
+        <p><span class="capitalize">{{user.username || ""}}</span></p>
+    </div>
+    <span class="vertical-line"></span>
+    <div class="user-role">
+        <p><span class="capitalize">{{user.accessLevel.authority.replace('ROLE_','') || ""}}</span></p>
+    </div>
+    <button class="btn" (click) ="openUpdateDialog()">Update</button>
+</div>

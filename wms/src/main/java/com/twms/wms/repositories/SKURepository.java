@@ -10,4 +10,6 @@ public interface SKURepository extends JpaRepository<SKU, Long> {
 
     public List<SKU> findByNameContainingIgnoreCase(String searchTerm);
 
+    public List<SKU> findByIdIn(List<Long> ids);
+
 }

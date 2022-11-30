@@ -1,7 +1,6 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
-import com.twms.wms.email.EmailSender;
 import com.twms.wms.email.EmailService;
 import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
@@ -11,6 +10,8 @@ import com.twms.wms.repositories.RoleRepository;
 import com.twms.wms.repositories.UserRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,7 +50,7 @@ public class UserService implements UserDetailsService {
             throw new SQLIntegrityConstraintViolationException("Email already registered.");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.addAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
+        user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
 
         String token = UUID.randomUUID().toString();
@@ -84,31 +85,36 @@ public class UserService implements UserDetailsService {
         return new UserDTO(user);
     }
 
+    public User getUserById(Long userId){
+        User savedUser = userRepository.findById(userId).orElseThrow(
+                ()->new EntityNotFoundException("User not found.")
+        );
+        return savedUser;
+    }
+    public List<UserDTO> getUserFilteredByUsername(String searchTerm){
+        List<User> userFiltered = userRepository.findByUsernameContainingIgnoreCase(searchTerm);
+        List<UserDTO> userDTOFiltered = userFiltered.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
+
+        return userDTOFiltered;
+    }
+
     public List<UserDTO> getAllUsers(){
         List<User> userList = userRepository.findAll();
         List<UserDTO> userDTOList = userList.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
         return userDTOList;
     }
 
-    public UserDTO updateUserAccessLevel(Role role, Long userId, boolean isAdding){
-        User savedUser = userRepository.findById(userId).orElseThrow(
-                ()->new EntityNotFoundException("User not found.")
-        );
-        Role thisRole = roleRepository.findById(role.getId()).orElseThrow(
-                ()->new EntityNotFoundException("Role with id:" + role.getId() +" do not exist.")
-        );
-        if(isAdding){
-            savedUser.addAccessLevel(thisRole);
-        } else {
-            savedUser.revokeAccessLevel(thisRole);
-        }
-        return new UserDTO(userRepository.save(savedUser));
-    }
+//    public UserDTO updateUserAccessLevel(Role role, Long userId){
+//        User savedUser = this.getUserById(userId);
+//        Role thisRole = roleRepository.findById(role.getId()).orElseThrow(
+//                ()->new EntityNotFoundException("Role with id:" + role.getId() +" do not exist.")
+//        );
+//        savedUser.setAccessLevel(role);
+//        return new UserDTO(userRepository.save(savedUser));
+//    }
 
     public UserDTO updateUserIsEnable(Long userId, boolean isActivating){
-        User savedUser = userRepository.findById(userId).orElseThrow(
-                ()->new EntityNotFoundException("User not found.")
-        );
+        User savedUser = this.getUserById(userId);
         savedUser.setEnabled(isActivating);
         return new UserDTO(userRepository.save(savedUser));
     }
@@ -136,5 +142,19 @@ public class UserService implements UserDetailsService {
                 ()->new UsernameNotFoundException("User not found.")
         );
         return savedUser;
+    }
+
+    public UserDTO updateUser(UserDTO user, Long userId) {
+        User savedUser = this.getUserById(userId);
+        if(userRepository.existsById(userId)){
+            User updatedUser = new User(user);
+            updatedUser.setPassword(savedUser.getPassword());
+            return new UserDTO(userRepository.save(updatedUser));
+        }
+        throw new UsernameNotFoundException("User not found.");
+    }
+
+    public Page<UserDTO> getUsersPaginated(Pageable pageable) {
+        return userRepository.findAll(pageable).map(UserDTO::new);
     }
 }

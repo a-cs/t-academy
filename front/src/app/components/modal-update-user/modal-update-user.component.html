@@ -1,0 +1,30 @@
+<div class="modal-container">
+    <div class="picture">
+    </div>
+    <button type="button" class="enableButton"
+        [ngClass]="{'enable': !userCopy.enabled, 'disable': userCopy.enabled}" (click)="enableUser()"><i
+                class="material-icons">{{userCopy.enabled ? "person_off" : "person_filled"}}</i><span>{{userCopy.enabled ?
+            "Disable User" : "Enable User"}}</span>
+    </button>
+    <div class="username">
+        <p><span class="capitalize">{{user.username || ""}}</span></p>
+    </div>
+    <div class="useremail">
+        <p><span class="capitalize">{{user.email || ""}}</span></p>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="update()" class="user-role">
+        <label for="role">Role</label>
+        <input type="text" placeholder="Select a Role" matInput name="selectedRoleId" formControlName="role"
+            [matAutocomplete]="roleAutoComplete" (blur)="roleFallback()">
+        <mat-autocomplete #roleAutoComplete="matAutocomplete" [displayWith]="displayRole"
+            (optionSelected)='optionSelected($event.option.value)'>
+            <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+                {{role.authority}}
+            </mat-option>
+        </mat-autocomplete>
+        <div class="row">
+            <button [disabled]="form.invalid" mat-raised-button class="btn sucessButton">Update</button>
+            <button mat-dialog-close mat-raised-button class="btn cancelButton">Cancel</button>
+        </div>
+    </form>
+</div>
