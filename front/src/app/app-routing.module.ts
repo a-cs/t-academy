@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BranchComponent } from './pages/branch/branch.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { ClientComponent } from './pages/client/client.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
@@ -17,6 +18,14 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR"]
+    }
+  },
+  {
+    path: 'clients',
+    component: ClientComponent},
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN", "ROLE_MANAGER"]
     }
   },
   {
