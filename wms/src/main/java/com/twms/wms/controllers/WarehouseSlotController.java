@@ -60,6 +60,17 @@ public class WarehouseSlotController {
                                                                        @RequestBody ListIdsFilterDTO branchIds) {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds));
     }
+
+
+    @GetMapping("/client/{clientId}/filterByBranches/searchProduct")
+    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
+                                                                       @RequestBody ListIdsFilterDTO branchIds,
+                                                                       @RequestParam(defaultValue = "") String term
+                                                                       ) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term));
+    }
+
     @GetMapping("/client/{clientId}/filterByBranchesAndProducts")
     public ResponseEntity<List<WarehouseSlotDTO>> getByClientBranchAndProduct(@PathVariable Long clientId,
                                                                        @RequestBody BranchIdsProductIdsFilterDTO branchIdsAndProductIds) {
