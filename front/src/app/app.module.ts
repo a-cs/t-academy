@@ -28,9 +28,9 @@ import { CategoryCreateFormComponent } from './components/CategoryComponents/cat
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
-import { CardMeasuUnitComponent } from './components/card-measu-unit/card-measu-unit.component';
-import { ModalUpdateMeasuUnitComponent } from './components/modal-update-measu-unit/modal-update-measu-unit.component';
-import { ModalAddMeasuUnitComponent } from './components/modal-add-measu-unit/modal-add-measu-unit.component';
+import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/card-measu-unit/card-measu-unit.component';
+import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
+import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
 
 
 @NgModule({

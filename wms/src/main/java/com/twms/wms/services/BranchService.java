@@ -50,7 +50,6 @@ public class BranchService {
         return branchRepository.findByIdIn(ids);
     }
 
-
     public Branch updateBranch(Long branchId, Branch branch){
         Branch oldBranch = this.readBranchById(branchId);
         //oldBranch.setAddress(branch.getAddress());
