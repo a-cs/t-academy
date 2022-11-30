@@ -25,4 +25,5 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
      List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(Long clientId, List<Branch> branches, List<SKU> skus);
 
      List<WarehouseSlot> findAllBySkuIn(List<SKU> skus);
+    List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(Long clientId, List<Branch> branches, String searchTerm);
 }

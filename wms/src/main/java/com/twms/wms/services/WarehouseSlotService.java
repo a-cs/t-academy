@@ -80,6 +80,16 @@ public class WarehouseSlotService {
         return WarehouseSlotDTO.fromListWarehouseSlot(slots);
     }
 
+    public List<WarehouseSlotDTO> getByClientBranchFilteredByProductName(Long clientId, ListIdsFilterDTO branchIdsDTO, String searchTerm) {
+        List<Branch> branches = branchService.getBranchesByIds(branchIdsDTO.getIds());
+        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(
+                clientId,
+                branches,
+                searchTerm
+        );
+        return WarehouseSlotDTO.fromListWarehouseSlot(slots);
+    }
+
     public WarehouseSlotDTO putById(WarehouseSlot ws, Long branchId, String aisleId, int bayId) {
         Branch branch = branchService.readBranchById(branchId);
         Optional<WarehouseSlot> expectedToChange = warehouseSlotRepository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(
