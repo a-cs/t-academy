@@ -27,4 +27,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([path])
   }
 
+  signout(){
+    localStorage.removeItem("T-WMS_token")
+    this.router.navigate(["/login"])
+  }
+
 }
