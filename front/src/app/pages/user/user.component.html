@@ -1,0 +1,10 @@
+<app-header></app-header>
+<div class="container">
+    <div class="search-bar">
+        <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
+    </div>
+    <div class="cards">
+        <app-card-user *ngFor="let user of userList" [user]="user"></app-card-user>
+    </div>
+</div>
+<app-footer></app-footer>

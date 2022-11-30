@@ -1,6 +1,9 @@
 <app-header></app-header>
 <div class="container">
-  <div class="title"><p>Home</p></div>
+
+  <div class="title">
+    <p>Home</p>
+  </div>
   <div class="cards">
     <button class="card" (click)="navigate()">
       <div class="center">
@@ -20,6 +23,16 @@
     <button class="card" (click)="navigateToBranches()">
       <div class="center">
         <p>Branches</p>
+        </div>
+    </button>
+    <button class="card" (click)="navigateClientInventory()">
+      <div class="center">
+        <p>Client Inventory</p>
+      </div>
+    </button>
+    <button class="card" (click)="navigateUser()">
+      <div class="center">
+        <p>User</p>
       </div>
     </button>
   </div>

@@ -56,4 +56,8 @@ public class SKUService {
         String terms = searchTerm.replace("-", " ");
         return skuRepository.findByNameContainingIgnoreCase(terms);
     }
+
+    public List<SKU> findAllByIds(List<Long> ids) {
+        return skuRepository.findByIdIn(ids);
+    }
 }

@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BranchComponent } from './pages/branch/branch.component';
+import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 import { ProductComponent } from './pages/product/product.component';
+import { UserComponent } from './pages/user/user.component';
 
 const routes: Routes = [
   {
@@ -12,9 +15,13 @@ const routes: Routes = [
     component: ProductComponent,
   },
   {
-  path: 'measurement-units',
-  component: MeasurementUnitComponent
- },
+    path: 'client-inventory',
+    component: ClientInventoryComponent
+  },
+  {
+    path: 'measurement-units',
+    component: MeasurementUnitComponent
+  },
   {
     path: 'categories',
     component: CategoryComponent,
@@ -24,13 +31,21 @@ const routes: Routes = [
     component: BranchComponent
   },
   {
-    path: '',
-    component: HomeComponent,
+    path: 'login',
+    component: LoginComponent
   },
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'users',
+    component: UserComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,0 +1,17 @@
+.container{
+    min-height: 78vh;
+    width: 100%;
+}
+
+.cards{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar{
+    margin-top: 2vh;
+}

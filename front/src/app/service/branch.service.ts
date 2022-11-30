@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import IBranch from '../interfaces/IBranch';
 
 @Injectable({
@@ -28,4 +28,5 @@ export class BranchService {
   create(data:IBranch){
     return this.http.post<IBranch>("http://localhost:8080/branch",data)
   }
+
 }

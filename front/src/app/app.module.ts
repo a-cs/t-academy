@@ -21,7 +21,13 @@ import { CardCreateSkuComponent } from './components/card-create-sku/card-create
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.component';
 import { HomeComponent } from './pages/home/home.component';
-
+import { LoginComponent } from './pages/login/login.component';
+import { UserComponent } from './pages/user/user.component';
+import { CardUserComponent } from './components/card-user/card-user.component';
+import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
+import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
+import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
+import { MatSelectModule } from '@angular/material/select';
 import { CategoryItemCardComponent } from './components/CategoryComponents/category-item-card/category-item-card.component';
 import { CategoryUpdateFormComponent } from './components/CategoryComponents/catogory-update-form/catogory-update-form.component';
 import { CategoryCreateFormComponent } from './components/CategoryComponents/category-create-form/category-create-form.component';
@@ -49,6 +55,12 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
     SearchBarComponent,
     ModalAddSkuComponent,
     HomeComponent,
+    LoginComponent,
+    UserComponent,
+    CardUserComponent,
+    ModalUpdateUserComponent,
+    ClientInventoryComponent,
+    CardClientSkuComponent,
     MeasurementUnitComponent,
     CardMeasuUnitComponent,
     ModalUpdateMeasuUnitComponent,
@@ -57,10 +69,10 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
     CategoryCreateCardComponent,
-    CategoryComponent,
     CardBranchComponent,
     BranchComponent,
-    ModalShowMoreComponent
+    ModalShowMoreComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +85,7 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

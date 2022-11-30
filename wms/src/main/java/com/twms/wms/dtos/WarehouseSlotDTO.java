@@ -16,6 +16,7 @@ public class WarehouseSlotDTO {
     private String skuName;
     private Long skuId;
     private int quantity;
+    private String symbol;
     private String clientName;
     private Long clientId;
     private Instant arrivalDate;
@@ -28,6 +29,7 @@ public class WarehouseSlotDTO {
         warehouseSlotDTO.setAisle(warehouseSlot.getWarehouseSlotId().getAisle());
         warehouseSlotDTO.setBay(warehouseSlot.getWarehouseSlotId().getBay());
         warehouseSlotDTO.setSkuId(warehouseSlot.getSku().getId());
+        warehouseSlotDTO.setSymbol(warehouseSlot.getSku().getMeasurementUnit().getSymbol());
         warehouseSlotDTO.setSkuName(warehouseSlot.getSku().getName());
         warehouseSlotDTO.setQuantity(warehouseSlot.getQuantity());
         warehouseSlotDTO.setClientId(warehouseSlot.getClient().getId());
@@ -40,7 +42,7 @@ public class WarehouseSlotDTO {
     public static List<WarehouseSlotDTO> fromListWarehouseSlot(List<WarehouseSlot> warehouseSlots) {
         List<WarehouseSlotDTO> warehouseSlotDTOs = new ArrayList<>();
         for (WarehouseSlot ws : warehouseSlots) {
-           warehouseSlotDTOs.add(WarehouseSlotDTO.fromWarehouseSlot(ws));
+            warehouseSlotDTOs.add(WarehouseSlotDTO.fromWarehouseSlot(ws));
         }
         return warehouseSlotDTOs;
     }

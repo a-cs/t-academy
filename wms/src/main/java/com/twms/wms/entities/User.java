@@ -1,7 +1,6 @@
 package com.twms.wms.entities;
 
 import com.twms.wms.dtos.UserDTO;
-import com.twms.wms.enums.AccessLevel;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,10 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Entity
 @Data
@@ -34,13 +30,15 @@ public class User implements UserDetails {
     @NotNull(message = "Password cannot be Null")
     @NotBlank
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> accessLevel = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "tb_user_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//    )
+    @ManyToOne
+    private Role accessLevel;
+//    private Set<Role> accessLevel = new HashSet<>();
     private boolean enabled = false;
 
     public User() {
@@ -51,19 +49,23 @@ public class User implements UserDetails {
         this.id = userDTO.getId();
         this.accessLevel = userDTO.getAccessLevel();
         this.email = userDTO.getEmail();
+        this.enabled = userDTO.isEnabled();
     }
 
-    public void addAccessLevel(Role role){
-        this.accessLevel.add(role);
-    }
-    public void revokeAccessLevel(Role role){
-        this.accessLevel.remove(role);
-    }
+//    public void addAccessLevel(Role role){
+//        this.accessLevel.add(role);
+//    }
+//    public void revokeAccessLevel(Role role){
+//        this.accessLevel.remove(role);
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return accessLevel.stream().map(role ->
-                new SimpleGrantedAuthority(role.getAuthority().name())).collect(Collectors.toList());
+//        return accessLevel.stream().map(role ->
+//                new SimpleGrantedAuthority(role.getAuthority().name())).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(this.accessLevel.getAuthority().name()));
+        return roles;
     }
 
     @Override
