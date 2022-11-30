@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAddSkuComponent } from 'src/app/components/modal-add-sku/modal-add-sku.component';
 
@@ -8,14 +8,14 @@ import { ModalAddSkuComponent } from 'src/app/components/modal-add-sku/modal-add
   styleUrls: ['./card-create-sku.component.css']
 })
 export class CardCreateSkuComponent implements OnInit {
-
+  @Input() component: any;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-  openAddDialog() {
-    const dialogRef = this.dialog.open(ModalAddSkuComponent,{
+  openAddDialog(component: any) {
+    const dialogRef = this.dialog.open(component,{
       width: "600px",
       height: "600px"
     });

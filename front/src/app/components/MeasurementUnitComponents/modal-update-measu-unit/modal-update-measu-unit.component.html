@@ -1,0 +1,24 @@
+<div class="top">
+    <div class="title">
+      <p class="capitalize">Measurement Unit</p>
+    </div>
+    <button mat-icon-button (click)="openConfirmDialog()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="update()">
+    <div class="row">
+      <label for="name">Description</label>
+      <input id="name" type="text" placeholder="Type a description" name="description" formControlName="description">
+    </div>
+
+    <div class="row">
+        <label for="symbol">Symbol</label>
+        <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+      </div>
+  
+    <div class="buttons">
+      <button mat-dialog-close mat-raised-button class="cancelButton"> Cancel</button>
+      <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Update</button>
+    </div>
+  </form>
