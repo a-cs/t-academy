@@ -3,7 +3,7 @@ import IAddress from "./IAddress";
 export default interface IBranch {
     id?: number,
     name: string,
-    maxRows: number,
-    maxColumns: number,
+    max_rows: number,
+    max_columns: number,
     address: IAddress
 }
