@@ -17,6 +17,7 @@ export class ClientInventoryComponent implements OnInit {
   client_wareshouses_slots: IWarehouseSlot[] = []
   branches?: IBranch[]
   branchesList: IBranch[]
+  firstBranch: string
   constructor(private warehouseSlotService: WarehouseSlotService, private branchService: BranchService) { }
 
   ngOnInit(): void {
@@ -35,8 +36,11 @@ export class ClientInventoryComponent implements OnInit {
 
     this.branchesForm.valueChanges.subscribe(branches => {
       this.branches = branches as unknown as IBranch[]
+      ,
+      this.firstBranch = this.branches[0].name as unknown as ""
     }
     )
+
   }
 
   refreshWarehouseSlot(){
@@ -57,4 +61,5 @@ export class ClientInventoryComponent implements OnInit {
     //this.warehouseSlotService.(this.searchText).subscribe(data => this.skus = data)
   }
 
+  
 }
