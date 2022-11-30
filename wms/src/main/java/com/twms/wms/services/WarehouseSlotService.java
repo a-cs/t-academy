@@ -1,8 +1,10 @@
 package com.twms.wms.services;
 
-import com.twms.wms.dtos.ListIdsDTO;
+import com.twms.wms.dtos.BranchIdsProductIdsFilterDTO;
+import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.Branch;
+import com.twms.wms.entities.SKU;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
 import com.twms.wms.repositories.WarehouseSlotRepository;
@@ -20,6 +22,9 @@ public class WarehouseSlotService {
 
     @Autowired
     BranchService branchService;
+
+    @Autowired
+    SKUService skuService;
 
     public WarehouseSlotDTO post(WarehouseSlot ws) {
         WarehouseSlot persisted = warehouseSlotRepository.save(ws);
@@ -59,11 +64,19 @@ public class WarehouseSlotService {
         return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
     }
 
-    public List<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsDTO branchIdList) {
-        List<Branch> branches = branchService.getBranchesByIds(branchIdList);
-
+    public List<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsFilterDTO branchIds) {
+        List<Branch> branches = branchService.getBranchesByIds(branchIds.getIds());
         List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchIn(clientId, branches);
-       return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+        return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+    }
+
+    public List<WarehouseSlotDTO> getByClientBranchAndProduct(Long clientId, BranchIdsProductIdsFilterDTO branchIdsProductIdsFilterDTO) {
+        List<Long> branchIds = branchIdsProductIdsFilterDTO.getBranchIds();
+        List<Long> skuIds = branchIdsProductIdsFilterDTO.getProductIds();
+        List<Branch> branches = branchService.getBranchesByIds(branchIds);
+        List<SKU> skus = skuService.findAllByIds(skuIds);
+        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(clientId, branches, skus);
+        return WarehouseSlotDTO.fromListWarehouseSlot(slots);
     }
 
     public WarehouseSlotDTO putById(WarehouseSlot ws, Long branchId, String aisleId, int bayId) {

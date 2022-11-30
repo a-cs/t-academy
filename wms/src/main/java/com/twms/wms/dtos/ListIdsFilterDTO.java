@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class ListIdsDTO {
+public class ListIdsFilterDTO {
     private List<Long> ids = new ArrayList<>();
 }
