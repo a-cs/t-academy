@@ -62,7 +62,7 @@ public class WarehouseSlotController {
     }
 
 
-    @GetMapping("/client/{clientId}/filterByBranches/searchProduct")
+    @PostMapping("/client/{clientId}/filterByBranches/searchProduct")
     public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
                                                                        @RequestBody ListIdsFilterDTO branchIds,
                                                                        @RequestParam(defaultValue = "") String term
