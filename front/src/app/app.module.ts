@@ -50,7 +50,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
     ModalAddSkuComponent,
     HomeComponent,
     ClientInventoryComponent,
-    CardClientSkuComponent
+    CardClientSkuComponent,
     MeasurementUnitComponent,
     CardMeasuUnitComponent,
     ModalUpdateMeasuUnitComponent,

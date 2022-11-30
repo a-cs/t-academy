@@ -13,21 +13,25 @@ const routes: Routes = [
     component: ProductComponent,
   },
   {
-  path: 'client-inventory',
-  component: ClientInventoryComponent
+    path: 'client-inventory',
+    component: ClientInventoryComponent
   },
   {
-  path: 'measurement-units',
-  component: MeasurementUnitComponent
- },
+    path: 'measurement-units',
+    component: MeasurementUnitComponent
+  },
   {
     path: 'categories',
     component: CategoryComponent,
   },
+  {
+    path: '',
+    component: HomeComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

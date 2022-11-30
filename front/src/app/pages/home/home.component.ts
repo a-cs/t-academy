@@ -26,4 +26,8 @@ export class HomeComponent implements OnInit {
   navigateToMeasurementUnits() {
     this.router.navigate(['/measurement-units']);
   }
+
+  navigateUser(){
+    this.router.navigate([""])
+  }
 }
