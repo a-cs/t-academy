@@ -3,20 +3,25 @@ import { Injectable } from '@angular/core';
 import IAccessLevel from '../interfaces/IAccessLevel';
 import IOAuthResponse from '../interfaces/IOAuthResponse';
 import IUser from '../interfaces/IUser';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   getByUsernameLike(name:string){
     return this.http.get<IUser[]>(`http://localhost:8080/user/search?username=${name}`)
   }
 
   get(){
-    return this.http.get<IUser[]>("http://localhost:8080/user/all")
+    console.log(this.auth.buildHeader())
+    return this.http.get<IUser[]>("http://localhost:8080/user/all", {
+      headers: this.auth.buildHeader()
+      // .set("Authorization", "Basic " + btoa("tsystems:tsPassword"))
+    })
   }
 
   getById(id:number){

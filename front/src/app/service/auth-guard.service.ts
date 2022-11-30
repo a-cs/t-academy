@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService  } from './auth.service';
 import decode from 'jwt-decode';
 import ITokenPayload from '../interfaces/ITokenPayload';
 
@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
     const expectedRoles: string[] = route.data["expectedRoles"];
-    const token = localStorage.getItem('T-WMS_token');
+    const token = this.auth.getToken();
 
     if(token){
 
