@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup
   showPassword: boolean = false
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     this.configureForm()
@@ -27,7 +28,9 @@ export class LoginComponent implements OnInit {
     // console.log(this.form)
     let email = this.form.controls['email'].value
     let password = this.form.controls['password'].value
-    console.log({email, password})
+    // console.log({email, password})
+    this.userService.login().subscribe(response => {console.log("res!", response) }, error => { console.log("err!", error) })
+
   }
 
 
