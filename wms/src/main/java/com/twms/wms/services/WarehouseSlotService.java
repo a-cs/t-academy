@@ -72,19 +72,42 @@ public class WarehouseSlotService {
     }
 
     public List<WarehouseSlotDTO> getByClientBranchAndProduct(Long clientId, BranchIdsProductIdsFilterDTO branchIdsProductIdsFilterDTO) {
+        List<Branch> branchesToFilter;
+        List<SKU> skusToFilter;
+
         List<Long> branchIds = branchIdsProductIdsFilterDTO.getBranchIds();
         List<Long> skuIds = branchIdsProductIdsFilterDTO.getProductIds();
-        List<Branch> branches = branchService.getBranchesByIds(branchIds);
-        List<SKU> skus = skuService.findAllByIds(skuIds);
-        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(clientId, branches, skus);
+
+        if (branchIds.size() > 0) {
+            branchesToFilter = branchService.getBranchesByIds(branchIds);
+        } else {
+            branchesToFilter = branchService.readAllBranchs();
+        }
+
+        if (skuIds.size() > 0) {
+            skusToFilter = skuService.findAllByIds(skuIds);
+        } else {
+            skusToFilter = skuService.read();
+        }
+
+        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(
+                clientId, branchesToFilter, skusToFilter);
         return WarehouseSlotDTO.fromListWarehouseSlot(slots);
     }
 
     public List<WarehouseSlotDTO> getByClientBranchFilteredByProductName(Long clientId, ListIdsFilterDTO branchIdsDTO, String searchTerm) {
-        List<Branch> branches = branchService.getBranchesByIds(branchIdsDTO.getIds());
+        List<Branch> branchesToFilter;
+        List<Long> branchIds = branchIdsDTO.getIds();
+
+        if (branchIds.size() > 0) {
+            branchesToFilter = branchService.getBranchesByIds(branchIds);
+        } else {
+            branchesToFilter = branchService.readAllBranchs();
+        }
+
         List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(
                 clientId,
-                branches,
+                branchesToFilter,
                 searchTerm
         );
         return WarehouseSlotDTO.fromListWarehouseSlot(slots);
