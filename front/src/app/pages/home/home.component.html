@@ -1,19 +1,28 @@
 <app-header></app-header>
 <div class="container">
-    <div class="title"><p>Home</p></div>
-    <div class="cards">
-      <button class="card" (click)="navigate()">
-        <div class="center">
-            <p>Products</p>
-        </div>
-        </button>
-        <button class="card" (click)="navigateClientInventory()">
+
+  <div class="title"><p>Home</p></div>
+  <div class="cards">
+    <button class="card" (click)="navigate()">
+      <div class="center">
+        <p>Products</p>
+      </div>
+    </button>
+    <button class="card" (click)="navigateToCategories()">
+      <div class="center">
+        <p>Categories</p>
+      </div>
+    </button>
+    <button class="card" (click)="navigateToMeasurementUnits()">
+      <div class="center">
+        <p>Measurement Units</p>
+      </div>
+    </button>
+  </div>
+  <button class="card" (click)="navigateClientInventory()">
             <div class="center">
                 <p>Client In</p>
             </div>
-        </button>
-    </div>
-    
-    
+  </button>
 </div>
 <app-footer></app-footer>
