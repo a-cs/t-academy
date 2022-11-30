@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BranchComponent } from './pages/branch/branch.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'categories',
     component: CategoryComponent,
+  },
+  {
+    path: 'branches',
+    component: BranchComponent
   },
   {
     path: '',
