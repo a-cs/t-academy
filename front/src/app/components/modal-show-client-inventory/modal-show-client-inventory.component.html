@@ -5,35 +5,35 @@
                 <p class="capitalize">Your Product</p>
             </div>
         </div>
-    <form>
+    <form [formGroup]="form">
         <div class="row">
           <label for="name">Sku Name</label>
-          <input id="name" type="text" placeholder="Type a description" name="description" formControlName="description">
+          <input readonly id="name" type="text" placeholder="Missing Information" name="name" formControlName="name">
         </div>
     
         <div class="row">
             <label for="Branch name">Branch name</label>
-            <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+            <input readonly id="branchName" type="text" placeholder="Missing Information" name="branchName" formControlName="branchName">
         </div>
 
         <div class="row">
             <label for="Quantity">Quantity</label>
-            <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+            <input readonly id="quantity" type="text" placeholder="Missing Information" name="quantity" formControlName="quantity">
         </div>
 
         <div class="row">
-            <label for="Aisle">Aisle | Bay</label>
-            <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+            <label for="AisleBay">Aisle | Bay</label>
+            <input readonly id="aisleBay" type="text" placeholder="Missing Information" name="aisleBay" formControlName="aisleBay">
         </div>
 
         <div class="row">
             <label for="Measurement Unity">Measurement Unity</label>
-            <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+            <input readonly readonly id="measurementUnity" type="text" placeholder="Missing Information" name="measurementUnity" formControlName="measurementUnity">
         </div>
 
         <div class="row">
             <label for="Arrival Date">Arrival Date</label>
-            <input id="symbol" type="text" placeholder="Type a symbol" name="symbol" formControlName="symbol">
+            <input readonly id="arrivalDate" type="text" placeholder="Missing Information" name="arrivalDate" formControlName="arrivalDate">
         </div>
       
     </form>
