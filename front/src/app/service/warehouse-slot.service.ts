@@ -35,4 +35,18 @@ export class WarehouseSlotService {
       headers: this.auth.buildHeader()
     }
   }
+
+  getByClientIdByBranches(id:number){
+    return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot/client/${id}/filterByBranches`)
+  }
+
+  getByClientIdByBranchesByProducts(id:number){
+    return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot/client/${id}/filterByBranchesAndProducts`)
+  }
+
+  getByClientIdByBranchesByProductsName(id:number, term:string, idsList: number[]){
+    const body = { ids: idsList}
+    return this.http.post<IWarehouseSlot[]>
+    (`http://localhost:8080/warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}`, body)
+  }
 }

@@ -51,6 +51,7 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

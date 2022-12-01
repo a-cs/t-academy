@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalShowClientInventoryComponent } from 'src/app/components/modal-show-client-inventory/modal-show-client-inventory.component';
 
+
 @Component({
   selector: 'app-client-inventory',
   templateUrl: './client-inventory.component.html',
