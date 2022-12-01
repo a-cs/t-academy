@@ -1,4 +1,4 @@
-import { Component, Inject, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -35,18 +35,9 @@ export class CategoryUpdateFormComponent implements OnInit {
     this.configureForm();
   }
 
-  configureForm() {
-    this.updateForm = new FormGroup({
-      id: new FormControl(this.categoryToUpdate.id, Validators.nullValidator),
-      name: new FormControl(
-        this.categoryToUpdate.name,
-        Validators.nullValidator
-      ),
-    });
-  }
-
   onUpdate() {
     const formSubmmited: boolean = true;
+    this.categoryService.categoryUpdatedOrDeleted.emit();
     const newCategoryName = this.updateForm.get('name')?.value;
     const newCategory: ICategory = {
       id: this.categoryToUpdate.id,
@@ -60,17 +51,18 @@ export class CategoryUpdateFormComponent implements OnInit {
 
   onDeleteItem() {
     const formSubmmited: boolean = true;
+    let dialogConfig: MatDialogConfig = this.getDialogConfiguration();
+    dialogConfig.data = {
+      observable: this.categoryService.delete(
+        this.categoryToUpdate.id as number
+      ),
+      object: 'category',
+    };
 
-    // const confirmDialogRef = this.confirmDialog.open(
-    // ModalConfirmComponent,
-    // this.getDialogConfiguration()
-    // );
-
-    // confirmDialogRef.afterClosed().subscribe(() => {
-    // console.log('deleted');
-    // });
-    this.categoryService.delete(this.categoryToUpdate.id as number).subscribe();
-    this.dialogRef.close(formSubmmited);
+    const confirmDialogRef = this.confirmDialog.open(
+      ModalConfirmComponent,
+      dialogConfig
+    );
   }
 
   getDialogConfiguration(): MatDialogConfig {
@@ -81,5 +73,15 @@ export class CategoryUpdateFormComponent implements OnInit {
     dialogConfig.width = '600px';
     dialogConfig.height = '600px';
     return dialogConfig;
+  }
+
+  configureForm() {
+    this.updateForm = new FormGroup({
+      id: new FormControl(this.categoryToUpdate.id, Validators.nullValidator),
+      name: new FormControl(
+        this.categoryToUpdate.name,
+        Validators.nullValidator
+      ),
+    });
   }
 }

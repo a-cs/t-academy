@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup
   showPassword: boolean = false
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, public router: Router) { }
 
   ngOnInit(): void {
     this.configureForm()
@@ -19,17 +20,25 @@ export class LoginComponent implements OnInit {
 
   configureForm() {
     this.form = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
+      username: ["", [Validators.required]],
       password: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     })
   }
 
   login(){
     // console.log(this.form)
-    let email = this.form.controls['email'].value
+    let username = this.form.controls['username'].value
     let password = this.form.controls['password'].value
-    // console.log({email, password})
-    this.userService.login().subscribe(response => {console.log("res!", response) }, error => { console.log("err!", error) })
+    // console.log({username, password})
+    this.userService.login(username, password).subscribe(
+      response => {
+        console.log("res!", response)
+        localStorage.setItem("T-WMS_token", response.access_token)
+        this.router.navigate([""])
+      },
+      error => {
+        console.log("err!", error)
+      })
 
   }
 
