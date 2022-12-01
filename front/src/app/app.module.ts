@@ -48,6 +48,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
 import { CardBranchComponent } from './components/BranchComponents/card-branch/card-branch.component';
 import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
+import { ModalShowClientInventoryComponent } from './modal-show-client-inventory/modal-show-client-inventory.component';
 
 
 @NgModule({
@@ -85,8 +86,9 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
     CardBranchComponent,
     BranchComponent,
     ModalShowMoreComponent,
+    CategoryComponent,
+    ModalShowClientInventoryComponent,
     CategoryComponent
-
   ],
   imports: [
     BrowserModule,
