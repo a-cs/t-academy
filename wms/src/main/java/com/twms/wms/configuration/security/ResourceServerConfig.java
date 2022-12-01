@@ -31,7 +31,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private static final String[] OPERATOR = {"/**"};
     private static final String[] BRANCH_MANAGER = {"/**"};
     private static final String[] MANAGER = {"/**"};
-    private static final String[] ADMIN = {"/**"};
+    private static final String[] ADMIN = {"/user/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -48,6 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .permitAll();
         } else if(Arrays.asList(env.getActiveProfiles()).contains("dev")){
             http
+                    .cors().and()
                     .authorizeRequests()
                     .antMatchers(PUBLIC).permitAll()
                     .antMatchers(ADMIN).hasRole("ADMIN")
