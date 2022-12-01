@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'clients',
-    component: ClientComponent},
+    component: ClientComponent,
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: ["ROLE_ADMIN", "ROLE_MANAGER"]
