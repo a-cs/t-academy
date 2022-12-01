@@ -13,32 +13,35 @@ export class UserService {
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   getByUsernameLike(name:string){
-    return this.http.get<IUser[]>(`http://localhost:8080/user/search?username=${name}`)
+    return this.http.get<IUser[]>(`http://localhost:8080/user/search?username=${name}`, {
+      headers: this.auth.buildHeader()
+    })
   }
 
   get(){
     console.log(this.auth.buildHeader())
     return this.http.get<IUser[]>("http://localhost:8080/user/all", {
       headers: this.auth.buildHeader()
-      // .set("Authorization", "Basic " + btoa("tsystems:tsPassword"))
     })
   }
 
   getById(id:number){
-    return this.http.get<IUser>(`http://localhost:8080/user/${id}`)
+    return this.http.get<IUser>(`http://localhost:8080/user/${id}`, {
+      headers: this.auth.buildHeader()
+    })
   }
-
-  // delete(id:number){
-  //   return this.http.delete(`http://localhost:8080/user/${id}`)
-  // }
 
   updateUser(data: IUser){
     console.log("json!",data)
-    return this.http.put<IUser>(`http://localhost:8080/user/${data.id}`, data)
+    return this.http.put<IUser>(`http://localhost:8080/user/${data.id}`, data, {
+      headers: this.auth.buildHeader()
+    })
   }
 
   getRoles(){
-    return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`)
+    return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`, {
+      headers: this.auth.buildHeader()
+    })
   }
 
 login(username: string, password: string) {
@@ -47,7 +50,6 @@ login(username: string, password: string) {
     .set("password", password)
     .set("grant_type",  'password')
 
-     // const body = new HttpParams().set("username", username).set("password", password)
      return this.http.post<IOAuthResponse>(`
         http://localhost:8080/oauth/token`,
         body.toString(), {
