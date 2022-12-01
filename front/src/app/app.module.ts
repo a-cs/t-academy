@@ -34,6 +34,14 @@ import { CategoryCreateFormComponent } from './components/CategoryComponents/cat
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
+
+
+import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
+import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
+import { ClientComponent } from './pages/client/client.component';
+import { ModalAddClientComponent } from './components/ClientComponents/modal-add-client/modal-add-client.component';
+import { ModalCreateClientComponent } from './components/ClientComponents/modal-create-client/modal-create-client.component';
+
 import { CardMeasuUnitComponent } from './components/MeasurementUnitComponents/card-measu-unit/card-measu-unit.component';
 import { ModalUpdateMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-update-measu-unit/modal-update-measu-unit.component';
 import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
@@ -69,12 +77,18 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,
+    CategoryCreateCardComponent,    
+    CardClientComponent,
+    ModalUpdateClientComponent,
+    ClientComponent,
+    ModalAddClientComponent,
+    ModalCreateClientComponent,
     CardBranchComponent,
     BranchComponent,
     ModalShowMoreComponent,
     CategoryComponent,
     ModalShowClientInventoryComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

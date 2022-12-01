@@ -12,20 +12,19 @@ export class CategoryComponent implements OnInit {
 
   constructor(private categoryService: CategoryService) {}
 
-  onItemUpdate() {}
-
   ngOnInit(): void {
-    this.categoryService.get().subscribe((data) => {
-      this.categories = data;
+    this.getCategories();
+  }
+
+  getCategories(): void {
+    this.categoryService.get().subscribe((categories) => {
+      this.categories = categories;
     });
-    console.log('CATEGORY PAGE!!');
   }
 
-  refreshComponent() {
-    window.location.reload();
-  }
-
-  onSearchTextEntered(data: String) {
-    console.log(data);
+  onSearchTextEntered(searchTerm: string) {
+    this.categoryService
+      .getByLikeName(searchTerm)
+      .subscribe((data) => (this.categories = data));
   }
 }
