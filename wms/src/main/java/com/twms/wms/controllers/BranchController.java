@@ -5,7 +5,6 @@ import com.twms.wms.services.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +23,11 @@ public class BranchController {
     @GetMapping("/{branchId}")
     public ResponseEntity<Branch> readBranchById(@PathVariable("branchId") Long branchId){
         return ResponseEntity.status(HttpStatus.OK).body(branchService.readBranchById(branchId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Branch>> search(@RequestParam String term) {
+        return ResponseEntity.status(HttpStatus.OK).body(branchService.searchTerm(term));
     }
 
     @PostMapping

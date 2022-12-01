@@ -50,6 +50,11 @@ public class BranchService {
         return branchRepository.findByIdIn(ids);
     }
 
+    public List<Branch> searchTerm(String searchTerm) {
+        String terms = searchTerm.replace("-", " ");
+        return this.branchRepository.findByNameContainingIgnoreCase(terms);
+    }
+
     public Branch updateBranch(Long branchId, Branch branch){
         Branch oldBranch = this.readBranchById(branchId);
         //oldBranch.setAddress(branch.getAddress());
