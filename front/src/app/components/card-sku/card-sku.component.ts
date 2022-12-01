@@ -19,16 +19,9 @@ export class CardSkuComponent {
     const dialogRef = this.dialog.open(ModalUpdateSkuComponent, {
       width: "600px",
       height: "600px",
+      autoFocus: false,
       data: sku
     });
-    // dialogRef.afterClosed().subscribe(
-    //   data => {
-    //     console.log("sku1", sku)
-    //     sku = data
-    //     console.log("sku2", sku)
-    //     this.router.navigate(["/product"])
-    //   }
-    // )
 
   }
 

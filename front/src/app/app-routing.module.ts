@@ -17,7 +17,7 @@ const routes: Routes = [
     component: ProductComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR"]
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"]
     }
   },
   {
@@ -41,7 +41,7 @@ const routes: Routes = [
     component: MeasurementUnitComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER","ROLE_OPERATOR"]
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER","ROLE_OPERATOR"]
     }
   },
   {
@@ -49,12 +49,16 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR"]
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"]
     }
   },
   {
     path: 'branches',
-    component: BranchComponent
+    component: BranchComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER"]
+    }
   },
   {
     path: 'login',
@@ -65,7 +69,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_BRANCH_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"]
+      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"]
     }
   },
   {
