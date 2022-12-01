@@ -25,6 +25,16 @@ export class AuthService {
       return false
   }
 
+  public getUsername():string {
+    let token = this.getToken();
+    if(token){
+      let decoded:ITokenPayload = this.jwtHelper.decodeToken(token)
+      return decoded.user_name
+    }
+    return ""
+}
+
+
   public buildHeader(){
     return new HttpHeaders().set("Authorization", "Bearer " + this.getToken())
   }

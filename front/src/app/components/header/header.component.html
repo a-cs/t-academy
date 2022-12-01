@@ -1,19 +1,66 @@
 <header>
-    <a (click)="navigate('/')"><div class="logo">T-WMS</div></a>
+    <a (click)="navigate('/')">
+        <div class="logo">T-WMS</div>
+    </a>
 
-    <div class="menu" [class.is-open] = "isMenuOpen" [@fadeInOnEnter]>
+    <div class="menu" [class.is-open]="isMenuOpen" [@fadeInOnEnter]>
         <ul>
-            <a (click)="navigate('/')"><li class="item">Home</li></a>
+            <a>
+                <li class="item">
+                    <div class="userMobile">
+                        <i class="material-icons">account_circle</i>{{auth.getUsername()}}
+                    </div>
+                </li>
+            </a>
+            <a (click)="navigate('/')">
+                <li class="item"><i class="material-icons">home</i>Home</li>
+            </a>
             <div class="line"></div>
-            <a (click)="navigate('/products')"><li class="item">Products</li></a>
+            <div *ngIf='auth.validateRole(permissions.products)' class="ngIf-Home">
+                <a (click)="navigate('/products')">
+                    <li class="item"><i class="material-icons">view_in_ar</i>Products</li>
+                </a>
+                <div class="line"></div>
+                <a (click)="navigate('/categories')">
+                    <li class="item"><i class="material-icons">category</i>Products</li>
+                </a>
+                <div class="line"></div>
+                <a (click)="navigate('/measurement-units')">
+                    <li class="item"><i class="material-icons">straighten</i>Measurement Units</li>
+                </a>
+                <div class="line"></div>
+                <a (click)="navigate('/Branches')">
+                    <li class="item"><i class="material-icons">location_city</i>Branches</li>
+                </a>
+                <div class="line"></div>
+                <a (click)="navigate('/Clients')">
+                    <li class="item"><i class="material-icons">groups</i>Clients</li>
+                </a>
+                <div class="line"></div>
+                <a (click)="navigate('/users')">
+                    <li class="item"><i class="material-icons">person</i>Users</li>
+                </a>
+                <div class="line"></div>
+            </div>
+            <a (click)="navigate('/client-inventory')">
+                <li class="item"><i class="material-icons">shelves</i>Client Inventory</li>
+            </a>
             <div class="line"></div>
-            <li class="item">placeholder</li>
-            <div class="line"></div>
-            <a (click)="signout()"><li class="item">Sign out</li></a>
+
+            <a (click)="signout()">
+                <li class="item">
+                <li class="item"><i class="material-icons">logout</i>Sign out</li>
+            </a>
         </ul>
     </div>
-    <div class="burguer" (click)="toggleMenu()">
-        <i class="material-icons" [@fadeInOnEnter]>{{ isMenuOpen ? "close" : "menu"}}</i>
+
+    <div class="right-side">
+        <div class="user">
+            <i class="material-icons">account_circle</i>{{auth.getUsername()}}
+        </div>
+        <div class="burguer" (click)="toggleMenu()">
+            <i class="material-icons burguer-icon" [@fadeInOnEnter]>{{ isMenuOpen ? "close" : "menu"}}</i>
+        </div>
     </div>
 
 </header>

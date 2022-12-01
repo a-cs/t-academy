@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
+import { AuthService } from 'src/app/service/auth.service';
+import { routePermission } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,9 @@ import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animati
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public auth: AuthService) { }
+
+  permissions = routePermission
 
   ngOnInit(): void {
   }

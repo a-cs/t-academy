@@ -12,6 +12,33 @@ header{
 a{
     cursor: pointer;
 }
+li > i{
+    height: 3rem;
+    vertical-align: middle;
+    padding-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-right: 1rem;
+}
+
+.right-side{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.right-side .user {
+    margin-right: 12rem;
+    color: var(--background-color);
+    font-size: 2.6rem;
+}
+
+.user i {
+    font-size: 4rem;
+    vertical-align: middle;
+    margin-right: 8px;
+}
 
 .logo{
     color: white;
@@ -25,7 +52,7 @@ a{
     color: var(--background-color);
 }
 
-.material-icons{
+.burguer-icon{
     font-size: 5rem;
 }
 
@@ -55,8 +82,8 @@ ul a {
         position: absolute;
         right: 0;
         top: 10vh;
-        height: 50%;
-        width: 30%;
+        height: 99%;
+        width: 35%;
         background-color: var(--primary-color);
         border-radius: 0 0 0 32px;
         color: var(--text-primary-color);
@@ -64,15 +91,35 @@ ul a {
         justify-content: center;
         align-items: center;
         box-shadow: 8px 8px 200px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
     }
 
     .menu.is-open li{
+        height: 3rem;
         font-size: 2rem;
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
         color: white;
+        line-height: 3rem;
+        text-align: center;
     }
 
     @media (max-width: 1000px) {
+        .user {
+            display: none;
+        }
+
+        .userMobile {
+            margin-right: 12rem;
+            color: var(--background-color);
+            font-size: 2.6rem;
+        }
+        
+        .userMobile i {
+            font-size: 4rem;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
         .menu.is-open{
             height: 90%;
             width: 75%;

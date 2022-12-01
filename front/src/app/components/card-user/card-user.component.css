@@ -18,10 +18,16 @@
 .picture {
     margin: 0 2rem;
     border-radius: 50%;
-    background-color: lightslategray;
+    background-color: var(--primary-hover-color);
     height: 100px;
     width: 100px;
     flex-shrink: 0;
+}
+
+i{
+    font-size: 90px;
+    padding: 2px 5px 8px 5px;
+    color: white;
 }
 
 .username {
