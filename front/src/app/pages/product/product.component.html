@@ -4,7 +4,7 @@
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
     <div class="cards">
-        <app-card-create-sku [component] = "component"></app-card-create-sku>
+        <app-card-create-sku *ngIf="auth.validateRole(btnPermission.addProduct)" [component] = "component"></app-card-create-sku>
         <app-card-sku *ngFor="let sku of skus" [sku]="sku"></app-card-sku>
     </div>
 </div>
