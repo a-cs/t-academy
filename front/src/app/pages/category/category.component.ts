@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import ICategory from 'src/app/interfaces/ICategory';
+import { AuthService } from 'src/app/service/auth.service';
 import { CategoryService } from 'src/app/service/category.service';
+import { buttonPermission } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-category',
@@ -10,7 +12,10 @@ import { CategoryService } from 'src/app/service/category.service';
 export class CategoryComponent implements OnInit {
   categories: ICategory[] = [];
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService,
+    public auth: AuthService) {}
+
+  btnPermission = buttonPermission;
 
   ngOnInit(): void {
     this.getCategories();

@@ -10,6 +10,7 @@ import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-u
 import { ProductComponent } from './pages/product/product.component';
 import { UserComponent } from './pages/user/user.component';
 import { AuthGuardService } from './service/auth-guard.service';
+import { routePermission } from './utils/utils';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
     component: ProductComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"]
+      expectedRoles: routePermission.products
     }
   },
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
     component: ClientComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN", "ROLE_MANAGER"]
+      expectedRoles: routePermission.clients
     }
   },
   {
@@ -33,7 +34,7 @@ const routes: Routes = [
     component: ClientInventoryComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN", "ROLE_MANAGER","ROLE_CLIENT"]
+      expectedRoles: routePermission.clientInventory
     }
   },
   {
@@ -41,7 +42,7 @@ const routes: Routes = [
     component: MeasurementUnitComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER","ROLE_OPERATOR"]
+      expectedRoles: routePermission.measurementUnits
     }
   },
   {
@@ -49,7 +50,7 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"]
+      expectedRoles: routePermission.categories
     }
   },
   {
@@ -57,7 +58,7 @@ const routes: Routes = [
     component: BranchComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER"]
+      expectedRoles: routePermission.branches
     }
   },
   {
@@ -69,7 +70,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"]
+      expectedRoles: routePermission.home
     }
   },
   {
@@ -77,7 +78,7 @@ const routes: Routes = [
     component: UserComponent,
     canActivate: [AuthGuardService],
     data: {
-      expectedRoles: ["ROLE_ADMIN","ROLE_MANAGER"]
+      expectedRoles: routePermission.users
     }
   }
 ];
