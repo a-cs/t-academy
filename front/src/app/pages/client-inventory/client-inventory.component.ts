@@ -8,7 +8,8 @@ import { FormControl, FormGroup} from '@angular/forms';
 import { map } from 'rxjs/operators';
 import {MatSelectModule} from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalShowClientInventoryComponent } from 'src/app/modal-show-client-inventory/modal-show-client-inventory.component';
+import { ModalShowClientInventoryComponent } from 'src/app/components/modal-show-client-inventory/modal-show-client-inventory.component';
+
 
 @Component({
   selector: 'app-client-inventory',
