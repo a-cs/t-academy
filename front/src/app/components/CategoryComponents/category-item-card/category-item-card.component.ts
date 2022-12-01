@@ -39,7 +39,6 @@ export class CategoryItemCardComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = this.category;
     dialogConfig.autoFocus = false;
-    dialogConfig.disableClose = true;
     dialogConfig.width = '600px';
     dialogConfig.height = '600px';
     return dialogConfig;

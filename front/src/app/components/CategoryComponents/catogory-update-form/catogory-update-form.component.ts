@@ -69,7 +69,6 @@ export class CategoryUpdateFormComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = this.categoryToUpdate;
     dialogConfig.autoFocus = false;
-    dialogConfig.disableClose = true;
     dialogConfig.width = '600px';
     dialogConfig.height = '600px';
     return dialogConfig;

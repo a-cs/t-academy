@@ -18,7 +18,6 @@ export class ModalCreateClientComponent implements OnInit {
   openAddDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = false;
-    dialogConfig.disableClose = true;
     dialogConfig.width = '600px';
     dialogConfig.height = '90%';
 
