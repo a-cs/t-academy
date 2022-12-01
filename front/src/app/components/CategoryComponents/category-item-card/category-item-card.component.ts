@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
+import { CategoryService } from 'src/app/service/category.service';
 import { CategoryUpdateFormComponent } from '../catogory-update-form/catogory-update-form.component';
 
 @Component({
@@ -12,7 +13,10 @@ export class CategoryItemCardComponent implements OnInit {
   @Output() onItemUpdatedOrDeleted = new EventEmitter<void>();
   @Input() category: ICategory;
 
-  constructor(public dialogRef: MatDialog) {}
+  constructor(
+    public dialogRef: MatDialog,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -35,7 +39,6 @@ export class CategoryItemCardComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = this.category;
     dialogConfig.autoFocus = false;
-    dialogConfig.disableClose = true;
     dialogConfig.width = '600px';
     dialogConfig.height = '600px';
     return dialogConfig;

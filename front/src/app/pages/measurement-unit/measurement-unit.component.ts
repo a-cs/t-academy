@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalAddMeasuUnitComponent } from 'src/app/components/MeasurementUnitComponents/modal-add-measu-unit/modal-add-measu-unit.component';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
+import { AuthService } from 'src/app/service/auth.service';
 import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
+import { buttonPermission } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-measurement-unit',
@@ -14,8 +16,11 @@ export class MeasurementUnitComponent implements OnInit {
   measurementUnits: IMeasurementUnit[]
   searchText: string
 
-  constructor(private measurementUnitService: MeasurementUnitService) { }
+  constructor(private measurementUnitService: MeasurementUnitService,
+    public auth: AuthService) { }
 
+    btnPermission = buttonPermission
+    
   ngOnInit(): void {
     this.measurementUnitService.get().subscribe(
       data => {

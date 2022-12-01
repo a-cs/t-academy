@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="container">
+  <div class="search-bar">
+    <app-search-bar
+      (searchTextChanged)="onSearchTextEntered($event)"
+    ></app-search-bar>
+  </div>
+
+  <p *ngFor="let client of clients"></p>
+
+  <div class="cards">
+    <app-modal-create-client></app-modal-create-client>
+    <app-card-client
+      (onItemUpdatedOrDeleted)="refreshComponent()"
+      *ngFor="let client of clients"
+      [client]="client"
+    ></app-card-client>
+  </div>
+</div>
+<app-footer></app-footer>

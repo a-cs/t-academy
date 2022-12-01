@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import ICategory from 'src/app/interfaces/ICategory';
+import { AuthService } from 'src/app/service/auth.service';
 import { CategoryService } from 'src/app/service/category.service';
+import { buttonPermission } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-category',
@@ -10,22 +12,24 @@ import { CategoryService } from 'src/app/service/category.service';
 export class CategoryComponent implements OnInit {
   categories: ICategory[] = [];
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService,
+    public auth: AuthService) {}
 
-  onItemUpdate() {}
+  btnPermission = buttonPermission;
 
   ngOnInit(): void {
-    this.categoryService.get().subscribe((data) => {
-      this.categories = data;
+    this.getCategories();
+  }
+
+  getCategories(): void {
+    this.categoryService.get().subscribe((categories) => {
+      this.categories = categories;
     });
-    console.log('CATEGORY PAGE!!');
   }
 
-  refreshComponent() {
-    window.location.reload();
-  }
-
-  onSearchTextEntered(data: String) {
-    console.log(data);
+  onSearchTextEntered(searchTerm: string) {
+    this.categoryService
+      .getByLikeName(searchTerm)
+      .subscribe((data) => (this.categories = data));
   }
 }

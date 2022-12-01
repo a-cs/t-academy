@@ -1,6 +1,7 @@
 package com.twms.wms.controllers;
 
 import com.twms.wms.entities.Client;
+import com.twms.wms.entities.SKU;
 import com.twms.wms.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,11 @@ public class ClientController {
 
     @Autowired
     ClientService clientService;
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Client>> searchSku(@RequestParam String term) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.searchTerm(term));
+    }
 
     @GetMapping
     public ResponseEntity<List<Client>> getAllClients(){return ResponseEntity.status(HttpStatus.OK).body(clientService.readAllClients());}

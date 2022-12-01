@@ -60,8 +60,8 @@ public class UserService implements UserDetailsService {
                 LocalDateTime.now().plusHours(2),
                 savedUser
         );
-        emailSender.send(user.getEmail(),
-                "<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
+        //emailSender.send(user.getEmail(),
+                //"<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return new UserDTO(savedUser);
     }

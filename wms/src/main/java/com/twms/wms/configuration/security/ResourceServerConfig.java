@@ -26,11 +26,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    private static final String[] PUBLIC = {"/oauth/token", "/user/signup"};
-    private static final String[] ROLE_CLIENT = {"/**"};
-    private static final String[] OPERATOR = {"/**"};
-    private static final String[] BRANCH_MANAGER = {"/**"};
-    private static final String[] MANAGER = {"/**"};
+
+    private static final String[] PUBLIC = {"/oauth/token"};
+
+    private static final String[] ROLE_CLIENT_GET = {"/branch", "/warehouseSlot/client/**"};
+    private static final String[] ROLE_CLIENT_POST = {"/warehouseSlot/client/**"};
+
+    private static final String[] OPERATOR = {"/sku/**", "/measurement-unit/**", "/category/**"};
+
+//    private static final String[] BRANCH_MANAGER = {"/sku/search", "/sku", "/sku/{\\\\d+}"};
+
+    private static final String[] MANAGER = {"/sku/**", "/measurement-unit/**", "/category/**", "/client/**", "/user/**"};
+    private static final String[] MANAGER_GET = {"/branch/**"};
+
     private static final String[] ADMIN = {"/**"};
 
     @Override
@@ -48,10 +56,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .permitAll();
         } else if(Arrays.asList(env.getActiveProfiles()).contains("dev")){
             http
+                    .cors().and()
                     .authorizeRequests()
-                    .antMatchers(PUBLIC).permitAll()
-                    .antMatchers(ADMIN).hasRole("ADMIN")
-                    .anyRequest().authenticated();
+                    .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+//                    .antMatchers( "/branch").hasRole( "ADMIN")
+                    .antMatchers( "/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
+                    .antMatchers("/sku/**").hasAnyRole("MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/measurement-unit/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
+                    .antMatchers( "/measurement-unit/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/category/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
+                    .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .anyRequest().hasRole("ADMIN");
         }
 
     }

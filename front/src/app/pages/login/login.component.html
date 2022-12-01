@@ -13,15 +13,14 @@
       <div class="group">
 
         <div class="row">
-          <label for="email">Email</label>
+          <label for="username">Username</label>
           <div class="input">
-            <input type="email" placeholder="Type your email" name="email" formControlName="email" #email>
-            <button type="button" class="icon" (click)="email.focus()">
+            <input type="text" placeholder="Type your username" name="username" formControlName="username" #username>
+            <button type="button" class="icon" (click)="username.focus()">
               <i class="material-icons">mail</i>
             </button>
           </div>
-          <p *ngIf="form.controls['email'].errors?.['required']">Email is required</p>
-          <p *ngIf="form.controls['email'].errors?.['email']">Invalid Email</p>
+          <p *ngIf="form.controls['username'].errors?.['required']">User name is required</p>
 
         </div>
         <div class="row">
