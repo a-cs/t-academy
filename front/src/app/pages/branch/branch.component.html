@@ -4,7 +4,7 @@
         
     </div>
     <div class="cards">
-        <button>Add</button>
+        <app-card-create-sku [component] = "component"></app-card-create-sku>
         <app-card-branch *ngFor="let branch of branches" [branch]="branch"></app-card-branch>
     </div>
 </div>

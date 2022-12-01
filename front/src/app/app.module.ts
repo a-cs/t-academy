@@ -40,6 +40,7 @@ import { ModalAddMeasuUnitComponent } from './components/MeasurementUnitComponen
 import { CardBranchComponent } from './components/BranchComponents/card-branch/card-branch.component';
 import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
+import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { ModalShowMoreComponent } from './components/BranchComponents/modal-show
     CardBranchComponent,
     BranchComponent,
     ModalShowMoreComponent,
-    CategoryComponent
+    CategoryComponent,
+    ModalAddBranchComponent
   ],
   imports: [
     BrowserModule,
