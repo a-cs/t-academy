@@ -85,10 +85,11 @@ export class ClientInventoryComponent implements OnInit {
     }
   }
 
-  openAddDialog() {
+  openAddDialog(warehouseSlot: IWarehouseSlot) {
     const dialogRef = this.dialog.open(ModalShowClientInventoryComponent,{
       width: "600px",
-      height: "600px"
+      height: "600px",
+      data: warehouseSlot
     });
   }
 

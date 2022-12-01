@@ -24,7 +24,7 @@
     </div>
     <div class="right-side">
         <div class="cards">
-            <app-card-client-sku (click)="openAddDialog()" *ngFor="let warehouseSlot of client_wareshouses_slots" [warehouseSlot]="warehouseSlot"></app-card-client-sku>
+            <app-card-client-sku (click)="openAddDialog(warehouseSlot)" *ngFor="let warehouseSlot of client_wareshouses_slots" [warehouseSlot]="warehouseSlot"></app-card-client-sku>
         </div>
     </div>
 </div>
