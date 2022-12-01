@@ -26,6 +26,10 @@ export class BranchService {
     })
   }
 
+  getByLikeName(likeName: string) {
+    return this.http.get<IBranch[]>(`http://localhost:8080/branch/search?term=${likeName}`)
+  }
+
   delete(id:number){
     return this.http.delete(`http://localhost:8080/branch/${id}`, {
 

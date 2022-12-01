@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalAddBranchComponent } from 'src/app/components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import IBranch from 'src/app/interfaces/IBranch';
 import { BranchService } from 'src/app/service/branch.service';
 
@@ -9,7 +10,9 @@ import { BranchService } from 'src/app/service/branch.service';
 })
 export class BranchComponent implements OnInit {
 
+  component = ModalAddBranchComponent
   branches: IBranch[]
+  searchText: string
 
   constructor(private branchService: BranchService) { }
 
@@ -20,6 +23,15 @@ export class BranchComponent implements OnInit {
         console.log(this.branches)
       }
     )
+  }
+
+  onSearchTextEntered(searchValue: string) {
+    this.searchText = searchValue
+    this.branchService.getByLikeName(this.searchText).subscribe(
+      data => {this.branches = data
+        console.log(this.branches)
+      }
+      )
   }
 
 }
