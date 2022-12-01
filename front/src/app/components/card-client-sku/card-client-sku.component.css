@@ -106,3 +106,16 @@
         grid-template-rows: repeat(1, 100%);
     }
 }
+
+@media (min-width:700px) and (max-width:1199px){
+    .card{
+        border: 4px var(--border-color) solid;
+        margin: 16px 8px;
+        min-width: 650px;
+        height: 100px;
+        border-radius: 32px;
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: repeat(1, 100%);
+    }
+}
