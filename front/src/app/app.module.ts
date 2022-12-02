@@ -50,6 +50,7 @@ import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 
 
@@ -91,7 +92,8 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryComponent,
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

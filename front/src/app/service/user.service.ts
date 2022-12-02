@@ -42,6 +42,11 @@ export class UserService {
     return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`, {
       headers: this.auth.buildHeader()
     })
+  
+  }
+  confirmEmail(token:string){
+    console.log(token)
+    return this.http.get<any>(`http://localhost:8080/user/confirm?token=${token}`)
   }
 
 login(username: string, password: string) {

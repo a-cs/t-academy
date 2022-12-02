@@ -1,6 +1,7 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
+import com.twms.wms.email.EmailLayout;
 import com.twms.wms.email.EmailService;
 import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
@@ -60,8 +61,8 @@ public class UserService implements UserDetailsService {
                 LocalDateTime.now().plusHours(2),
                 savedUser
         );
-        //emailSender.send(user.getEmail(),
-                //"<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
+
+        emailSender.send(user.getEmail(), EmailLayout.buildEmail(new UserDTO(user), token));
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return new UserDTO(savedUser);
     }

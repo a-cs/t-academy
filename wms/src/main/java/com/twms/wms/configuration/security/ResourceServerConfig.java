@@ -31,14 +31,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] ROLE_CLIENT_GET = {"/branch", "/warehouseSlot/client/**"};
     private static final String[] ROLE_CLIENT_POST = {"/warehouseSlot/client/**"};
-
     private static final String[] OPERATOR = {"/sku/**", "/measurement-unit/**", "/category/**"};
-
-//    private static final String[] BRANCH_MANAGER = {"/sku/search", "/sku", "/sku/{\\\\d+}"};
-
     private static final String[] MANAGER = {"/sku/**", "/measurement-unit/**", "/category/**", "/client/**", "/user/**"};
     private static final String[] MANAGER_GET = {"/branch/**"};
-
     private static final String[] ADMIN = {"/**"};
 
     @Override
@@ -58,8 +53,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             http
                     .cors().and()
                     .authorizeRequests()
+                    .antMatchers("/user/confirm").permitAll()
                     .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
-//                    .antMatchers( "/branch").hasRole( "ADMIN")
                     .antMatchers( "/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/sku/**").hasAnyRole("MANAGER", "ADMIN")
@@ -69,22 +64,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
+
                     .anyRequest().hasRole("ADMIN");
         }
-
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD",
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+//        configuration.setAllowedMethods(Arrays.asList("HEAD",
+//                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 }

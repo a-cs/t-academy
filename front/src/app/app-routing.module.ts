@@ -11,6 +11,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { UserComponent } from './pages/user/user.component';
 import { AuthGuardService } from './service/auth-guard.service';
 import { routePermission } from './utils/utils';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,10 @@ const routes: Routes = [
     data: {
       expectedRoles: routePermission.users
     }
+  },
+  {
+    path: 'confirmation',
+    component: ConfirmationComponent
   }
 ];
 
