@@ -6,10 +6,8 @@
     <div class="menu" [class.is-open]="isMenuOpen" [@fadeInOnEnter]>
         <ul>
             <a>
-                <li class="item">
-                    <div class="userMobile">
+                <li class="item userMobile">
                         <i class="material-icons">account_circle</i>{{auth.getUsername()}}
-                    </div>
                 </li>
             </a>
             <a (click)="navigate('/')">
@@ -48,7 +46,6 @@
             <div class="line"></div>
 
             <a (click)="signout()">
-                <li class="item">
                 <li class="item"><i class="material-icons">logout</i>Sign out</li>
             </a>
         </ul>

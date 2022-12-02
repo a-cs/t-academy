@@ -1,10 +1,18 @@
-.container{
+.container {
     min-height: 78vh;
     width: 100%;
-    
+
 }
 
-.cards{
+.title {
+    font-size: 6rem;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    color: var(--text-secondary-color);
+}
+
+.cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -14,6 +22,6 @@
     justify-content: center;
 }
 
-.search-bar{
+.search-bar {
     margin-top: 2vh;
 }

@@ -34,11 +34,12 @@ i{
     margin: 0 1rem;
     font-size: 1.5rem;
     font-weight: 700;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     flex-shrink: 1;
 }
+
 .username > p {
     word-wrap: break-word;
+    margin-bottom: 0;
 }
 
 .vertical-line{
