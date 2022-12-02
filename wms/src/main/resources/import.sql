@@ -3,10 +3,10 @@ insert into role(authority) values (1);
 insert into role(authority) values (2);
 insert into role(authority) values (3);
 
-insert into user(username, password, email, enabled, access_level_id) values ('client_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','client_user@mail.com', true, 1)
-insert into user(username, password, email, enabled, access_level_id) values ('operator_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true, 2)
-insert into user(username, password, email, enabled, access_level_id) values ('manager_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','manager_user@mail.com', true, 3)
-insert into user(username, password, email, enabled, access_level_id) values ('admin_user', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','admin_user@mail.com', true, 4)
+insert into user(username, password, email, enabled, access_level_id) values ('client', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','client_user@mail.com', true, 1)
+insert into user(username, password, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true, 2)
+insert into user(username, password, email, enabled, access_level_id) values ('manager', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','manager_user@mail.com', true, 3)
+insert into user(username, password, email, enabled, access_level_id) values ('admin', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','admin_user@mail.com', true, 4)
 
 insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Costa", "999", "Brasília", "DF", "12345678")
 insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Silva", "123", "São José dos Campos", "SP", "12345678")
