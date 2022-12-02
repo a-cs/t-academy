@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="container">
+    <div class="title">
+        <p>Branch</p>
+    </div>
+    <div class="search-bar">
+        <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
+    </div>
+    <div class="cards">
+        <app-card-create-sku [component] = "component"></app-card-create-sku>
+        <app-card-branch *ngFor="let branch of branches" [branch]="branch"></app-card-branch>
+    </div>
+</div>
+<app-footer></app-footer>

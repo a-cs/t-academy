@@ -1,0 +1,40 @@
+.card{
+    border: 4px var(--border-color) solid;
+    margin: 16px 8px;
+    min-width: 300px;
+    max-width: 450px;
+    height: 300px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.2s all;
+    background-color: transparent;
+}
+
+.center{
+    margin: auto;
+    border: 4px var(--primary-color) solid;
+    border-radius: 32px;
+}
+
+i{
+    font-size: 14rem;
+    color: var(--primary-color);
+    font-weight: lighter;
+}
+
+.card:hover{
+    cursor: pointer;
+    background-color: var(--secondary-color);
+}
+
+.card:hover{
+    transform: scale(0.98);
+}
+
+.card:active{
+    transform: scale(0.96);
+    background-color: var(--secondary-color);
+    border-color: black;
+}

@@ -1,7 +1,9 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.Client;
+import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.ClientRepository;
+import io.swagger.v3.core.util.Json;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,12 +34,17 @@ public class ClientService {
     @SneakyThrows
     public Client createClient(Client client){
 
-        client.setUser(userService.createClientUser(client.getCNPJ()));
+
         if(clientRepository.findByCNPJ(client.getCNPJ()).size()>0) throw new SQLIntegrityConstraintViolationException("CNPJ is a unique field!!");
         if(clientRepository.findByName(client.getName()).size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
-        if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
-
-        return this.saveClient(client);
+        client.setUser(userService.createClientUser(client.getCNPJ(), client.getEmail()));
+        System.out.println("ate aqui");
+        if(client.getAddress().getId()==null) client.setAddress(addressService.post(client.getAddress()));
+        else if(addressService.getById(client.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
+        System.out.println("ate aqui tbm");
+        Client clientToReturn = this.saveClient(client);
+        System.out.println("tudo ok");
+        return clientToReturn;
 
     }
 
@@ -51,10 +58,15 @@ public class ClientService {
     public Client updateClient(Long clientId, Client client){
         Client oldClient = this.readClientById(clientId);
 
-        //oldClient.setAddress(client.getAddress());
+        long idAdress = oldClient.getAddress().getId();
+        oldClient.setAddress(client.getAddress());
+        oldClient.getAddress().setId(idAdress);
         oldClient.setName(client.getName());
         oldClient.setCNPJ(client.getCNPJ());
+        //oldClient.setEmail(client.getEmail());
         //oldClient.setUser(client.getUser());
+
+        addressService.post(oldClient.getAddress());
 
         return this.saveClient(oldClient);
     }
@@ -63,6 +75,11 @@ public class ClientService {
     public void deleteClient(Long clientId){
         Client toDelete = this.readClientById(clientId);
         clientRepository.delete(toDelete);
+    }
+
+    public List<Client> searchTerm(String searchTerm){
+        String terms = searchTerm.replace("-", " ");
+        return clientRepository.findByNameContainingIgnoreCaseOrCNPJContainingIgnoreCase(terms,terms);
     }
 
 }

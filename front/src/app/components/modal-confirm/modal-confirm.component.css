@@ -1,0 +1,94 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.title{
+  font-size: 2rem;
+  line-height: 3.25rem;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--primary-color);
+  width: 60%;
+  border: 3px var(--primary-color) solid;
+  border-radius: 32px;
+  padding: 8px 0px;
+}
+
+
+.top .mat-icon {
+  font-size: 3.5rem;
+  margin-left: -1.9rem;
+  color: var(--danger-color);
+  transition: 0.2s;
+}
+
+.top .mat-icon-button{
+  background-color: transparent;
+  border: 2px var(--danger-color) solid;
+  width: 74px;
+  height: 74px;
+  transition: 0.2s;
+}
+
+.top .mat-icon-button:hover{
+  background-color: var(--danger-color);
+}
+
+.top .mat-icon-button:hover .mat-icon{
+  color: var(--background-color);
+}
+
+.title p {
+  margin: 0;
+}
+
+.middle {
+  text-align: center;
+  font-size: 2rem;
+  line-height: 3.25rem;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons button {
+  width: 100%;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  line-height: 3.25rem;
+  border-radius: 32px;
+  color: var(--text-tittle-color);
+  padding: 4px 0;
+}
+
+
+.buttons .cancelButton {
+  background-color: var(--danger-color);
+}
+
+.buttons .cancelButton:hover {
+  background-color: var(--danger-color-lighter);
+}
+
+.buttons .sucessButton{
+  background-color: var(--sucess-color);
+}
+
+.buttons .sucessButton:hover{
+  background-color: var(--sucess-color-lighter);
+}

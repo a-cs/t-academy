@@ -1,0 +1,86 @@
+.container{
+    min-height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+span{
+    position: absolute;
+    top: 14vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 50%;
+}
+
+.select{
+    position: absolute;
+    top: 14vh;
+    left: 16%;
+    width: 50%;
+}
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards:first-child{
+    margin-top: 13vh;   
+}
+
+.estilo{
+    width: 250px;
+}
+
+.space{
+    height: 13vh;
+}
+
+@media (max-width: 700px) {
+    .space{
+        height: 25vh;
+    }
+
+    .select{
+        width: 80%;
+        top: 25vh;
+    }
+
+    span{
+        width: 80%;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 1600px){
+
+
+    .space{
+        height: 25vh;
+    }
+
+    span{
+        width: 80%;
+    }
+
+    .select{
+        width: 450px;
+        top: 25vh;
+        left: 80%;
+        transform: translate(-50%, 0);
+        width: 56%;
+    }
+
+    .estilo{
+        transform: translate(-50%, 0);
+        width: 56%;
+    }
+}

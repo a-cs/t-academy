@@ -1,9 +1,9 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.repositories.BranchRepository;
 import lombok.SneakyThrows;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +38,21 @@ public class BranchService {
         Optional<Branch> opt = branchRepository.findById(branchId);
         Branch branch = opt.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
         return branch;
+    }
+
+    // Refatorar para usar apenas o que recebe lista de ids
+    public List<Branch> getBranchesByIds(ListIdsFilterDTO ids) {
+        List<Long> idsAsLong = ids.getIds();
+        return branchRepository.findByIdIn(idsAsLong);
+    }
+
+    public List<Branch> getBranchesByIds(List<Long> ids) {
+        return branchRepository.findByIdIn(ids);
+    }
+
+    public List<Branch> searchTerm(String searchTerm) {
+        String terms = searchTerm.replace("-", " ");
+        return this.branchRepository.findByNameContainingIgnoreCase(terms);
     }
 
     public Branch updateBranch(Long branchId, Branch branch){

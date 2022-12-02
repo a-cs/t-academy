@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,15 @@ public class MeasurementUnitService {
     MeasurementUnitRepository measurementUnitRepository;
     public Page<MeasurementUnit> read(Pageable pageable) {
         return  measurementUnitRepository.findAll(pageable);
+    }
+
+    public List<MeasurementUnit> read() {
+        return measurementUnitRepository.findAll();
+    }
+
+    public List<MeasurementUnit> searchTerm(String searchTerm) {
+        String terms = searchTerm.replace("-", " ");
+        return this.measurementUnitRepository.findByDescriptionContainingIgnoreCaseOrSymbolContainingIgnoreCase(terms, terms);
     }
 
     @Transactional

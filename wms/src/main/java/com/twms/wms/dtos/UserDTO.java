@@ -13,7 +13,10 @@ public class UserDTO {
 
     private Long id;
     private String username;
-    private Set<Role> accessLevel = new HashSet<>();
+    private String email;
+    private boolean enabled;
+    private Role accessLevel;
+//    private Set<Role> accessLevel = new HashSet<>();
 
     public UserDTO() {
     }
@@ -21,5 +24,7 @@ public class UserDTO {
         this.id = user.getId();
         this.username = user.getUsername();
         this.accessLevel = user.getAccessLevel();
+        this.email = user.getEmail();
+        this.enabled = user.isEnabled();
     }
 }

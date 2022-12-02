@@ -1,0 +1,83 @@
+.container{
+  min-height: 78vh;
+  width: 100%;
+}
+
+.title {
+  font-size: 6rem;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  color: var(--text-secondary-color);
+}
+
+.cards{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 16px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar{
+  margin-top: 2vh;
+}
+
+.card{
+  border: 4px var(--border-color) solid;
+  margin: 16px 8px;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  width: 450px;
+  height: 394px;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s all;
+  background-color: transparent;
+  flex-shrink: 1;
+}
+
+.center{
+  margin: auto;
+  border: 4px var(--primary-color) solid;
+  border-radius: 32px;
+}
+
+.card p{
+  margin-bottom: 0;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  font-weight: lighter;
+  padding: 16px 12px;
+}
+
+.card:hover{
+  cursor: pointer;
+  background-color: var(--secondary-color);
+}
+
+.card:hover{
+  transform: scale(0.98);
+}
+
+.card:active{
+  transform: scale(0.96);
+  background-color: var(--secondary-color);
+  border-color: black;
+}
+
+i{
+  font-size: 12rem;
+  color: var(--primary-hover-color);
+  padding: 8px;
+}
+
+@media (max-width: 700px) {
+  .card p{
+    font-size: 2.5rem;
+  }
+}

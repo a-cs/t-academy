@@ -5,6 +5,8 @@ import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,28 +26,43 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<UserDTO> readUser(@RequestParam("username") String username){
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDTO> readUser(@PathVariable("username") String username){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByUsername(username));
     }
 
-    @PutMapping("/permissions/add/{userId}")
-    public ResponseEntity<UserDTO> addUserAccessLevel(@RequestBody Role role,
-                                                         @PathVariable("userId") Long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserAccessLevel(role, userId, true));
+    @GetMapping("/search")
+    public ResponseEntity<List<UserDTO>> readUserFiltered(@RequestParam("username") String username){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFilteredByUsername(username));
     }
-    @PutMapping("/permissions/revoke/{userId}")
-    public ResponseEntity<UserDTO> revokeUserAccessLevel(@RequestBody Role role,
+
+//    @PutMapping("/permissions/{userId}")
+//    public ResponseEntity<UserDTO> setUserAccessLevel(@RequestBody Role role,
+//                                                         @PathVariable("userId") Long userId){
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserAccessLevel(role, userId));
+//    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO user,
                                                       @PathVariable("userId") Long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserAccessLevel(role, userId, false));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(user, userId));
     }
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> readAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
-    @PutMapping("/{userId}/enable/{enabled}")
-    public ResponseEntity<UserDTO> enableOrDisableUser(@PathVariable("userId") Long userId,
-                                                  @PathVariable("enabled") boolean enabled){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserIsEnable(userId, enabled));
+    @GetMapping("/pages")
+    public ResponseEntity<Page<UserDTO>> readPaginated(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsersPaginated(pageable));
     }
+//    @PutMapping("/{userId}/enable/{enabled}")
+//    public ResponseEntity<UserDTO> enableOrDisableUser(@PathVariable("userId") Long userId,
+//                                                  @PathVariable("enabled") boolean enabled){
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserIsEnable(userId, enabled));
+//    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmUserEmail(@RequestParam("token") String token){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
+    }
+
 }
