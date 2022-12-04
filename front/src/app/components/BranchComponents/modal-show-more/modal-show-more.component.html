@@ -1,5 +1,5 @@
 <div class="top">
-    <button mat-icon-button *ngIf="showUpdateButton" class="edit" (click)="clickOnEdit()">
+    <button mat-icon-button *ngIf="auth.validateRole(permissions.editBranch) && showUpdateButton" class="edit" (click)="clickOnEdit()">
         <mat-icon>mode_edit</mat-icon>
     </button>
     <div class="title">
