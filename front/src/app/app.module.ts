@@ -35,7 +35,6 @@ import { CategoryCreateCardComponent } from './components/CategoryComponents/cat
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 
-
 import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
 import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
 import { ClientComponent } from './pages/client/client.component';
@@ -50,8 +49,8 @@ import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
-
-
+import { ToastrModule } from 'ngx-toastr';
+import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,7 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,    
+    CategoryCreateCardComponent,
     CardClientComponent,
     ModalUpdateClientComponent,
     ClientComponent,
@@ -91,7 +90,8 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryComponent,
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    ModalConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,9 +104,10 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
