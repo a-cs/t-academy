@@ -50,8 +50,8 @@ import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
-
-
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +91,9 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryComponent,
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    NotFoundComponent,
+    NotFoundIconsBgComponent
   ],
   imports: [
     BrowserModule,
