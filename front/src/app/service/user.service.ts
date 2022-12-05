@@ -44,9 +44,11 @@ export class UserService {
     })
   
   }
-  confirmEmail(token:string){
-    console.log(token)
-    return this.http.get<any>(`http://localhost:8080/user/confirm?token=${token}`)
+  changePassword(token:string, password:string){
+    const body = new HttpParams()
+    .set("token", token)
+    .set("password", password)
+    return this.http.put<any>(`http://localhost:8080/user/setpassword`, body)
   }
 
 login(username: string, password: string) {

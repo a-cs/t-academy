@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class EmailService implements EmailSender{
@@ -26,9 +27,9 @@ public class EmailService implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom(emailSender);
+            helper.setFrom(emailSender, "T-WMS");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e){
+        } catch (MessagingException | UnsupportedEncodingException e){
             //TODO: change thrown error type
             throw new IllegalArgumentException("Failed to send email");
         }
