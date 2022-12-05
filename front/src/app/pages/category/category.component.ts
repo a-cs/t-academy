@@ -15,14 +15,14 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    public auth: AuthService,
-    private route: Router
+    public auth: AuthService
   ) {
     this.categoryService.categoryUpdatedOrDeleted.subscribe(() => {
       console.log('Updated or deleted');
       this.categoryService.get().subscribe((sucessData) => {
-        this.categories = [];
-        this.categories = Object.assign([], sucessData);
+        // this.categories = [];
+        //this.categories = Object.assign([], sucessData);
+        this.categories = sucessData;
       });
     });
   }
