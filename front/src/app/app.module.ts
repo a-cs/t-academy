@@ -23,7 +23,7 @@ import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.c
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UserComponent } from './pages/user/user.component';
-import { CardUserComponent } from './components/card-user/card-user.component';
+import { CardUserComponent } from './components/UsersComponents/card-user/card-user.component';
 import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
