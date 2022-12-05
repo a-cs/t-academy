@@ -1,0 +1,120 @@
+h1{
+    font-size: 20rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;  
+    left: 50%; 
+    transition: 0.2s all;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+h1:hover{
+    font-size: 19rem;
+    color: var(--primary-color);
+}
+
+@media (max-width: 1000px) {
+    h1{
+        font-size: 10rem;
+    }
+
+    h1:hover{
+        font-size: 9rem;
+        color: var(--primary-color);
+    }
+}
+
+section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+section .row{
+    position: relative;
+    top: -50%;
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+    white-space: nowrap;
+    font-size: 4rem;
+    transform: rotate(-30deg);
+}
+
+i{
+    color: white;
+    transition: 1s;
+    padding: 0 5px;
+    user-select: none;
+    cursor: default;
+    font-size: 4rem;
+}
+
+i:hover{
+    transition: 0s;
+    color: var(--primary-color);
+    text-shadow: 0 0 220px #E20074;
+}
+
+section .row div{
+    animation: animate 80s linear infinite;
+    animation-delay: -10s;
+}
+
+section .row div:nth-child(2){
+    animation: animate2 80s linear infinite;
+
+}
+
+@keyframes animate{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes animate2{
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(-200%);
+    }
+}
+
+section .row:nth-child(even) div{
+    animation: animate3 70s linear infinite;
+    animation-delay: -80s;
+}
+
+section .row:nth-child(even) div:nth-child(2){
+    animation: animate4 80s linear infinite;
+    animation-delay: -40s;
+}
+
+@keyframes animate3{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(100%);
+    }
+}
+
+@keyframes animate4{
+    0%{
+        transform: translateX(-200%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
