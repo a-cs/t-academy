@@ -25,7 +25,7 @@ public class TransactionController {
     public ResponseEntity<Transaction> getTransactionById(@PathVariable("idTransaction") Long idTransaction){return ResponseEntity.status(HttpStatus.OK).body(transactionService.readTransactionById(idTransaction));}
 
     @PostMapping
-    public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction){
+    public ResponseEntity<List<Transaction>> postTransaction(@RequestBody Transaction transaction){
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transaction));
     }
 
