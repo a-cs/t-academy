@@ -51,6 +51,8 @@ import { ModalAddBranchComponent } from './components/BranchComponents/modal-add
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/m
     ModalShowClientInventoryComponent,
     CategoryComponent,
     ModalConfirmDeleteComponent,
+    NotFoundComponent,
+    NotFoundIconsBgComponent
   ],
   imports: [
     BrowserModule,

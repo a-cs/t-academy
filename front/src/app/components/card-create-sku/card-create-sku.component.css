@@ -3,7 +3,7 @@
     margin: 16px 8px;
     min-width: 300px;
     max-width: 450px;
-    height: 300px;
+    height: var(--custom-height, 300px);
     border-radius: 32px;
     display: flex;
     flex-direction: column;
@@ -13,13 +13,13 @@
 }
 
 .center{
-    margin: auto;
+    margin: var(--custom-margin, auto);
     border: 4px var(--primary-color) solid;
     border-radius: 32px;
 }
 
 i{
-    font-size: 14rem;
+    font-size: var(--custom-i-font, 14rem);
     color: var(--primary-color);
     font-weight: lighter;
 }

@@ -2,7 +2,10 @@ package com.twms.wms.services;
 
 import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.entities.Branch;
+import com.twms.wms.entities.WarehouseSlot;
+import com.twms.wms.entities.WarehouseSlotId;
 import com.twms.wms.repositories.BranchRepository;
+import com.twms.wms.repositories.WarehouseSlotRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +24,52 @@ public class BranchService {
     @Autowired
     AddressService addressService;
 
+    @Autowired
+    WarehouseSlotRepository warehouseSlotRepository;
+
     @SneakyThrows
     @Transactional
     public Branch createBranch(Branch branch){
         List<Branch> branchesWithSameName = branchRepository.findByName(branch.getName());
         if(branchesWithSameName.size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
         if(addressService.getById(branch.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address does'nt exist!!");
-        return branchRepository.save(branch);
+
+        Branch savedBranch =  branchRepository.save(branch);
+        for (int i = 1; i <= branch.getMax_rows(); i++) {
+
+            for (int j = 0; j < branch.getMax_columns(); j++) {
+                WarehouseSlotId warehouseSlotId = new WarehouseSlotId();
+                warehouseSlotId.setBranch(savedBranch);
+                warehouseSlotId.setBay(i);
+
+                warehouseSlotId.setAisle(toAlphabetic(j));
+
+                WarehouseSlot warehouseSlot = new WarehouseSlot();
+                warehouseSlot.setWarehouseSlotId(warehouseSlotId);
+                warehouseSlot.setClient(null);
+                warehouseSlot.setSku(null);
+                warehouseSlot.setQuantity(0);
+                warehouseSlot.setArrivalDate(null);
+                warehouseSlotRepository.save(warehouseSlot);
+            }
+        }
+
+        return savedBranch;
+    }
+
+    private String toAlphabetic(int i) {
+        if( i<0 ) {
+            return "-"+toAlphabetic(-i-1);
+        }
+
+        int quot = i/26;
+        int rem = i%26;
+        char letter = (char)((int)'A' + rem);
+        if( quot == 0 ) {
+            return ""+letter;
+        } else {
+            return toAlphabetic(quot-1) + letter;
+        }
     }
 
     public List<Branch> readAllBranchs(){

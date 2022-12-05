@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import IBranch from 'src/app/interfaces/IBranch';
+import { AuthService } from 'src/app/service/auth.service';
 import { BranchService } from 'src/app/service/branch.service';
+import { buttonPermission } from 'src/app/utils/utils';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -18,11 +20,14 @@ export class ModalShowMoreComponent implements OnInit {
   showDeleteButton: boolean
   showUpdateButton:boolean
   showButtons: boolean
+  
+  permissions  = buttonPermission
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IBranch,
     private formBuilder: FormBuilder,
     private branchService: BranchService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public auth: AuthService) {
     this.branch = Object.assign({}, this.data)
   }
 
