@@ -24,6 +24,13 @@
     color: var(--danger-color);
     transition: 0.2s;
   }
+
+  .top .edit .mat-icon{
+    font-size: 3.5rem;
+    margin-left: -1.9rem;
+    color: var(--text-secondary-color);
+    transition: 0.2s;
+  }
   
   .top .mat-icon-button{
     background-color: transparent;
@@ -33,6 +40,14 @@
     transition: 0.2s;
   }
   
+  .top .edit{
+    background-color: transparent;
+    border: 2px var(--text-secondary-color) solid;
+    width: 74px;
+    height: 74px;
+    transition: 0.2s;
+  }
+
   .top .mat-icon-button:hover{
     background-color: var(--danger-color);
   }
@@ -84,6 +99,11 @@
   
   form input:focus-visible{
     border: 2px var(--secondary-color) solid;
+  }
+
+  form input.readonly:focus-visible {
+    outline: none;
+    border: none;
   }
   
   .buttons {
