@@ -14,6 +14,24 @@ export class CategoryCreateCardComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //openAddDialog() {
+  //const dialogConfig = new MatDialogConfig();
+  //dialogConfig.autoFocus = false;
+  //dialogConfig.width = '600px';
+  //dialogConfig.height = '600px';
+
+  //const dialogRef = this.dialogRef.open(
+  //CategoryCreateFormComponent,
+  //dialogConfig
+  //);
+
+  //dialogRef.afterClosed().subscribe((formSubmmited) => {
+  //if (formSubmmited) {
+  //this.onItemAdded.emit();
+  //}
+  //});
+  //}
+
   openAddDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = false;

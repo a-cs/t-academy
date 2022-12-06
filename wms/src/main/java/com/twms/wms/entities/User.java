@@ -27,18 +27,11 @@ public class User implements UserDetails {
     @Email
     private String email;
     @Size(min = 5, max = 128)
-    @NotNull(message = "Password cannot be Null")
-    @NotBlank
+//    @NotNull(message = "Password cannot be Null")
+//    @NotBlank
     private String password;
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "tb_user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
     @ManyToOne
     private Role accessLevel;
-//    private Set<Role> accessLevel = new HashSet<>();
     private boolean enabled = false;
 
     public User() {
@@ -51,13 +44,6 @@ public class User implements UserDetails {
         this.email = userDTO.getEmail();
         this.enabled = userDTO.isEnabled();
     }
-
-//    public void addAccessLevel(Role role){
-//        this.accessLevel.add(role);
-//    }
-//    public void revokeAccessLevel(Role role){
-//        this.accessLevel.remove(role);
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

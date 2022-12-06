@@ -24,9 +24,4 @@ public class WarehouseSlot {
     private Client client;
 
     private Instant arrivalDate;
-
-    @PrePersist
-    public void prePersist() {
-        this.arrivalDate = Instant.now();
-    }
 }

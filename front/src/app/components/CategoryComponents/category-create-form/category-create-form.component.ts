@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
 import { CategoryService } from 'src/app/service/category.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-create-form',
@@ -14,7 +15,8 @@ export class CategoryCreateFormComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private dialogRef: MatDialogRef<CategoryCreateFormComponent>
+    private dialogRef: MatDialogRef<CategoryCreateFormComponent>,
+    private notification: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -27,13 +29,31 @@ export class CategoryCreateFormComponent implements OnInit {
     });
   }
 
+  //createNewCategory() {
+  //const formSubmmited: boolean = true;
+  //const categoryName = this.createForm.get('name')?.value;
+  //const newCategory: ICategory = {
+  //name: categoryName,
+  //};
+  //this.categoryService.create(newCategory).subscribe(
+  //(res) => {
+  //this.notification.success('Categoria criada');
+  //},
+  //(erro) => {
+  //this.notification.warning(erro.error.message);
+  //},
+  //() => console.log('HTTP Request completed!')
+  //);
+  //this.dialogRef.close(formSubmmited);
+  //}
+
   createNewCategory() {
     const formSubmmited: boolean = true;
     const categoryName = this.createForm.get('name')?.value;
     const newCategory: ICategory = {
       name: categoryName,
     };
-    this.categoryService.create(newCategory).subscribe();
+    this.categoryService.create(newCategory);
     this.dialogRef.close(formSubmmited);
   }
 }

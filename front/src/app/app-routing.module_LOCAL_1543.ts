@@ -12,11 +12,6 @@ import { UserComponent } from './pages/user/user.component';
 import { AuthGuardService } from './service/auth-guard.service';
 import { routePermission } from './utils/utils';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
-import { NotFoundComponent } from './components/404/not-found/not-found.component';
-import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
-import { ComponentType } from '@angular/cdk/portal';
-
-const pages404: any = [NotFoundComponent, NotFoundIconsBgComponent]
 
 const routes: Routes = [
   {
@@ -90,10 +85,6 @@ const routes: Routes = [
   {
     path: 'confirmation',
     component: ConfirmationComponent
-  },
-  {
-    path: '**',
-    component: pages404[Math.floor(Math.random() * 2)]
   }
 ];
 

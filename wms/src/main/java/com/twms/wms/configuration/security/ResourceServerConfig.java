@@ -1,7 +1,6 @@
 package com.twms.wms.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -10,9 +9,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -31,14 +27,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] ROLE_CLIENT_GET = {"/branch", "/warehouseSlot/client/**"};
     private static final String[] ROLE_CLIENT_POST = {"/warehouseSlot/client/**"};
-
     private static final String[] OPERATOR = {"/sku/**", "/measurement-unit/**", "/category/**"};
-
-//    private static final String[] BRANCH_MANAGER = {"/sku/search", "/sku", "/sku/{\\\\d+}"};
-
     private static final String[] MANAGER = {"/sku/**", "/measurement-unit/**", "/category/**", "/client/**", "/user/**"};
     private static final String[] MANAGER_GET = {"/branch/**"};
-
     private static final String[] ADMIN = {"/**"};
 
     @Override
@@ -58,8 +49,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             http
                     .cors().and()
                     .authorizeRequests()
+                    .antMatchers( "/user/setpassword", "/user/resetpassword").permitAll()
                     .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
-//                    .antMatchers( "/branch").hasRole( "ADMIN")
                     .antMatchers( "/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/sku/**").hasAnyRole("MANAGER", "ADMIN")
@@ -69,22 +60,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
+
                     .anyRequest().hasRole("ADMIN");
         }
-
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD",
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+//        configuration.setAllowedMethods(Arrays.asList("HEAD",
+//                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 }

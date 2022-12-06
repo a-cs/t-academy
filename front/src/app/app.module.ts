@@ -23,7 +23,7 @@ import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.c
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UserComponent } from './pages/user/user.component';
-import { CardUserComponent } from './components/card-user/card-user.component';
+import { CardUserComponent } from './components/UsersComponents/card-user/card-user.component';
 import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
@@ -34,7 +34,6 @@ import { CategoryCreateFormComponent } from './components/CategoryComponents/cat
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
-
 
 import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
 import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
@@ -50,8 +49,12 @@ import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
-
+import { ToastrModule } from 'ngx-toastr';
+import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,7 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,    
+    CategoryCreateCardComponent,
     CardClientComponent,
     ModalUpdateClientComponent,
     ClientComponent,
@@ -91,7 +94,11 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryComponent,
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    ConfirmationComponent,
+    ModalConfirmDeleteComponent,
+    NotFoundComponent,
+    NotFoundIconsBgComponent
   ],
   imports: [
     BrowserModule,
@@ -104,9 +111,10 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
