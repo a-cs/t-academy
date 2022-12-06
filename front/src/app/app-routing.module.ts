@@ -16,6 +16,7 @@ import { NotFoundComponent } from './components/404/not-found/not-found.componen
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
 
 const pages404: any = [NotFoundComponent, NotFoundIconsBgComponent]
 
@@ -94,6 +95,14 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: routePermission.users
+    }
+  },
+  {
+    path: 'warehouse-slots',
+    component: WarehouseSlotsComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.warehouseSlot
     }
   },
   {

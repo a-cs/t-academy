@@ -10,6 +10,12 @@ export class WarehouseSlotService {
 
   constructor(private http: HttpClient, private auth: AuthService){}
 
+  get() {
+     return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot`, {
+      headers: this.auth.buildHeader()
+     })
+  }
+
   getByIdClient(id:number){
     return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot/client/${id}`,{
       headers: this.auth.buildHeader()

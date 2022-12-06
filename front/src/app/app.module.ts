@@ -57,6 +57,8 @@ import { NotFoundComponent } from './components/404/not-found/not-found.componen
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +105,8 @@ import { CardTransactionHistoryComponent } from './components/TransactionsCompon
     NotFoundIconsBgComponent,
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
+    WarehouseSlotsComponent,
+    CardWarehouseSlotComponent,
 
   ],
   imports: [
