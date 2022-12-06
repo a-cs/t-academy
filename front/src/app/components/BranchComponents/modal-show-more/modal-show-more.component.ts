@@ -23,6 +23,8 @@ export class ModalShowMoreComponent implements OnInit {
   
   permissions  = buttonPermission
 
+  isReadOnly: boolean
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: IBranch,
     private formBuilder: FormBuilder,
     private branchService: BranchService,
@@ -34,8 +36,10 @@ export class ModalShowMoreComponent implements OnInit {
   ngOnInit(): void {
     this.configureForm()
     this.showDeleteButton = false
-    this.showUpdateButton = true
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit)
     this.showButtons = false
+
+    this.isReadOnly = this.showUpdateButton
   }
 
   configureForm() {
@@ -87,6 +91,7 @@ export class ModalShowMoreComponent implements OnInit {
     this.showDeleteButton = true
     this.showUpdateButton = false
     this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 
 }

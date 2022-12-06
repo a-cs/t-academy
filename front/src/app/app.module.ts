@@ -56,6 +56,8 @@ import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/m
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,8 @@ import { CreateTransactionComponent } from './pages/create-transaction/create-tr
     ModalConfirmDeleteComponent,
     NotFoundComponent,
     NotFoundIconsBgComponent,
+    TransactionHistoryComponent,
+    CardTransactionHistoryComponent,
     CreateTransactionComponent
   ],
   imports: [

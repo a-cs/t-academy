@@ -16,6 +16,8 @@ import { NotFoundComponent } from './components/404/not-found/not-found.componen
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+
 
 const pages404: any = [NotFoundComponent, NotFoundIconsBgComponent]
 
@@ -26,6 +28,14 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: routePermission.products
+    }
+  },
+  {
+    path: 'transaction-history',
+    component: TransactionHistoryComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.transactionHistory
     }
   },
   {
