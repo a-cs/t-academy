@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="top">
+    <div class="title">
+      <p class="capitalize">Delete</p>
+    </div>
+  </div>
+  <div class="middle">
+    <p>Are you sure you want to delete this {{ entityName }}?</p>
+  </div>
+
+  <div class="buttons">
+    <button mat-dialog-close mat-raised-button class="cancelButton">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      class="sucessButton"
+      (click)="onConfirmButtonPressed()"
+    >
+      Delete
+    </button>
+  </div>
+</div>

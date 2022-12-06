@@ -7,13 +7,12 @@ import {
 } from '@angular/forms';
 import {
   MatDialog,
-  MatDialogConfig,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
+import { ModalConfirmDeleteComponent } from 'src/app/components/modal-confirm-delete/modal-confirm-delete.component';
 import { CategoryService } from 'src/app/service/category.service';
-import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'app-catogory-update-form',
@@ -22,65 +21,52 @@ import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.compone
 })
 export class CategoryUpdateFormComponent implements OnInit {
   updateForm: FormGroup;
-  formBuilder: FormBuilder = new FormBuilder();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public categoryToUpdate: ICategory,
-    private dialogRef: MatDialogRef<CategoryUpdateFormComponent>,
+    private updateDialogRef: MatDialogRef<CategoryUpdateFormComponent>,
     public confirmDialog: MatDialog,
     private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
-    this.configureForm();
-  }
-
-  onUpdate() {
-    const formSubmmited: boolean = true;
-    this.categoryService.categoryUpdatedOrDeleted.emit();
-    const newCategoryName = this.updateForm.get('name')?.value;
-    const newCategory: ICategory = {
-      id: this.categoryToUpdate.id,
-      name: newCategoryName,
-    };
-    this.categoryService
-      .update(newCategory.id as number, newCategory)
-      .subscribe();
-    this.dialogRef.close(formSubmmited);
-  }
-
-  onDeleteItem() {
-    const formSubmmited: boolean = true;
-    let dialogConfig: MatDialogConfig = this.getDialogConfiguration();
-    dialogConfig.data = {
-      observable: this.categoryService.delete(
-        this.categoryToUpdate.id as number
-      ),
-      object: 'category',
-    };
-
-    const confirmDialogRef = this.confirmDialog.open(
-      ModalConfirmComponent,
-      dialogConfig
-    );
-  }
-
-  getDialogConfiguration(): MatDialogConfig {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = this.categoryToUpdate;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = '600px';
-    dialogConfig.height = '600px';
-    return dialogConfig;
-  }
-
-  configureForm() {
     this.updateForm = new FormGroup({
       id: new FormControl(this.categoryToUpdate.id, Validators.nullValidator),
       name: new FormControl(
         this.categoryToUpdate.name,
         Validators.nullValidator
       ),
+    });
+  }
+
+  onUpdate() {
+    const newCategoryName = this.updateForm.get('name')?.value;
+
+    const newCategory: ICategory = {
+      id: this.categoryToUpdate.id,
+      name: newCategoryName,
+    };
+
+    this.categoryService.update(newCategory.id as number, newCategory);
+
+    this.updateDialogRef.close();
+  }
+
+  onDelete() {
+    const confirmDialogRef = this.confirmDialog.open(
+      ModalConfirmDeleteComponent,
+      {
+        width: '600px',
+        height: '600px',
+        autoFocus: false,
+      }
+    );
+
+    confirmDialogRef.afterClosed().subscribe((isConfirmed) => {
+      if (isConfirmed) {
+        this.categoryService.delete(this.categoryToUpdate.id as number);
+        this.updateDialogRef.close();
+      }
     });
   }
 }
