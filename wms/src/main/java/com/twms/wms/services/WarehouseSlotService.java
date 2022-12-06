@@ -10,6 +10,8 @@ import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
 import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,12 +45,12 @@ public class WarehouseSlotService {
         return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
     }
 
-    public List<WarehouseSlotDTO> getAllById(Long branchId, String aisleId) {
-        Branch branch = branchService.readBranchById(branchId);
-        List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findAllByWarehouseSlotIdBranchAndWarehouseSlotIdAisle(
-                branch, aisleId);
-        return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
-    }
+//    public List<WarehouseSlotDTO> getAllById(Long branchId, String aisleId) {
+//        Branch branch = branchService.readBranchById(branchId);
+//        List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findAllByWarehouseSlotIdBranchAndWarehouseSlotIdAisle(
+//                branch, aisleId);
+//        return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+//    }
 
     public WarehouseSlotDTO getById(Long branchId, String aisleId, int bay) {
         Branch branch = branchService.readBranchById(branchId);
@@ -65,13 +67,13 @@ public class WarehouseSlotService {
         return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
     }
 
-    public List<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsFilterDTO branchIds) {
+    public Page<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsFilterDTO branchIds, Pageable pageable) {
         List<Branch> branches = branchService.getBranchesByIds(branchIds.getIds());
-        List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchIn(clientId, branches);
-        return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+        Page<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchIn(clientId, branches, pageable);
+        return warehouseSlots.map(WarehouseSlotDTO::new);
     }
 
-    public List<WarehouseSlotDTO> getByClientBranchAndProduct(Long clientId, BranchIdsProductIdsFilterDTO branchIdsProductIdsFilterDTO) {
+    public Page<WarehouseSlotDTO> getByClientBranchAndProduct(Long clientId, BranchIdsProductIdsFilterDTO branchIdsProductIdsFilterDTO, Pageable pageable) {
         List<Branch> branchesToFilter;
         List<SKU> skusToFilter;
 
@@ -90,9 +92,9 @@ public class WarehouseSlotService {
             skusToFilter = skuService.read();
         }
 
-        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(
-                clientId, branchesToFilter, skusToFilter);
-        return WarehouseSlotDTO.fromListWarehouseSlot(slots);
+        Page<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(
+                clientId, branchesToFilter, skusToFilter, pageable);
+        return slots.map(WarehouseSlotDTO::new);
     }
 
     public List<WarehouseSlotDTO> getByClientBranchFilteredByProductName(Long clientId, ListIdsFilterDTO branchIdsDTO, String searchTerm) {

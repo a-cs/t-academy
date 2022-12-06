@@ -3,6 +3,8 @@ package com.twms.wms.controllers;
 import com.twms.wms.entities.Category;
 import com.twms.wms.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,8 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> readAllCategories(){
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.readCategories());
+    public ResponseEntity<Page<Category>> readAllCategories(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.readCategories(pageable));
     }
 
     @GetMapping("/{idCategory}")
@@ -44,8 +46,8 @@ public class CategoryController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Category>> searchCategory(@RequestParam String term) {
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.searchTerm(term));
+    public ResponseEntity<Page<Category>> searchCategory(@RequestParam String term, Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.searchTerm(term, pageable));
     }
 
 }
