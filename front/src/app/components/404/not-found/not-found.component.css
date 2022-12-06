@@ -1,0 +1,75 @@
+.page_404 {
+    background: #fff;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(10, 10vh);
+    background-color: var(--secondary-color);
+    margin: 0px;
+    color: white;
+}
+
+.grid-title{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    margin-top: 2vh;
+}
+
+.grid-title h1{
+    font-size: 6rem;
+    text-align: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    font-weight: bold;
+    transition: 0.2s all;
+}
+
+h1:hover{
+    font-size: 8rem !important;
+    color: var(--primary-color);
+}
+
+.grid-animation{
+    grid-row-start: 3;
+    grid-row-end: 8;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    border-radius: 32px;
+}
+
+.animation {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 32px;
+}
+
+.grid-message{
+    grid-row-start: 9;
+    grid-row-end: 10;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.grid-message h3{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.grid-message p{
+    font-size: 2rem;
+    font-weight: bold;
+}

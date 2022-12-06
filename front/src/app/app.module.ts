@@ -35,7 +35,6 @@ import { CategoryCreateCardComponent } from './components/CategoryComponents/cat
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
 
-
 import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
 import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
 import { ClientComponent } from './pages/client/client.component';
@@ -52,7 +51,10 @@ import { ModalAddBranchComponent } from './components/BranchComponents/modal-add
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
-
+import { ToastrModule } from 'ngx-toastr';
+import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,7 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,    
+    CategoryCreateCardComponent,
     CardClientComponent,
     ModalUpdateClientComponent,
     ClientComponent,
@@ -93,7 +95,10 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
     CategoryComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ModalConfirmDeleteComponent,
+    NotFoundComponent,
+    NotFoundIconsBgComponent
   ],
   imports: [
     BrowserModule,
@@ -106,9 +111,10 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

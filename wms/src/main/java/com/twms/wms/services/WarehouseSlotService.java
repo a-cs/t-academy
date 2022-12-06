@@ -131,4 +131,15 @@ public class WarehouseSlotService {
         WarehouseSlotId id = new WarehouseSlotId(branch, bayId, aisleId);
         warehouseSlotRepository.deleteById(id);
     }
+
+    public WarehouseSlot getFirstEmptySlot(Long branchId){
+        //TODO: Tratar erro
+        return warehouseSlotRepository.findFirstBySkuIsNullAndWarehouseSlotIdBranchId(branchId);
+    }
+
+    public List<WarehouseSlot> getOldestSlotByClientAndSkuAndBranch(Long clientId,
+                                                              Long branchId,
+                                                              Long skuId){
+        return warehouseSlotRepository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(clientId, branchId, skuId);
+    }
 }

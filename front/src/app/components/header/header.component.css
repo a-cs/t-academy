@@ -29,7 +29,7 @@ li > i{
 }
 
 .right-side .user {
-    margin-right: 12rem;
+    margin-right: 5rem;
     color: var(--background-color);
     font-size: 2.6rem;
 }
@@ -71,6 +71,11 @@ ul a {
   cursor: pointer;
 }
 
+.menu{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 @media (min-width: 0px) {
     .menu{
         display: none;
@@ -82,7 +87,7 @@ ul a {
         position: absolute;
         right: 0;
         top: 10vh;
-        height: 99%;
+        height: fit-content;
         width: 35%;
         background-color: var(--primary-color);
         border-radius: 0 0 0 32px;
@@ -95,7 +100,7 @@ ul a {
     }
 
     .menu.is-open li{
-        height: 3rem;
+        height: fit-content;
         font-size: 2rem;
         margin-bottom: 0.5rem;
         color: white;
@@ -103,26 +108,31 @@ ul a {
         text-align: center;
     }
 
+    .userMobile{
+        display: none;
+    }
+
     @media (max-width: 1000px) {
         .user {
             display: none;
         }
 
-        .userMobile {
-            margin-right: 12rem;
+        .userMobile {   
             color: var(--background-color);
             font-size: 2.6rem;
+            display: list-item;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            vertical-align: middle;
         }
         
-        .userMobile i {
-            font-size: 4rem;
-            vertical-align: middle;
-            margin-right: 8px;
-        }
+
+
 
         .menu.is-open{
-            height: 90%;
-            width: 75%;
+            height: fit-content;
+            width: 85%;
+            
         }
     }
 

@@ -51,7 +51,7 @@ span{
     }
 
     .select{
-        width: 100%;
+        width: 80%;
         top: 25vh;
     }
 
@@ -61,10 +61,7 @@ span{
 }
 
 @media (min-width: 701px) and (max-width: 1600px){
-    .select{
-        width: 100%;
-        top: 25vh;
-    }
+
 
     .space{
         height: 25vh;
@@ -75,8 +72,11 @@ span{
     }
 
     .select{
-        position: absolute;
-        left: 50%;
+        width: 450px;
+        top: 25vh;
+        left: 80%;
+        transform: translate(-50%, 0);
+        width: 56%;
     }
 
     .estilo{

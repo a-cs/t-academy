@@ -5,47 +5,47 @@
     <p>Home</p>
   </div>
   <div class="cards">
-    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigate()">
+    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('products')">
       <div class="center">
         <i class="material-icons">view_in_ar</i>
       </div>
       <p>Products</p>
       
     </button>
-    <button *ngIf='auth.validateRole(permissions.categories)' class="card" (click)="navigateToCategories()">
+    <button *ngIf='auth.validateRole(permissions.categories)' class="card" (click)="navigateTo('categories')">
       
       <div class="center">
         <i class="material-icons">category</i>
       </div>
       <p>Categories</p>
     </button>
-    <button *ngIf='auth.validateRole(permissions.measurementUnits)' class="card" (click)="navigateToMeasurementUnits()">
+    <button *ngIf='auth.validateRole(permissions.measurementUnits)' class="card" (click)="navigateTo('measurement-units')">
       
       <div class="center">
         <i class="material-icons">straighten</i>
       </div>
       <p>Measurement Units</p>
     </button>
-    <button *ngIf="auth.validateRole(permissions.branches)" class="card" (click)="navigateToBranches()">
+    <button *ngIf="auth.validateRole(permissions.branches)" class="card" (click)="navigateTo('branches')">
       
       <div class="center">
         <i class="material-icons">location_city</i>
       </div>
       <p>Branches</p>
     </button>
-    <button *ngIf='auth.validateRole(permissions.clientInventory)' class="card" (click)="navigateClientInventory()">
+    <button *ngIf='auth.validateRole(permissions.clientInventory)' class="card" (click)="navigateTo('client-inventory')">
       <div class="center">
         <i class="material-icons">shelves</i>
       </div>
       <p>Client Inventory</p>
     </button>
-    <button *ngIf='auth.validateRole(permissions.users)' class="card" (click)="navigateUser()">
+    <button *ngIf='auth.validateRole(permissions.users)' class="card" (click)="navigateTo('users')">
       <div class="center">
         <i class="material-icons">person</i>
       </div>
-      <p>User</p>
+      <p>Users</p>
     </button>
-    <button *ngIf='auth.validateRole(permissions.clients)' class="card" (click)="navigateToClients()">
+    <button *ngIf='auth.validateRole(permissions.clients)' class="card" (click)="navigateTo('clients')">
       <div class="center">
         <i class="material-icons">groups</i>
       </div>
