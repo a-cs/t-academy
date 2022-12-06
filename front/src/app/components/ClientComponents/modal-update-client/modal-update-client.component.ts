@@ -49,7 +49,6 @@ export class ModalUpdateClientComponent implements OnInit {
     this.filteredStates.subscribe(value => this.firstState=value[0])
     this.showDeleteButton = false
     this.showUpdateButton = this.auth.validateRole(this.permissions.selectClient)
-    console.log(this.showUpdateButton)
     this.showButtons = false
     this.isReadOnly = this.showUpdateButton
   }
