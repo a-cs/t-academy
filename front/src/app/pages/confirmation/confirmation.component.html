@@ -1,0 +1,51 @@
+
+<!-- <div class="container">
+    <h3 class="title">Email Confirmation</h3>
+    <p>{{msg}}.</p>
+    <p><a href="/login">Click here</a> to go to <a href="/login">Login</a> page.</p>
+</div> -->
+<div class="container">
+    <div class="left-content">
+      <img src="../../../assets/images/loginImg.svg" alt="Login Image">
+  
+    </div>
+  
+    <div class="right-content">
+  
+      <img class="logo" src="../../../assets/images/TWMS_logo.svg" alt="Logo T-WMS">
+      <div class="title">Reset your password</div>
+  
+      <form class="form" [formGroup]="form" (ngSubmit)="changePassword()">
+        <div class="group">
+          <div class="row">
+            <label for="password">Password</label>
+            <div class="input">
+              <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password" formControlName="password" #password>
+              <button type="button" class="icon" (click)="togglePasswordVisibility(password)">
+                <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
+              </button>
+            </div>
+            <p *ngIf="form.controls['password'].errors?.['required']">Password is required</p>
+            <p *ngIf="form.controls['password'].errors?.['minlength']">Password needs at least 5 characters</p>
+            <p *ngIf="form.controls['password'].errors?.['maxlength']">Password needs at most 20 characters</p>
+          </div>
+          <div class="row">
+            <label for="password_confirmation">Password Confirmation</label>
+            <div class="input">
+              <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password_confirmation" formControlName="password_confirmation" #password_confirmation>
+              <button type="button" class="icon" (click)="togglePasswordVisibility(password_confirmation)">
+                <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
+              </button>
+            </div>
+            <p *ngIf="form.controls['password_confirmation'].errors?.['required']">Password is required</p>
+            <p *ngIf="form.controls['password_confirmation'].errors?.['matching']">Password is not a match</p>
+          </div>
+        </div>
+  
+        <button [disabled]="form.invalid" id="loginButton">Change Password</button>
+        <!-- <button id="loginButton">Login now</button> -->
+      </form>
+    </div>
+  </div>
+  
+<app-footer></app-footer>

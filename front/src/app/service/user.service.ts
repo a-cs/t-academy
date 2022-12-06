@@ -42,8 +42,17 @@ export class UserService {
 
   getRoles() {
     return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`, {
-      headers: this.auth.buildHeader(),
-    });
+
+      headers: this.auth.buildHeader()
+    })
+  
+  }
+  changePassword(token:string, password:string){
+    const body = new HttpParams()
+    .set("token", token)
+    .set("password", password)
+    return this.http.put<any>(`http://localhost:8080/user/setpassword`, body)
+
   }
 
   login(username: string, password: string) {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -59,10 +60,22 @@ public class UserController {
 //                                                  @PathVariable("enabled") boolean enabled){
 //        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserIsEnable(userId, enabled));
 //    }
-
-    @GetMapping("/confirm")
-    public ResponseEntity<String> confirmUserEmail(@RequestParam("token") String token){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
+//
+//    @GetMapping("/confirm")
+//    public ResponseEntity<String> confirmUserEmail(@RequestParam("token") String token){
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
+//    }
+    @PutMapping("/setpassword")
+    public ResponseEntity<String> setUserPassword(@RequestParam Map<String, String> passwordMap){
+        String token = passwordMap.get("token");
+        String password = passwordMap.get("password");
+        return ResponseEntity.status(HttpStatus.OK).body(userService.setNewPassword(token, password));
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
+    }
+    @GetMapping("/resetpassword")
+    public ResponseEntity<String> resetPassword(@RequestParam String username){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.resetPassword(username));
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
     }
 
 }

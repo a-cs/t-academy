@@ -1,6 +1,7 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
+import com.twms.wms.email.EmailLayout;
 import com.twms.wms.email.EmailService;
 import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
@@ -35,8 +36,7 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
     @Autowired
     ConfirmationTokenService confirmationTokenService;
-    @Autowired
-    EmailService emailSender;
+
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @SneakyThrows
@@ -49,20 +49,11 @@ public class UserService implements UserDetailsService {
         } else if(emailExists){
             throw new SQLIntegrityConstraintViolationException("Email already registered.");
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(UUID.randomUUID().toString()));
         user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
 
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusHours(2),
-                savedUser
-        );
-        //emailSender.send(user.getEmail(),
-                //"<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        confirmationTokenService.createTokenAndSendEmail(user);
         return new UserDTO(savedUser);
     }
 
@@ -71,11 +62,19 @@ public class UserService implements UserDetailsService {
         clientUser.setUsername(username);
         clientUser.setEmail(clientEmail);
         //TODO: Auto generate random password
-        String clientPassword = username;
-        clientUser.setPassword(clientPassword);
+//        String clientPassword = username;
+//        clientUser.setPassword(clientPassword);
         User savedClientUser = new User(this.createUser(clientUser));
-        savedClientUser.setPassword(clientPassword);
+//        savedClientUser.setPassword(clientPassword);
         return savedClientUser;
+    }
+
+    public String resetPassword(String username){
+        User user = userRepository.findUserByUsername(username).orElseThrow(
+                ()->new EntityNotFoundException("User " + username + " do not exist")
+        );
+        confirmationTokenService.createTokenAndSendEmail(user);
+        return "An email was sent to your email address.";
     }
 
     public UserDTO getUserByUsername(String username){
@@ -122,23 +121,38 @@ public class UserService implements UserDetailsService {
 //    public String verificationEmailSender(){
 //        return "ok";
 //    }
-
-    public String userConfirmation(String token){
+//
+//    public String userConfirmation(String token){
+//        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
+//        if (confirmationToken.getConfirmedAt() != null){
+//            throw new IllegalArgumentException("Email has already been confirmed");
+//        }
+//        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
+//            throw new IllegalArgumentException("Token has expired");
+//        }
+//        confirmationToken.setConfirmedAt(LocalDateTime.now());
+//        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
+//        return "User has been confirmed";
+//    }
+    public String setNewPassword(String token, String password){
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
         if (confirmationToken.getConfirmedAt() != null){
-            throw new IllegalArgumentException("Email has already been confirmed");
+            throw new IllegalArgumentException("Token has already been used.");
         }
         if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
             throw new IllegalArgumentException("Token has expired");
         }
         confirmationToken.setConfirmedAt(LocalDateTime.now());
-        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
-        return "User has been confirmed";
+        User user = this.getUserById(confirmationToken.getUser().getId());
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "Password has been changed successfully.";
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User savedUser = userRepository.findUserByUsername(username).orElseThrow(
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User savedUser = userRepository.findUserByEmail(email).orElseThrow(
                 ()->new UsernameNotFoundException("User not found.")
         );
         return savedUser;
