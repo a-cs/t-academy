@@ -12,7 +12,9 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import ICategory from 'src/app/interfaces/ICategory';
+import { AuthService } from 'src/app/service/auth.service';
 import { CategoryService } from 'src/app/service/category.service';
+import { buttonPermission } from 'src/app/utils/utils';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -24,15 +26,30 @@ export class CategoryUpdateFormComponent implements OnInit {
   updateForm: FormGroup;
   formBuilder: FormBuilder = new FormBuilder();
 
+  showDeleteButton: boolean
+  showUpdateButton:boolean
+  showButtons: boolean
+  
+  permissions = buttonPermission
+
+  isReadOnly: boolean
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public categoryToUpdate: ICategory,
     private dialogRef: MatDialogRef<CategoryUpdateFormComponent>,
     public confirmDialog: MatDialog,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {
     this.configureForm();
+
+    this.showDeleteButton = false
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateCategory)
+    this.showButtons = false
+
+    this.isReadOnly = this.showUpdateButton
   }
 
   onUpdate() {
@@ -82,5 +99,12 @@ export class CategoryUpdateFormComponent implements OnInit {
         Validators.nullValidator
       ),
     });
+  }
+
+  clickOnEdit() {
+    this.showDeleteButton = true
+    this.showUpdateButton = false
+    this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 }
