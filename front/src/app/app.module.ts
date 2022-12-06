@@ -55,6 +55,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -112,7 +114,9 @@ import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/no
     MatButtonModule,
     FormsModule,
     MatSelectModule,
+    NgxMaskModule.forRoot(),
     ToastrModule.forRoot(),
+    MatPaginatorModule
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

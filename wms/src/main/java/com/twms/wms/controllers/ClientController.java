@@ -4,6 +4,8 @@ import com.twms.wms.entities.Client;
 import com.twms.wms.entities.SKU;
 import com.twms.wms.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,8 +21,13 @@ public class ClientController {
     ClientService clientService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<Client>> searchSku(@RequestParam String term) {
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.searchTerm(term));
+    public ResponseEntity<Page<Client>> searchSku(@RequestParam String term,Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.searchTerm(term, pageable));
+    }
+
+    @GetMapping("/pages")
+    public ResponseEntity<Page<Client>> getAllClientsPaginated(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.readAllClientsPaginated(pageable));
     }
 
     @GetMapping

@@ -3,9 +3,9 @@
         <p class="capitalize">{{client.name || ""}}</p>
     </div>
     <div class="left">
-        <p><b>CNPJ: </b> <span class="capitalize">{{client.cnpj || ""}}</span> </p>
+        <p><b>CNPJ: </b> <span class="capitalize">{{client.cnpj || ""| mask: '00.000.000/0000-00'}}</span> </p>
         <p><b>Email: </b> <span>{{client.email || ""}}</span> </p>
-        <p><b>Address: </b> <span>Street {{client.address.street || ""}}, {{client.address.number || ""}}, {{client.address.city || ""}}-{{client.address.state || ""}}, {{client.address.zipCode || ""}}</span> </p>
+        <p><b>Address: </b> <span>Street {{client.address.street || ""}}, {{client.address.number || ""}}, {{client.address.city || ""}}-{{client.address.state || ""}}, {{client.address.zipCode || ""| mask: '000000-000'}}</span> </p>
     </div>
     <button (click)="openUpdateDialog(client)">Update</button>
 </div>
