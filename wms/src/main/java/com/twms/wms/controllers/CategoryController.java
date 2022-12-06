@@ -19,9 +19,14 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping("/pageable")
     public ResponseEntity<Page<Category>> readAllCategories(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.readCategories(pageable));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Category>> readAllCategories(){
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.readCategories());
     }
 
     @GetMapping("/{idCategory}")

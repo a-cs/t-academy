@@ -36,6 +36,10 @@ public class CategoryService {
         return categoryRepository.findAll(pageable);
     }
 
+    public List<Category> readCategories(){
+        return categoryRepository.findAll();
+    }
+
     public Category readById(Long id){
         Optional<Category> category = categoryRepository.findById(id);
         Category categ = category.orElseThrow(() -> new EntityNotFoundException("Category not found"));
