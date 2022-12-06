@@ -16,10 +16,19 @@ export class CategoryService {
     private notification: ToastrService
   ) {}
 
-  get() {
-    return this.http.get<ICategory[]>('http://localhost:8080/category', {
-      headers: this.auth.buildHeader(),
-    });
+  //get() {
+  //return this.http.get<ICategory[]>('http://localhost:8080/category', {
+  //headers: this.auth.buildHeader(),
+  //});
+  //}
+
+  get(page = 0, size = 10) {
+    return this.http.get<any>(
+      `http://localhost:8080/category?page=${page}&size=${size}`,
+      {
+        headers: this.auth.buildHeader(),
+      }
+    );
   }
 
   getById(id: number) {
