@@ -1,7 +1,6 @@
-.container{
+.container {
     min-height: 78vh;
     width: 100%;
-    
 }
 
 .title {
@@ -10,9 +9,9 @@
     margin-top: 60px;
     margin-bottom: 40px;
     color: var(--text-secondary-color);
-  }
+}
 
-.cards{
+.cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -22,7 +21,7 @@
     justify-content: center;
 }
 
-.search-bar{
+.search-bar {
     margin-top: 2vh;
 }
 
