@@ -36,10 +36,10 @@ export class ModalShowMoreComponent implements OnInit {
   ngOnInit(): void {
     this.configureForm()
     this.showDeleteButton = false
-    this.showUpdateButton = true
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit)
     this.showButtons = false
 
-    this.isReadOnly = !this.auth.validateRole(this.permissions.updateBranch)
+    this.isReadOnly = this.showUpdateButton
   }
 
   configureForm() {
@@ -91,6 +91,7 @@ export class ModalShowMoreComponent implements OnInit {
     this.showDeleteButton = true
     this.showUpdateButton = false
     this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 
 }
