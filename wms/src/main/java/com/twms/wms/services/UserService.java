@@ -90,11 +90,11 @@ public class UserService implements UserDetailsService {
         );
         return savedUser;
     }
-    public List<UserDTO> getUserFilteredByUsername(String searchTerm){
-        List<User> userFiltered = userRepository.findByUsernameContainingIgnoreCase(searchTerm);
-        List<UserDTO> userDTOFiltered = userFiltered.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
+    public Page<UserDTO> getUserFilteredByUsername(String searchTerm, Pageable pageable){
+        Page<UserDTO> userFiltered = userRepository.findByUsernameContainingIgnoreCase(searchTerm, pageable).map(UserDTO::new);
+//        Page<UserDTO> userDTOFiltered = userFiltered.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
 
-        return userDTOFiltered;
+        return userFiltered;
     }
 
     public List<UserDTO> getAllUsers(){
