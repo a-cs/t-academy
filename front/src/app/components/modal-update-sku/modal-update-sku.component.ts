@@ -12,6 +12,8 @@ import { MatAutocomplete } from '@angular/material/autocomplete';
 import { SkuService } from '../../service/sku.service';
 import { Router } from '@angular/router';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
+import { buttonPermission } from 'src/app/utils/utils';
+import { AuthService } from 'src/app/service/auth.service';
 @Component({
   selector: 'app-modal-update-sku',
   templateUrl: './modal-update-sku.component.html',
@@ -27,6 +29,14 @@ export class ModalUpdateSkuComponent {
   firstCategory: ICategory;
   firstUnit: IMeasurementUnit;
 
+  permissions = buttonPermission
+
+  showDeleteButton: boolean
+  showUpdateButton:boolean
+  showButtons: boolean
+
+  isReadOnly: boolean
+
   constructor(@Inject(MAT_DIALOG_DATA)
   public data: ISku,
     private router: Router,
@@ -34,7 +44,8 @@ export class ModalUpdateSkuComponent {
     private measurementUnitService: MeasurementUnitService,
     private skuService: SkuService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService
   ) {
 
     this.sku = Object.assign({}, this.data)
@@ -53,6 +64,12 @@ export class ModalUpdateSkuComponent {
     )
 
     this.configureForm()
+
+    this.showDeleteButton = false
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateProduct)
+    this.showButtons = false
+
+    this.isReadOnly = this.showUpdateButton
 
     this.filteredCategories = this.form.controls["category"].valueChanges.pipe(
       map((value: any) => {
@@ -136,5 +153,12 @@ export class ModalUpdateSkuComponent {
       }
 
     });
+  }
+
+  clickOnEdit() {
+    this.showDeleteButton = true
+    this.showUpdateButton = false
+    this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 }
