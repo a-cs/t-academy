@@ -4,7 +4,9 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { map, Observable } from 'rxjs';
 import IAddress from 'src/app/interfaces/IAddress';
 import IClient from 'src/app/interfaces/IClient';
+import { AuthService } from 'src/app/service/auth.service';
 import { ClientService } from 'src/app/service/client.service';
+import { buttonPermission } from 'src/app/utils/utils';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -23,12 +25,17 @@ export class ModalUpdateClientComponent implements OnInit {
   showUpdateButton:boolean
   showButtons: boolean
 
+  isReadOnly: boolean
+
+  permissions = buttonPermission
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public clientToUpdate: IClient,
     private dialogRef: MatDialogRef<ModalUpdateClientComponent>,
     public confirmDialog: MatDialog,
     private clientService: ClientService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +48,10 @@ export class ModalUpdateClientComponent implements OnInit {
     this.firstState = this.clientToUpdate.address.state||""
     this.filteredStates.subscribe(value => this.firstState=value[0])
     this.showDeleteButton = false
-    this.showUpdateButton = true
+    this.showUpdateButton = this.auth.validateRole(this.permissions.selectClient)
+    console.log(this.showUpdateButton)
     this.showButtons = false
+    this.isReadOnly = this.showUpdateButton
   }
 
   configureForm() {
@@ -153,6 +162,7 @@ export class ModalUpdateClientComponent implements OnInit {
     this.showDeleteButton = true
     this.showUpdateButton = false
     this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 
 }
