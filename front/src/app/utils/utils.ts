@@ -27,6 +27,5 @@ export const buttonPermission ={
   addBranch: ["ROLE_ADMIN"],
   updateBranch: ["ROLE_ADMIN"],
   deleteBranch: ["ROLE_ADMIN"],
-  selectClient: ["ROLE_ADMIN, ROLE_MANAGER"],
-  editBranch: ["ROLE_ADMIN"]
+  selectClient: ["ROLE_ADMIN", "ROLE_MANAGER"]
 }
