@@ -55,6 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/no
     ConfirmationComponent,
     ModalConfirmDeleteComponent,
     NotFoundComponent,
-    NotFoundIconsBgComponent
+    NotFoundIconsBgComponent,
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,
