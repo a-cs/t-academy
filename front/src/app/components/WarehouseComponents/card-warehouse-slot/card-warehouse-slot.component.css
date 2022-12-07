@@ -6,7 +6,8 @@
     height: 15rem;
     border-radius: 32px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
+    grid-auto-rows: 1fr 2fr;
 }
 
 .sku-name {
@@ -14,6 +15,10 @@
     text-align: center;
     line-height: 3;
     color: var(--text-primary-color);
+}
+
+.sku-name p {
+    margin: 0;
 }
 
 .aisle-bay {
@@ -40,9 +45,13 @@
 
 .info {
     display: grid;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: var(--text-secondary-color);
     grid-template-columns: 1fr 1fr;
+}
+
+.info p {
+    margin: 0;
 }
 
 .info .p-name {
@@ -53,10 +62,19 @@
 .info .p-date {
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 2;
+    grid-row-start: 3;
+    margin-left: 1.5rem;
+    line-height: normal;
 }
 
 .info .p-quantity {
     grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.info .p-branch {
+    grid-column-start: 1;
+    line-height: normal;
 }
 
