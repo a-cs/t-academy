@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -55,6 +56,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { CardCreateUserComponent } from './components/UsersComponents/card-create-user/card-create-user.component';
+import { ModalCreateUserComponent } from './components/UsersComponents/modal-create-user/modal-create-user.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +101,9 @@ import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/no
     ConfirmationComponent,
     ModalConfirmDeleteComponent,
     NotFoundComponent,
-    NotFoundIconsBgComponent
+    NotFoundIconsBgComponent,
+    CardCreateUserComponent,
+    ModalCreateUserComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +117,7 @@ import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/no
     MatButtonModule,
     FormsModule,
     MatSelectModule,
+    MatPaginatorModule,
     ToastrModule.forRoot(),
   ],
   providers: [ModalConfirmDeleteComponent],

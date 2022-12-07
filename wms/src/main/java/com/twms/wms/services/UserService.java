@@ -50,7 +50,8 @@ public class UserService implements UserDetailsService {
             throw new SQLIntegrityConstraintViolationException("Email already registered.");
         }
         user.setPassword(bCryptPasswordEncoder.encode(UUID.randomUUID().toString()));
-        user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
+        if(user.getAccessLevel()==null)
+            user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
 
         confirmationTokenService.createTokenAndSendEmail(user);
@@ -103,37 +104,12 @@ public class UserService implements UserDetailsService {
         return userDTOList;
     }
 
-//    public UserDTO updateUserAccessLevel(Role role, Long userId){
-//        User savedUser = this.getUserById(userId);
-//        Role thisRole = roleRepository.findById(role.getId()).orElseThrow(
-//                ()->new EntityNotFoundException("Role with id:" + role.getId() +" do not exist.")
-//        );
-//        savedUser.setAccessLevel(role);
-//        return new UserDTO(userRepository.save(savedUser));
-//    }
-
     public UserDTO updateUserIsEnable(Long userId, boolean isActivating){
         User savedUser = this.getUserById(userId);
         savedUser.setEnabled(isActivating);
         return new UserDTO(userRepository.save(savedUser));
     }
 
-//    public String verificationEmailSender(){
-//        return "ok";
-//    }
-//
-//    public String userConfirmation(String token){
-//        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
-//        if (confirmationToken.getConfirmedAt() != null){
-//            throw new IllegalArgumentException("Email has already been confirmed");
-//        }
-//        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
-//            throw new IllegalArgumentException("Token has expired");
-//        }
-//        confirmationToken.setConfirmedAt(LocalDateTime.now());
-//        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
-//        return "User has been confirmed";
-//    }
     public String setNewPassword(String token, String password){
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
         if (confirmationToken.getConfirmedAt() != null){
@@ -171,4 +147,21 @@ public class UserService implements UserDetailsService {
     public Page<UserDTO> getUsersPaginated(Pageable pageable) {
         return userRepository.findAll(pageable).map(UserDTO::new);
     }
+
+//    public String verificationEmailSender(){
+//        return "ok";
+//    }
+//
+//    public String userConfirmation(String token){
+//        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
+//        if (confirmationToken.getConfirmedAt() != null){
+//            throw new IllegalArgumentException("Email has already been confirmed");
+//        }
+//        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
+//            throw new IllegalArgumentException("Token has expired");
+//        }
+//        confirmationToken.setConfirmedAt(LocalDateTime.now());
+//        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
+//        return "User has been confirmed";
+//    }
 }
