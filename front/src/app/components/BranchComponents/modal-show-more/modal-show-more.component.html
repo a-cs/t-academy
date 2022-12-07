@@ -31,11 +31,20 @@
     </div>
     <div class="row">
         <label for="state">State</label>
-        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="state" type="text" placeholder="Type a state" name="state" formControlName="state">
-    </div>
+        <input
+        [ngClass]="isReadOnly ? 'readonly' : ''"
+        type="text" placeholder="Type the state" name="state" formControlName="state"
+        [readonly]="showUpdateButton"
+          [matAutocomplete]="stateAutoComplete" (blur)="stateFallback()" >
+        <mat-autocomplete #stateAutoComplete="matAutocomplete" >
+          <mat-option *ngFor="let state of filteredStates | async" [value]="state" (mousedown)="stateOnCLick()" >
+            {{state}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
     <div class="row">
         <label for="zip_code">Zip code</label>
-        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="zip_code" type="text" placeholder="Type a zip code" name="zip_code" formControlName="zip_code">
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="zip_code" type="text" placeholder="Type a zip code" name="zip_code" formControlName="zip_code" mask="00000-000">
     </div>
     <div class="row">
         <label for="max_rows">Total of aisles</label>
