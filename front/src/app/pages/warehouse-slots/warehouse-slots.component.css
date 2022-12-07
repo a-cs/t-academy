@@ -11,6 +11,10 @@
     color: var(--text-secondary-color);
   }
 
+  .title p {
+    margin: 0;
+  }
+
   .cards {
     display: flex;
     flex-direction: row;
@@ -19,4 +23,18 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 650px) {
+  .title {
+    font-size: 5rem;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 540px) {
+  .title {
+    font-size: 3.5rem;
+    line-height: normal;
+  }
 }
