@@ -62,6 +62,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
+import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
+
 
 
 @NgModule({
@@ -109,6 +111,7 @@ import { CardTransactionHistoryComponent } from './components/TransactionsCompon
     NotFoundIconsBgComponent,
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
+    ModalShowMoreTransactionHistoryComponent,
     CreateTransactionComponent
   ],
   imports: [
@@ -126,7 +129,6 @@ import { CardTransactionHistoryComponent } from './components/TransactionsCompon
     NgxMaskModule.forRoot(),
     ToastrModule.forRoot(),
     MatPaginatorModule
-
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

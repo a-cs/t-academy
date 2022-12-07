@@ -1,0 +1,44 @@
+<div class="top">
+    <div class="space"></div>
+    <div class="title">
+        <p class="capitalize">transaction History</p>
+    </div>
+    <!-- <form [formGroup]="form">
+        <input readonly class="arrivalDateTitle" id="arrivalDateTitle" type="text" placeholder="Missing information arrivalDate" name="arrivalDate" formControlName="arrivalDate" mask="0000/00/00">
+    </form> -->
+    
+</div>
+<form [formGroup]="form">
+    <div class="row">
+        <label for="sku">Sku</label>
+        <input readonly id="sku" type="text" placeholder="Missing information sku" name="sku.name" formControlName="sku">
+    </div>
+
+    <div class="row">
+        <label for="branch">Branch</label>
+        <input readonly id="branch" type="text" placeholder="Missing information branch" name="branch" formControlName="branch">
+    </div>
+
+    <div class="row">
+        <label for="client">Client</label>
+        <input readonly id="client" type="text" placeholder="Missing information client" name="client" formControlName="client">
+    </div>
+
+    <div class="row">
+        <label for="aisleBay">Aisle/Bay</label>
+        <input readonly id="aisleBay" type="text" placeholder="Missing information aisleBay" name="aisleBay" formControlName="aisleBay">
+    </div>
+
+    <div class="row">
+        <label for="quantity">Quantity</label>
+        <input readonly id="quantity" type="quantity" placeholder="Missing information quantity" name="quantity" formControlName="quantity">
+    </div>
+    <div class="row">
+        <label for="type">Type</label>
+        <input readonly id="type" type="text" placeholder="Missing information type" name="type" formControlName="type">
+    </div>
+    <div class="row">
+        <label for="arrivalDate">Date</label>
+        <input readonly id="arrivalDate" type="text" placeholder="Missing information arrivalDate" name="arrivalDate" formControlName="arrivalDate" mask="0000/00/00">
+    </div>
+</form>
