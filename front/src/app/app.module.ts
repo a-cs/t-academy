@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -55,8 +56,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { CardCreateUserComponent } from './components/UsersComponents/card-create-user/card-create-user.component';
+import { ModalCreateUserComponent } from './components/UsersComponents/modal-create-user/modal-create-user.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { NgxMaskModule } from 'ngx-mask';
 
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
@@ -67,8 +69,6 @@ import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots
 import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
 
 import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
-
-
 
 
 @NgModule({
@@ -114,6 +114,8 @@ import { ModalShowMoreTransactionHistoryComponent } from './components/Transacti
     ModalConfirmDeleteComponent,
     NotFoundComponent,
     NotFoundIconsBgComponent,
+    CardCreateUserComponent,
+    ModalCreateUserComponent,
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
     WarehouseSlotsComponent,
@@ -133,9 +135,9 @@ import { ModalShowMoreTransactionHistoryComponent } from './components/Transacti
     MatButtonModule,
     FormsModule,
     MatSelectModule,
+    MatPaginatorModule,
     NgxMaskModule.forRoot(),
-    ToastrModule.forRoot(),
-    MatPaginatorModule
+    ToastrModule.forRoot()
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
