@@ -20,19 +20,43 @@ export class ModalShowMoreComponent implements OnInit {
   form: FormGroup;
   branch: IBranch;
 
+  states = [
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO',
+  ];
+  filteredStates: Observable<String[]>;
+  firstState: String;
+
   showDeleteButton: boolean;
   showUpdateButton: boolean;
   showButtons: boolean;
-  
-  states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
-  filteredStates:Observable<String[]>
-  firstState:String;
 
-  showDeleteButton: boolean
-  showUpdateButton:boolean
-  showButtons: boolean
-  
-  permissions  = buttonPermission
+  permissions = buttonPermission;
 
   isReadOnly: boolean;
 
@@ -49,19 +73,19 @@ export class ModalShowMoreComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.configureForm()
-    this.filteredStates = this.form.controls["state"].valueChanges.pipe(
+    this.configureForm();
+    this.filteredStates = this.form.controls['state'].valueChanges.pipe(
       startWith(''),
-      map((value:string) =>{
-        return this._filterStates(value)
+      map((value: string) => {
+        return this._filterStates(value);
       })
-    )
-    this.firstState = this.branch.address.state||""
-    this.filteredStates.subscribe(value => this.firstState=value[0])
+    );
+    this.firstState = this.branch.address.state || '';
+    this.filteredStates.subscribe((value) => (this.firstState = value[0]));
 
-    this.showDeleteButton = false
-    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit)
-    this.showButtons = false
+    this.showDeleteButton = false;
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit);
+    this.showButtons = false;
 
     this.isReadOnly = this.showUpdateButton;
   }
@@ -83,27 +107,31 @@ export class ModalShowMoreComponent implements OnInit {
   }
 
   private _filterStates(name: string): String[] {
-    console.log(this.states.filter(state => state?.toLowerCase().includes(name.toLowerCase())))
-    if(name!=undefined){
+    console.log(
+      this.states.filter((state) =>
+        state?.toLowerCase().includes(name.toLowerCase())
+      )
+    );
+    if (name != undefined) {
       const filterValue = name.toLowerCase();
-      return this.states.filter(state => state?.toLowerCase().includes(filterValue));
+      return this.states.filter((state) =>
+        state?.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return this.states;
     }
-    else{
-      return this.states 
-    }
-    
   }
 
   stateFallback() {
-    if(this.states.includes(this.form.get('state')?.value.toUpperCase())){
+    if (this.states.includes(this.form.get('state')?.value.toUpperCase())) {
       this.firstState = this.form.get('state')?.value.toUpperCase();
     }
 
-    this.form.controls['state'].setValue(this.firstState)
+    this.form.controls['state'].setValue(this.firstState);
   }
 
   stateOnCLick() {
-    this.firstState = this.form.controls['state'].getRawValue(); 
+    this.firstState = this.form.controls['state'].getRawValue();
   }
 
   update() {
