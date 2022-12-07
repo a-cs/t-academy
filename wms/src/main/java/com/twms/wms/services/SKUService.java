@@ -3,6 +3,8 @@ package com.twms.wms.services;
 import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.SKURepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -52,12 +54,16 @@ public class SKUService {
         skuRepository.delete(s);
     }
 
-    public List<SKU> searchTerm(String searchTerm){
+    public Page<SKU> searchTerm(String searchTerm, Pageable pageable){
         String terms = searchTerm.replace("-", " ");
-        return skuRepository.findByNameContainingIgnoreCase(terms);
+        return skuRepository.findByNameContainingIgnoreCase(terms, pageable);
     }
 
     public List<SKU> findAllByIds(List<Long> ids) {
         return skuRepository.findByIdIn(ids);
+    }
+
+    public Page<SKU> readPaginated(Pageable pageable) {
+        return skuRepository.findAll(pageable);
     }
 }

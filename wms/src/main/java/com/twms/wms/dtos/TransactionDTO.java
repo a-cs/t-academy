@@ -1,9 +1,7 @@
 package com.twms.wms.dtos;
 
-import com.twms.wms.entities.Client;
-import com.twms.wms.entities.SKU;
-import com.twms.wms.entities.User;
-import com.twms.wms.entities.WarehouseSlot;
+import com.twms.wms.entities.*;
+import com.twms.wms.enums.TransactionType;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,21 +11,67 @@ public class TransactionDTO {
 
     private long id;
 
-    private Timestamp Date;
+    private Timestamp date;
 
     private int quantity;
 
-    @ManyToOne
-    private WarehouseSlot warehouseSlot;
+    private String warehouseSlot;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    private String client;
 
-    @ManyToOne
-    @JoinColumn(name = "sku_id")
-    private SKU sku;
+    private String sku;
 
-    @ManyToOne
-    private User user;
+    private String user;
+
+    private String branch;
+
+    private TransactionType type;
+
+    public TransactionDTO(Transaction transaction) {
+        this.id = transaction.getId();
+        this.date = transaction.getDate();
+        this.quantity = transaction.getQuantity();
+        this.warehouseSlot  = transaction.getWarehouseSlot().getWarehouseSlotId().getAisle()+transaction.getWarehouseSlot().getWarehouseSlotId().getBay();
+        this.client = transaction.getClient().getName();
+        this.sku = transaction.getSku().getName();
+        this.user = transaction.getUser().getUsername();
+        this.branch =  transaction.getWarehouseSlot().getWarehouseSlotId().getBranch().getName();
+        this.type = transaction.getType();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getWarehouseSlot() {
+        return warehouseSlot;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
 }
