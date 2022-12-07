@@ -18,8 +18,16 @@ export class ClientService {
     })
   }
 
-  get(page: number, size: number){
+  getPageable(page: number, size: number){
     return this.http.get<any>(`http://localhost:8080/client/pages?page=${page}&size=${size}`, {
+
+      headers: this.auth.buildHeader()
+
+    })
+  }
+
+  get(){
+    return this.http.get<IClient[]>(`http://localhost:8080/client`, {
 
       headers: this.auth.buildHeader()
 

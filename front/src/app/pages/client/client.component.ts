@@ -25,7 +25,7 @@ export class ClientComponent implements OnInit {
   constructor(private clientService:ClientService) { }
 
   ngOnInit(): void {
-    this.clientService.get(0,10).subscribe((data) => {
+    this.clientService.getPageable(0,10).subscribe((data) => {
       this.clients = data.content;
       this.length = data.totalElements
       this.pageSize = data.size
@@ -59,7 +59,7 @@ export class ClientComponent implements OnInit {
     this.pageIndex = e.pageIndex;
 
     if(this.searchText.length>0){
-      this.clientService.get(this.pageIndex, this.pageSize).subscribe((data) => {
+      this.clientService.getPageable(this.pageIndex, this.pageSize).subscribe((data) => {
         this.clients = data.content;
         this.length = data.totalElements
         this.pageSize = data.size

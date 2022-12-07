@@ -23,7 +23,7 @@ export class CategoryService {
   //}
 
   get() {
-    return this.http.get<any>(`http://localhost:8080/category`, {
+    return this.http.get<ICategory[]>(`http://localhost:8080/category`, {
       headers: this.auth.buildHeader(),
     });
   }
