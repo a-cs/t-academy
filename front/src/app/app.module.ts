@@ -55,6 +55,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
 
@@ -103,7 +105,7 @@ import { CardTransactionHistoryComponent } from './components/TransactionsCompon
     NotFoundIconsBgComponent,
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
-
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +120,7 @@ import { CardTransactionHistoryComponent } from './components/TransactionsCompon
     FormsModule,
     MatSelectModule,
     ToastrModule.forRoot(),
+    MatPaginatorModule,
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
