@@ -63,7 +63,7 @@ export class WarehouseSlotService {
     pageSize: number = 10
   ) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches?page=${pageSize}&size${pageSize}`,
+      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -76,7 +76,7 @@ export class WarehouseSlotService {
     pageSize: number = 10
   ) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranchesAndProducts?page=${pageSize}&size${pageSize}`,
+      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranchesAndProducts?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -92,7 +92,7 @@ export class WarehouseSlotService {
   ) {
     const body = { ids: idsList };
     return this.http.post<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}&page=${pageSize}&size${pageSize}`,
+      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}&page=${pageIndex}&size=${pageSize}`,
       body,
       {
         headers: this.auth.buildHeader(),
