@@ -24,11 +24,11 @@ public class JwtTokenEnhancer extends JwtAccessTokenConverter implements TokenEn
         UserDTO user = userService.getUserByUsername(authentication.getName());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id",user.getId());
+        map.put("user_id",user.getId());
 
         ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(map);
 
-        String encoded = super.encode(accessToken, authentication);
+//        String encoded = super.encode(accessToken, authentication);
 
 //        ((DefaultOAuth2AccessToken) accessToken).setValue(encoded);
 
