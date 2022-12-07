@@ -8,34 +8,41 @@ import { buttonPermission } from 'src/app/utils/utils';
 @Component({
   selector: 'app-measurement-unit',
   templateUrl: './measurement-unit.component.html',
-  styleUrls: ['./measurement-unit.component.css']
+  styleUrls: ['./measurement-unit.component.css'],
 })
 export class MeasurementUnitComponent implements OnInit {
+  component = ModalAddMeasuUnitComponent;
+  measurementUnits: IMeasurementUnit[];
+  searchText: string;
 
-  component = ModalAddMeasuUnitComponent
-  measurementUnits: IMeasurementUnit[]
-  searchText: string
+  constructor(
+    private measurementUnitService: MeasurementUnitService,
+    public auth: AuthService
+  ) {}
 
-  constructor(private measurementUnitService: MeasurementUnitService,
-    public auth: AuthService) { }
+  btnPermission = buttonPermission;
 
-    btnPermission = buttonPermission
-    
   ngOnInit(): void {
-    this.measurementUnitService.get().subscribe(
-      data => {
-        this.measurementUnits = data
-        console.log(this.measurementUnits)
-    })
-  }
-  
-  onSearchTextEntered(searchValue: string) {
-    this.searchText = searchValue
-    this.measurementUnitService.getByLikeName(this.searchText).subscribe(
-      data => {this.measurementUnits = data
-        console.log(this.measurementUnits)
-      }
-      )
+    this.measurementUnitService.measurementUnitChanged.subscribe(() =>
+      this.getData()
+    );
+    this.getData();
   }
 
+  getData() {
+    this.measurementUnitService.get().subscribe((data) => {
+      this.measurementUnits = data;
+      console.log(this.measurementUnits);
+    });
+  }
+
+  onSearchTextEntered(searchValue: string) {
+    this.searchText = searchValue;
+    this.measurementUnitService
+      .getByLikeName(this.searchText)
+      .subscribe((data) => {
+        this.measurementUnits = data;
+        console.log(this.measurementUnits);
+      });
+  }
 }
