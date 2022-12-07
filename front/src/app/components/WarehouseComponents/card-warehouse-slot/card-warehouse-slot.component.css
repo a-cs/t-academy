@@ -23,7 +23,7 @@
 
 .aisle-bay {
     width: 13rem;
-    height: 10rem;
+    height: 11rem;
     border: 4px var(--primary-hover-color) solid;
     border-radius: 32px;
     font-size: 8rem;
@@ -48,6 +48,7 @@
     font-size: 1.4rem;
     color: var(--text-secondary-color);
     grid-template-columns: 1fr 1fr;
+    margin-bottom: 0.5rem;
 }
 
 .info p {
