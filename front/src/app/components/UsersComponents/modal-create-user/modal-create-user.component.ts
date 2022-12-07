@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable, startWith } from 'rxjs';
 import IAccessLevel from 'src/app/interfaces/IAccessLevel';
 import IBranch from 'src/app/interfaces/IBranch';
@@ -28,7 +29,9 @@ export class ModalCreateUserComponent implements OnInit {
   public user: IUser,
   private formBuilder: FormBuilder,
   private branchService: BranchService,
-  private userService: UserService
+  private userService: UserService,
+  private dialogRef: MatDialogRef<ModalCreateUserComponent>,
+  private notificationService: ToastrService
   ){}
 
   ngOnInit(): void {
@@ -36,8 +39,6 @@ export class ModalCreateUserComponent implements OnInit {
     this.branchService.get().subscribe(branches => this.onGetBranches(branches))
 
     this.configureForm()
-    // this.filteredRoles.subscribe(role => this.firstRole = role[0])
-    // this.filteredBranches.subscribe(branch => this.firstBranch = branch[0])
 
   }
 
@@ -90,6 +91,7 @@ export class ModalCreateUserComponent implements OnInit {
 
 
   create(){
+
     const userInfo: IUser = {
       username: this.form.value.username,
       email: this.form.value.email,
@@ -97,7 +99,22 @@ export class ModalCreateUserComponent implements OnInit {
       accessLevel: this.form.value.role
     }
     this.userService.createUser(userInfo).subscribe(
-      response => { window.location.reload() }, error => { console.log("err!", error) }
+      response => {
+       },
+      (error) => {
+        this.notificationService.error(error.error.message, 'Error!', {
+          progressBar: true,
+        });
+      },
+
+      () => {
+        this.notificationService.success(`User created successfully.`,
+          'Success!',
+          { progressBar: true }
+        )
+        this.userService.userChanged.emit()
+        this.dialogRef.close()
+      }
       )
   }
 

@@ -9,21 +9,21 @@
     <img class="logo" src="../../../assets/images/TWMS_logo.svg" alt="Logo T-WMS">
     <div class="title">Login into your account</div>
 
-    <form class="form" [formGroup]="form" (ngSubmit)="login()">
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()">
       <div class="group">
 
         <div class="row">
-          <label for="username">Username</label>
+          <label for="email">Email</label>
           <div class="input">
-            <input type="text" placeholder="Type your username" name="username" formControlName="username" #username>
-            <button type="button" class="icon" (click)="username.focus()">
+            <input type="text" placeholder="Type your email" name="email" formControlName="email" #email>
+            <button type="button" class="icon" (click)="email.focus()">
               <i class="material-icons">mail</i>
             </button>
           </div>
-          <p *ngIf="form.controls['username'].errors?.['required']">User name is required</p>
+          <p *ngIf="form.controls['email'].errors?.['required']">Email is required</p>
 
         </div>
-        <div class="row">
+        <div *ngIf="isLogin" class="row">
           <label for="password">Password</label>
           <div class="input">
             <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password" formControlName="password" #password>
@@ -31,14 +31,16 @@
               <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
             </button>
           </div>
-          <a href="/login" id="forgotPassword">Forgot Password?</a>
           <p *ngIf="form.controls['password'].errors?.['required']">Password is required</p>
           <p *ngIf="form.controls['password'].errors?.['minlength']">Password needs at least 5 characters</p>
           <p *ngIf="form.controls['password'].errors?.['maxlength']">Password needs at most 20 characters</p>
         </div>
+        <div id="forgotLink">
+          <a (click)="toggleLogin()" id="forgotPassword">{{isLogin ? "Forgot Password?" : "Click here to login."}}</a>
+        </div>
       </div>
 
-      <button [disabled]="form.invalid" id="loginButton">Login now</button>
+      <button [disabled]="form.invalid" id="loginButton">{{isLogin ? "Login now" : "Forgot my password"}}</button>
       <!-- <button id="loginButton">Login now</button> -->
     </form>
   </div>
