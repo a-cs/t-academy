@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, Observable, startWith } from 'rxjs';
 import IBranch from 'src/app/interfaces/IBranch';
 import { BranchService } from 'src/app/service/branch.service';
 
@@ -13,11 +14,23 @@ export class ModalAddBranchComponent implements OnInit {
   form: FormGroup
   branch: IBranch
 
+  states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+  filteredStates:Observable<String[]>
+  firstState:String; 
+
   constructor(private formBuilder: FormBuilder,
               private branchService: BranchService) { }
 
   ngOnInit(): void {
     this.configureForm()
+
+    this.filteredStates = this.form.controls["state"].valueChanges.pipe(
+      startWith(''),
+      map((value:string) =>{
+        return this._filterStates(value)
+      })
+    )
+    this.filteredStates.subscribe(value => this.firstState=value[0])
   }
 
     configureForm() {
@@ -31,6 +44,30 @@ export class ModalAddBranchComponent implements OnInit {
         max_rows: ["", [Validators.required]],
         max_columns: ["", [Validators.required]]
       })
+    }
+
+    stateFallback() {
+      if(this.states.includes(this.form.get('state')?.value.toUpperCase())){
+        this.firstState = this.form.get('state')?.value.toUpperCase();
+      }
+  
+      this.form.controls['state'].setValue(this.firstState)
+    }
+  
+    stateOnCLick() {
+      this.firstState = this.form.controls['state'].getRawValue(); 
+    }
+
+    private _filterStates(name: string): String[] {
+      console.log(this.states.filter(state => state?.toLowerCase().includes(name.toLowerCase())))
+      if(name!=undefined){
+        const filterValue = name.toLowerCase();
+        return this.states.filter(state => state?.toLowerCase().includes(filterValue));
+      }
+      else{
+        return this.states 
+      }
+      
     }
 
     create() {
