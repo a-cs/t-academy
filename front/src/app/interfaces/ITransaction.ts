@@ -5,10 +5,11 @@ import IWarehouseSlot from "./IWarehouseSlot";
 
 export default interface ITransaction {
     id: number,
-    date: Date,
+    date: string,
     quantity: number,
     warehouseSlot: IWarehouseSlot,
     client: IClient,
     sku: ISku,
-    user: IUser
+    user: IUser,
+    type: string
 }
