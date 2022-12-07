@@ -22,5 +22,14 @@
       [category]="c"
     ></app-category-item-card>
   </div>
+  <mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [pageSizeOptions]="[1, 5, 10, 15, 20]"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [length]="length"
+  >
+  </mat-paginator>
 </div>
 <app-footer></app-footer>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalAddBranchComponent } from 'src/app/components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import IBranch from 'src/app/interfaces/IBranch';
+import { AuthService } from 'src/app/service/auth.service';
 import { BranchService } from 'src/app/service/branch.service';
+import { buttonPermission } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-branch',
@@ -14,7 +16,9 @@ export class BranchComponent implements OnInit {
   branches: IBranch[]
   searchText: string
 
-  constructor(private branchService: BranchService) { }
+  permissions = buttonPermission
+
+  constructor(private branchService: BranchService, public auth: AuthService) { }
 
   ngOnInit(): void {
     this.branchService.get().subscribe(
