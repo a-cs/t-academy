@@ -1,7 +1,38 @@
+.container{
+    min-height: 80vh;
+}
+
 .title {
     font-size: 6rem;
     text-align: center;
     margin-top: 60px;
     margin-bottom: 40px;
     color: var(--text-secondary-color);
+}
+
+.cards{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+@media (min-width:550px) and (max-width:850px) {
+    .title{
+        font-size: 4rem;
+    }
+}
+
+@media (min-width: 480px) and (max-width:549px) {
+    .title{
+        font-size: 3rem;
+    }
+}
+
+@media (min-width:0px) and (max-width: 479px) {
+    .title{
+        font-size: 2.5rem;
+    }
 }
