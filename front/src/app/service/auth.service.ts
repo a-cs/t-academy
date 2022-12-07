@@ -10,38 +10,59 @@ export class AuthService {
 
   private jwtHelper = new JwtHelperService();
 
-  constructor() {}
+  constructor() { }
 
-  public getToken():string | null {
+  public getToken(): string | null {
     return localStorage.getItem("T-WMS_token")
   }
 
-  public validateRole(roleList:string[]):boolean {
-      let token = this.getToken();
-      if(token){
-        let decoded:ITokenPayload = this.jwtHelper.decodeToken(token)
-        return roleList.includes(decoded.authorities[0])
-      }
-      return false
+  public validateRole(roleList: string[]): boolean {
+    let token = this.getToken();
+    if (token) {
+      let decoded: ITokenPayload = this.jwtHelper.decodeToken(token)
+      return roleList.includes(decoded.authorities[0])
+    }
+    return false
   }
 
-  public getUsername():string {
+  public getUsername(): string {
     let token = this.getToken();
-    if(token){
-      let decoded:ITokenPayload = this.jwtHelper.decodeToken(token)
+    if (token) {
+      let decoded: ITokenPayload = this.jwtHelper.decodeToken(token)
       return decoded.user_name
     }
     return ""
-}
+  }
+
+  public getUserId(): number | null {
+    let token = this.getToken();
+    if (token) {
+      let decoded: ITokenPayload = this.jwtHelper.decodeToken(token)
+      return decoded.user_id
+    }
+    return null
+  }
+
+  public getUserBranchId(): number | null {
+    let token = this.getToken();
+    if (token) {
+      let decoded: ITokenPayload = this.jwtHelper.decodeToken(token)
+      if(decoded.user_branch_id)
+        return decoded.user_branch_id
+      else
+        return null
+    }
+    return null
+  }
 
 
-  public buildHeader(){
+  public buildHeader() {
     return new HttpHeaders().set("Authorization", "Bearer " + this.getToken())
   }
 
-  public isAuthenticated():boolean {
+  public isAuthenticated(): boolean {
     const token = this.getToken()
-    if(token)
+    if (token)
       return !this.jwtHelper.isTokenExpired(token)
     return false
   }
