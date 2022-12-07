@@ -1,0 +1,38 @@
+<div class="modal-container">
+    <div class="picture">
+    </div>
+    <form [formGroup]="form" (ngSubmit)="create()" class="user-role">
+        <div class="username row">
+            <label for="username">Username</label>
+            <input type="text" placeholder="Username" name="username" formControlName="username">
+        </div>
+        <div class="useremail row">
+            <label for="email">Email</label>
+            <input type="email" placeholder="user@email.com" name="email" formControlName="email">
+        </div>
+        <div class="branch row">
+            <label for="branch">branch</label>
+            <input type="text" placeholder="Select a Branch" matInput name="selectedBranchId" formControlName="branch"
+                [matAutocomplete]="branchAutoComplete" (blur)="branchFallback()">
+            <mat-autocomplete #branchAutoComplete="matAutocomplete" [displayWith]="displayBranch">
+                <mat-option *ngFor="let branch of filteredBranches | async" [value]="branch" (mousedown)="branchOnCLick()">
+                    {{branch.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="role row">
+            <label for="role">Role</label>
+            <input type="text" placeholder="Select a Role" matInput name="selectedRoleId" formControlName="role"
+                [matAutocomplete]="roleAutoComplete" (blur)="roleFallback()">
+            <mat-autocomplete #roleAutoComplete="matAutocomplete" [displayWith]="displayRole">
+                <mat-option *ngFor="let role of filteredRoles | async" [value]="role" (mousedown)="roleOnCLick()">
+                    {{role.authority}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="btn-row row">
+            <button mat-dialog-close mat-raised-button class="btn cancelButton">Cancel</button>
+            <button [disabled]="form.invalid" mat-raised-button class="btn sucessButton">Create</button>
+        </div>
+    </form>
+</div>

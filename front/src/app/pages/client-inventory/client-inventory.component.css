@@ -8,7 +8,7 @@
     overflow-y: scroll;
 }
 
-span{
+#bar-position{
     position: absolute;
     top: 14vh;
     left: 50%;

@@ -24,6 +24,10 @@ public class CustomTokenConverter extends JwtAccessTokenConverter{
 
         Map<String, Object> map = new HashMap<>();
         map.put("user_id",user.getId());
+        if(user.getBranch() == null)
+            map.put("user_branch_id", null);
+        else
+            map.put("user_branch_id",user.getBranch().getId());
 
         ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(map);
 

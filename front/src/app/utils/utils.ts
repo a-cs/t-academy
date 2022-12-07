@@ -11,7 +11,8 @@ export const routePermission = {
   categories: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   branches: ["ROLE_ADMIN","ROLE_MANAGER"],
   users: ["ROLE_ADMIN","ROLE_MANAGER"],
-  transactionHistory: ["ROLE-OPERATOR", "ROLE_ADMIN"] //remove admin later
+  transactionHistory: ["ROLE-OPERATOR", "ROLE_ADMIN"], //remove admin later
+  warehouseSlot: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"]
 }
 
 export const buttonPermission ={

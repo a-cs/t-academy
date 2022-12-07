@@ -7,7 +7,13 @@
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
     <div class="cards">
+        <app-card-create-user></app-card-create-user>
         <app-card-user *ngFor="let user of userList" [user]="user"></app-card-user>
     </div>
+    <mat-paginator
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 20, 40]"
+              aria-label="Select page">
+    </mat-paginator>
 </div>
 <app-footer></app-footer>

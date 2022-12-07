@@ -32,10 +32,10 @@ public class WarehouseSlotController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAll());
     }
 
-//    @GetMapping("/branch/{branchId}")
-//    public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId) {
-//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(branchId));
-//    }
+    @GetMapping("/branch/{branchId}")
+    public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(branchId));
+    }
 
 //    @GetMapping("/branch/{branchId}/aisle/{aisleId}")
 //    public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId,
@@ -69,6 +69,12 @@ public class WarehouseSlotController {
                                                                          @RequestBody ListIdsFilterDTO branchIds,
                                                                          Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds, pageable));
+    }
+    @GetMapping("/client/filtered")
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesandProducts(@RequestParam(defaultValue = "") String term,
+                                                                                    @RequestParam Long branch,
+                                                                         Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranchesandProducts(term, branch, pageable));
     }
 
 

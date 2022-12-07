@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
@@ -31,6 +30,8 @@ public class User implements UserDetails {
 //    @NotBlank
     private String password;
     @ManyToOne
+    private Branch branch = null;
+    @ManyToOne
     private Role accessLevel;
     private boolean enabled = false;
 
@@ -38,10 +39,11 @@ public class User implements UserDetails {
     }
 
     public User(UserDTO userDTO) {
-        this.username = userDTO.getUsername();
         this.id = userDTO.getId();
-        this.accessLevel = userDTO.getAccessLevel();
+        this.username = userDTO.getUsername();
         this.email = userDTO.getEmail();
+        this.branch = userDTO.getBranch();
+        this.accessLevel = userDTO.getAccessLevel();
         this.enabled = userDTO.isEnabled();
     }
 

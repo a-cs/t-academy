@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { map, Observable, startWith } from 'rxjs';
 import IBranch from 'src/app/interfaces/IBranch';
 import { AuthService } from 'src/app/service/auth.service';
 import { BranchService } from 'src/app/service/branch.service';
@@ -22,8 +23,16 @@ export class ModalShowMoreComponent implements OnInit {
   showDeleteButton: boolean;
   showUpdateButton: boolean;
   showButtons: boolean;
+  
+  states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+  filteredStates:Observable<String[]>
+  firstState:String;
 
-  permissions = buttonPermission;
+  showDeleteButton: boolean
+  showUpdateButton:boolean
+  showButtons: boolean
+  
+  permissions  = buttonPermission
 
   isReadOnly: boolean;
 
@@ -40,10 +49,19 @@ export class ModalShowMoreComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.configureForm();
-    this.showDeleteButton = false;
-    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit);
-    this.showButtons = false;
+    this.configureForm()
+    this.filteredStates = this.form.controls["state"].valueChanges.pipe(
+      startWith(''),
+      map((value:string) =>{
+        return this._filterStates(value)
+      })
+    )
+    this.firstState = this.branch.address.state||""
+    this.filteredStates.subscribe(value => this.firstState=value[0])
+
+    this.showDeleteButton = false
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit)
+    this.showButtons = false
 
     this.isReadOnly = this.showUpdateButton;
   }
@@ -62,6 +80,30 @@ export class ModalShowMoreComponent implements OnInit {
       max_rows: [this.branch.max_rows, [Validators.required]],
       max_columns: [this.branch.max_columns, [Validators.required]],
     });
+  }
+
+  private _filterStates(name: string): String[] {
+    console.log(this.states.filter(state => state?.toLowerCase().includes(name.toLowerCase())))
+    if(name!=undefined){
+      const filterValue = name.toLowerCase();
+      return this.states.filter(state => state?.toLowerCase().includes(filterValue));
+    }
+    else{
+      return this.states 
+    }
+    
+  }
+
+  stateFallback() {
+    if(this.states.includes(this.form.get('state')?.value.toUpperCase())){
+      this.firstState = this.form.get('state')?.value.toUpperCase();
+    }
+
+    this.form.controls['state'].setValue(this.firstState)
+  }
+
+  stateOnCLick() {
+    this.firstState = this.form.controls['state'].getRawValue(); 
   }
 
   update() {

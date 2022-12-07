@@ -33,15 +33,10 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserDTO>> readUserFiltered(@RequestParam("username") String username){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFilteredByUsername(username));
+    public ResponseEntity<Page<UserDTO>> readUserFiltered(@RequestParam("username") String username, Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFilteredByUsername(username, pageable));
     }
 
-//    @PutMapping("/permissions/{userId}")
-//    public ResponseEntity<UserDTO> setUserAccessLevel(@RequestBody Role role,
-//                                                         @PathVariable("userId") Long userId){
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserAccessLevel(role, userId));
-//    }
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO user,
                                                       @PathVariable("userId") Long userId){
@@ -55,27 +50,15 @@ public class UserController {
     public ResponseEntity<Page<UserDTO>> readPaginated(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUsersPaginated(pageable));
     }
-//    @PutMapping("/{userId}/enable/{enabled}")
-//    public ResponseEntity<UserDTO> enableOrDisableUser(@PathVariable("userId") Long userId,
-//                                                  @PathVariable("enabled") boolean enabled){
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserIsEnable(userId, enabled));
-//    }
-//
-//    @GetMapping("/confirm")
-//    public ResponseEntity<String> confirmUserEmail(@RequestParam("token") String token){
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
-//    }
     @PutMapping("/setpassword")
     public ResponseEntity<String> setUserPassword(@RequestParam Map<String, String> passwordMap){
         String token = passwordMap.get("token");
         String password = passwordMap.get("password");
         return ResponseEntity.status(HttpStatus.OK).body(userService.setNewPassword(token, password));
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
     }
     @GetMapping("/resetpassword")
     public ResponseEntity<String> resetPassword(@RequestParam String username){
         return ResponseEntity.status(HttpStatus.OK).body(userService.resetPassword(username));
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.userConfirmation(token));
     }
 
 }

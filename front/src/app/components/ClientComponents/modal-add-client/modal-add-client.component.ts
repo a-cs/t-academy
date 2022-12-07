@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { map, Observable } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import IAddress from 'src/app/interfaces/IAddress';
 import IClient from 'src/app/interfaces/IClient';
 import { ClientService } from 'src/app/service/client.service';
@@ -26,6 +26,7 @@ export class ModalAddClientComponent implements OnInit {
   ngOnInit(): void {
     this.configureForm();
     this.filteredStates = this.createForm.controls["state"].valueChanges.pipe(
+      startWith(''),
       map((value:string) =>{
         return this._filterStates(value)
       })
