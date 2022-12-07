@@ -6,6 +6,8 @@ import com.twms.wms.repositories.ClientRepository;
 import io.swagger.v3.core.util.Json;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,9 +79,13 @@ public class ClientService {
         clientRepository.delete(toDelete);
     }
 
-    public List<Client> searchTerm(String searchTerm){
+    public Page<Client> searchTerm(String searchTerm, Pageable pageable){
         String terms = searchTerm.replace("-", " ");
-        return clientRepository.findByNameContainingIgnoreCaseOrCNPJContainingIgnoreCase(terms,terms);
+        return clientRepository.findByNameContainingIgnoreCaseOrCNPJContainingIgnoreCase(terms, terms, pageable);
+    }
+
+    public Page<Client> readAllClientsPaginated(Pageable pageable) {
+        return clientRepository.findAll(pageable);
     }
 
 }

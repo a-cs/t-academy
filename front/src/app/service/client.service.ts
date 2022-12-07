@@ -10,16 +10,16 @@ export class ClientService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getByLikeName(name:string){
-    return this.http.get<IClient[]>(`http://localhost:8080/client/search?term=${name}`, {
+  getByLikeName(name:string, page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/client/search?term=${name}&page=${page}&size=${size}`, {
 
       headers: this.auth.buildHeader()
 
     })
   }
 
-  get(){
-    return this.http.get<IClient[]>("http://localhost:8080/client", {
+  get(page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/client/pages?page=${page}&size=${size}`, {
 
       headers: this.auth.buildHeader()
 
