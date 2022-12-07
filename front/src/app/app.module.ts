@@ -55,10 +55,16 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { NgxMaskModule } from 'ngx-mask';
+
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
 import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
-import { NgxMaskModule } from 'ngx-mask';
+
+
 
 @NgModule({
   declarations: [
@@ -106,7 +112,7 @@ import { NgxMaskModule } from 'ngx-mask';
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
     ModalShowMoreTransactionHistoryComponent,
-
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -120,8 +126,9 @@ import { NgxMaskModule } from 'ngx-mask';
     MatButtonModule,
     FormsModule,
     MatSelectModule,
-    ToastrModule.forRoot(),
     NgxMaskModule.forRoot(),
+    ToastrModule.forRoot(),
+    MatPaginatorModule
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

@@ -62,9 +62,9 @@ public class WarehouseSlotService {
         return WarehouseSlotDTO.fromWarehouseSlot(ws);
     }
 
-    public List<WarehouseSlotDTO> getByClientId(Long clientId) {
-        List<WarehouseSlot> warehouseSlots = warehouseSlotRepository.findByClientId(clientId);
-        return WarehouseSlotDTO.fromListWarehouseSlot(warehouseSlots);
+    public Page<WarehouseSlotDTO> getByClientId(Long clientId, Pageable pageable) {
+        Page<WarehouseSlot> slots = warehouseSlotRepository.findByClientId(clientId, pageable);
+        return slots.map(WarehouseSlotDTO::new);
     }
 
     public Page<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsFilterDTO branchIds, Pageable pageable) {
@@ -97,7 +97,7 @@ public class WarehouseSlotService {
         return slots.map(WarehouseSlotDTO::new);
     }
 
-    public List<WarehouseSlotDTO> getByClientBranchFilteredByProductName(Long clientId, ListIdsFilterDTO branchIdsDTO, String searchTerm) {
+    public Page<WarehouseSlotDTO> getByClientBranchFilteredByProductName(Long clientId, ListIdsFilterDTO branchIdsDTO, String searchTerm, Pageable pageable) {
         List<Branch> branchesToFilter;
         List<Long> branchIds = branchIdsDTO.getIds();
 
@@ -107,12 +107,13 @@ public class WarehouseSlotService {
             branchesToFilter = branchService.readAllBranchs();
         }
 
-        List<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(
+        Page<WarehouseSlot> slots = warehouseSlotRepository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(
                 clientId,
                 branchesToFilter,
-                searchTerm
+                searchTerm,
+                pageable
         );
-        return WarehouseSlotDTO.fromListWarehouseSlot(slots);
+        return slots.map(WarehouseSlotDTO::new);
     }
 
     public WarehouseSlotDTO putById(WarehouseSlot ws, Long branchId, String aisleId, int bayId) {

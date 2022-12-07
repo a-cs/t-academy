@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtTokenEnhancer extends JwtAccessTokenConverter implements TokenEnhancer {
+public class CustomTokenConverter extends JwtAccessTokenConverter{
     @Autowired
     private UserService userService;
 
@@ -24,14 +23,15 @@ public class JwtTokenEnhancer extends JwtAccessTokenConverter implements TokenEn
         UserDTO user = userService.getUserByUsername(authentication.getName());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id",user.getId());
+        map.put("user_id",user.getId());
 
         ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(map);
 
-        String encoded = super.encode(accessToken, authentication);
+        accessToken = super.enhance(accessToken, authentication);
 
-//        ((DefaultOAuth2AccessToken) accessToken).setValue(encoded);
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(new HashMap<>());
 
         return accessToken;
     }
 }
+
