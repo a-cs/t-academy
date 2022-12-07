@@ -19,14 +19,14 @@ export class ClientInventoryComponent implements OnInit {
   branchesList: IBranch[];
   firstBranch: string;
   idList: number[] = [];
-  pageSize = 1;
+  pageSize = 10;
   pageIndex = 0;
   length = 0;
   constructor(
     private warehouseSlotService: WarehouseSlotService,
     private branchService: BranchService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.warehouseSlotService
@@ -58,7 +58,7 @@ export class ClientInventoryComponent implements OnInit {
     });
   }
 
-  refreshWarehouseSlot() {}
+  refreshWarehouseSlot() { }
   branchesForm = new FormControl('');
 
   searchText: string = '';
@@ -89,6 +89,7 @@ export class ClientInventoryComponent implements OnInit {
           this.length = client_wareshouses_slots.totalPages;
         });
     } else {
+      console.log(this.idList)
       this.searchText = searchValue;
       this.warehouseSlotService
         .getByClientIdByBranchesByProductsName(

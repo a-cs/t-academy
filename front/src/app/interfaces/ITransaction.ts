@@ -7,9 +7,10 @@ export default interface ITransaction {
     id: number,
     date: string,
     quantity: number,
-    warehouseSlot: IWarehouseSlot,
-    client: IClient,
-    sku: ISku,
-    user: IUser,
-    type: string
+    warehouseSlot: string,
+    client: string,
+    sku: string,
+    user: string,
+    type: string,
+    branch: string,
 }

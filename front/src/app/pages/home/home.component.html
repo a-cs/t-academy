@@ -27,6 +27,13 @@
       <p>Create Transaction</p>
     </button>
 
+    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('transaction-history')">
+      <div class="center">
+        <i class="material-icons">article</i>
+      </div>
+      <p>Transaction-History</p>
+    </button>
+
     <button *ngIf='auth.validateRole(permissions.measurementUnits)' class="card" (click)="navigateTo('measurement-units')">
 
       <div class="center">
