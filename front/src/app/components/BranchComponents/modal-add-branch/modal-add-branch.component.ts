@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable, startWith } from 'rxjs';
 import IBranch from 'src/app/interfaces/IBranch';
 import { BranchService } from 'src/app/service/branch.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-add-branch',
   templateUrl: './modal-add-branch.component.html',
-  styleUrls: ['./modal-add-branch.component.css']
+  styleUrls: ['./modal-add-branch.component.css'],
 })
 export class ModalAddBranchComponent implements OnInit {
+  form: FormGroup;
+  branch: IBranch;
 
-  form: FormGroup
-  branch: IBranch
+  constructor(
+    private formBuilder: FormBuilder,
+    private branchService: BranchService,
+    private notification: ToastrService,
+    private dialogRef: MatDialogRef<ModalAddBranchComponent>
+  ) {}
 
   states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
   filteredStates:Observable<String[]>
   firstState:String; 
-
-  constructor(private formBuilder: FormBuilder,
-              private branchService: BranchService) { }
 
   ngOnInit(): void {
     this.configureForm()
@@ -33,18 +38,18 @@ export class ModalAddBranchComponent implements OnInit {
     this.filteredStates.subscribe(value => this.firstState=value[0])
   }
 
-    configureForm() {
-      this.form = this.formBuilder.group({
-        name: ["", [Validators.required]],
-        street: ["", [Validators.required]],
-        number: ["", [Validators.required]],
-        city: ["", [Validators.required]],
-        state: ["", [Validators.required]],
-        zip_code: ["", [Validators.required]],
-        max_rows: ["", [Validators.required]],
-        max_columns: ["", [Validators.required]]
-      })
-    }
+  configureForm() {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      number: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      zip_code: ['', [Validators.required]],
+      max_rows: ['', [Validators.required]],
+      max_columns: ['', [Validators.required]],
+    });
+  }
 
     stateFallback() {
       if(this.states.includes(this.form.get('state')?.value.toUpperCase())){
@@ -83,11 +88,23 @@ export class ModalAddBranchComponent implements OnInit {
         max_rows: this.form.value.max_rows,
         max_columns: this.form.value.max_columns
       }
-  
-      this.branchService.create(newBranch)
-        .subscribe(response => {
-          window.location.reload()
-        })
-    }
 
+    this.branchService.create(newBranch).subscribe(
+      (response) => {},
+      (error) => {
+        this.notification.error(error.error.message, 'Error!', {
+          progressBar: true,
+        });
+      },
+      () => {
+        this.notification.success(
+          `Branch ${newBranch.name.toUpperCase()} was successfuly updated`,
+          'Created!',
+          { progressBar: true }
+        );
+        this.branchService.branchChanged.emit();
+        this.dialogRef.close();
+      }
+    );
+  }
 }
