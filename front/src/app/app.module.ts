@@ -58,7 +58,6 @@ import { NotFoundComponent } from './components/404/not-found/not-found.componen
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { CardCreateUserComponent } from './components/UsersComponents/card-create-user/card-create-user.component';
 import { ModalCreateUserComponent } from './components/UsersComponents/modal-create-user/modal-create-user.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxMaskModule } from 'ngx-mask';
 
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
