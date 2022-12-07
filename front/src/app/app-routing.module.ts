@@ -15,8 +15,10 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { ComponentType } from '@angular/cdk/portal';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+
 
 const pages404: any = [NotFoundComponent, NotFoundIconsBgComponent]
 
@@ -98,12 +100,22 @@ const routes: Routes = [
     }
   },
   {
+
     path: 'warehouse-slots',
     component: WarehouseSlotsComponent,
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: routePermission.warehouseSlot
     }
+    },
+    {
+    path: 'create-transaction',
+    component: CreateTransactionComponent,
+    // canActivate: [AuthGuardService],
+    // data: {
+    //   expectedRoles: routePermission.users
+    // }
+
   },
   {
     path: 'confirmation',

@@ -10,8 +10,16 @@ export class ClientService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  getByLikeName(name:string){
-    return this.http.get<IClient[]>(`http://localhost:8080/client/search?term=${name}`, {
+  getByLikeName(name:string, page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/client/search?term=${name}&page=${page}&size=${size}`, {
+
+      headers: this.auth.buildHeader()
+
+    })
+  }
+
+  getPageable(page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/client/pages?page=${page}&size=${size}`, {
 
       headers: this.auth.buildHeader()
 
@@ -19,7 +27,7 @@ export class ClientService {
   }
 
   get(){
-    return this.http.get<IClient[]>("http://localhost:8080/client", {
+    return this.http.get<IClient[]>(`http://localhost:8080/client`, {
 
       headers: this.auth.buildHeader()
 

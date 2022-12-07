@@ -10,14 +10,19 @@ export class SkuService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  getByLikeName(name:string){
-    return this.http.get<ISku[]>(`http://localhost:8080/sku/search?term=${name}`, {
+  getByLikeName(name:string, page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/sku/search?term=${name}&page=${page}&size=${size}`, {
       headers: this.auth.buildHeader()
     })
   }
 
+  getPageable(page: number, size: number){
+    return this.http.get<any>(`http://localhost:8080/sku/pages?page=${page}&size=${size}`, {
+      headers: this.auth.buildHeader()
+    })
+  }
   get(){
-    return this.http.get<ISku[]>("http://localhost:8080/sku", {
+    return this.http.get<any>(`http://localhost:8080/sku`, {
       headers: this.auth.buildHeader()
     })
   }
