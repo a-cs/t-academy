@@ -62,7 +62,12 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
 import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
+
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
+
 import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
+
 
 
 
@@ -111,6 +116,8 @@ import { ModalShowMoreTransactionHistoryComponent } from './components/Transacti
     NotFoundIconsBgComponent,
     TransactionHistoryComponent,
     CardTransactionHistoryComponent,
+    WarehouseSlotsComponent,
+    CardWarehouseSlotComponent,
     ModalShowMoreTransactionHistoryComponent,
     CreateTransactionComponent
   ],

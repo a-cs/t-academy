@@ -15,15 +15,22 @@ export class WarehouseSlotService {
   //})
   //}
 
+
+  get() {
+     return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot`, {
+      headers: this.auth.buildHeader()
+     })
+  }
+
   getByIdClient(id: number, pageIndex: number = 0, pageSize = 10) {
     return this.http.get<any>(
       `http://localhost:8080/warehouseSlot/client/${id}?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
+      })
       }
-    );
-  }
 
+  
   // getByClientIdByBranches(id: number) {
   // return this.http.get<IWarehouseSlot[]>(
   // `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches`,

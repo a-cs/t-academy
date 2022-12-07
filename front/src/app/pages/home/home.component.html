@@ -59,6 +59,12 @@
       </div>
       <p>Clients</p>
     </button>
+    <button *ngIf='auth.validateRole(permissions.warehouseSlot)' class="card" (click)="navigateTo('warehouse-slots')">
+      <div class="center">
+        <i class="material-icons">forklift</i>
+      </div>
+      <p>Warehouse Slots</p>
+    </button>
   </div>
 </div>
 <app-footer></app-footer>
