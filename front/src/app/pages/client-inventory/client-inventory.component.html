@@ -1,29 +1,51 @@
 <app-header></app-header>
 <div class="container">
-<div class="space"></div>
-    <div class="top-side">
-        <div class="select">
-        <mat-form-field class="estilo" appearance="fill">
-            <mat-label>Branches</mat-label>
-            <mat-select [formControl]="branchesForm" multiple>
-                <mat-select-trigger>
-                    {{firstBranch || ''}}
-                    <span *ngIf="(branchesForm.value?.length || 0) > 1" class="example-additional-selection">
-                        (+{{(branchesForm.value?.length || 0) - 1}} {{branchesForm.value?.length === 2 ? 'other' :
-                        'others'}})
-                    </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let branch of branches" [value]="branch">{{branch.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+  <div class="space"></div>
+  <div class="top-side">
+    <div class="select">
+      <mat-form-field class="estilo" appearance="fill">
+        <mat-label>Branches</mat-label>
+        <mat-select [formControl]="branchesForm" multiple>
+          <mat-select-trigger>
+            {{ firstBranch || "" }}
+            <span
+              *ngIf="(branchesForm.value?.length || 0) > 1"
+              class="example-additional-selection"
+            >
+              (+{{ (branchesForm.value?.length || 0) - 1 }}
+              {{ branchesForm.value?.length === 2 ? "other" : "others" }})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let branch of branches" [value]="branch">{{
+            branch.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-        <span><app-search-bar class="margin-search-bar" (searchTextChanged)="onSearchTextEnteredSKUWareHouse($event)"></app-search-bar></span>
-    </div>
+    <span
+      ><app-search-bar
+        class="margin-search-bar"
+        (searchTextChanged)="onSearchTextEnteredSKUWareHouse($event)"
+      ></app-search-bar
+    ></span>
+  </div>
 
-    <div class="cards">
-        <app-card-client-sku (click)="openAddDialog(warehouseSlot)"
-            *ngFor="let warehouseSlot of client_wareshouses_slots" [warehouseSlot]="warehouseSlot">
-        </app-card-client-sku>
-    </div>
+  <div class="cards">
+    <app-card-client-sku
+      (click)="openAddDialog(warehouseSlot)"
+      *ngFor="let warehouseSlot of client_wareshouses_slots"
+      [warehouseSlot]="warehouseSlot"
+    >
+    </app-card-client-sku>
+  </div>
+  <mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [pageSizeOptions]="[1, 5, 10, 15, 20]"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [length]="length"
+  >
+  </mat-paginator>
 </div>
 <app-footer></app-footer>

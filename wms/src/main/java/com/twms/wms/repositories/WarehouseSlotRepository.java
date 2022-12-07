@@ -18,7 +18,7 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
                                                                                                      String aisle,
                                                                                                      int bay);
 
-     List<WarehouseSlot> findByClientId(Long clientId);
+     Page<WarehouseSlot> findByClientId(Long clientId, Pageable pageable);
 
 
      Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchIn(Long clientId, List<Branch> branches, Pageable pageable);
@@ -26,7 +26,7 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
      Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(Long clientId, List<Branch> branches, List<SKU> skus, Pageable pageable);
 
      List<WarehouseSlot> findAllBySkuIn(List<SKU> skus);
-    List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(Long clientId, List<Branch> branches, String searchTerm);
+    Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(Long clientId, List<Branch> branches, String searchTerm, Pageable pageable);
 
      WarehouseSlot findFirstBySkuIsNullAndWarehouseSlotIdBranchId(Long branchId);
 
