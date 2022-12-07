@@ -16,8 +16,13 @@ export class SkuService {
     })
   }
 
-  get(page: number, size: number){
+  getPageable(page: number, size: number){
     return this.http.get<any>(`http://localhost:8080/sku/pages?page=${page}&size=${size}`, {
+      headers: this.auth.buildHeader()
+    })
+  }
+  get(){
+    return this.http.get<any>(`http://localhost:8080/sku`, {
       headers: this.auth.buildHeader()
     })
   }

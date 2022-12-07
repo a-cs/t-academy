@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit {
   btnPermission = buttonPermission;
 
   ngOnInit(): void {
-    this.skuService.get(0,10).subscribe(
+    this.skuService.getPageable(0,10).subscribe(
       data => {
         this.skus = data.content
         console.log(this.skus)
@@ -64,7 +64,7 @@ export class ProductComponent implements OnInit {
     this.pageIndex = e.pageIndex;
 
     if(this.searchText.length>0){
-      this.skuService.get(this.pageIndex, this.pageSize).subscribe((data) => {
+      this.skuService.getPageable(this.pageIndex, this.pageSize).subscribe((data) => {
         this.skus = data.content;
         this.length = data.totalElements
         this.pageSize = data.size
