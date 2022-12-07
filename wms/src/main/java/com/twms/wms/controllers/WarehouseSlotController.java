@@ -52,10 +52,11 @@ public class WarehouseSlotController {
 //        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getById(branchId, aisleId, bay));
 //    }
 
-//    @GetMapping("/client/{clientId}")
-//    public ResponseEntity<List<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId) {
-//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId));
-//    }
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId,
+                                                                Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId, pageable));
+    }
 
 //    @GetMapping("/client/{clientId}/filterByBranches")
 //    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranches(@PathVariable Long clientId,
@@ -72,12 +73,13 @@ public class WarehouseSlotController {
 
 
     @PostMapping("/client/{clientId}/filterByBranches/searchProduct")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranchesSearchByProductName(@PathVariable Long clientId,
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesSearchByProductName(@PathVariable Long clientId,
                                                                                             @RequestBody ListIdsFilterDTO branchIds,
-                                                                                            @RequestParam(defaultValue = "") String term
+                                                                                            @RequestParam(defaultValue = "") String term,
+                                                                                            Pageable pageable
                                                                        ) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term));
+                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term, pageable));
     }
 
     @PostMapping("/client/{clientId}/filterByBranchesAndProducts")

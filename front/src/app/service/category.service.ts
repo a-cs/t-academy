@@ -22,9 +22,29 @@ export class CategoryService {
   //});
   //}
 
-  get(page = 0, size = 10) {
+  get() {
+    return this.http.get<any>(`http://localhost:8080/category`, {
+      headers: this.auth.buildHeader(),
+    });
+  }
+
+  //getPageable(page = 0, size = 10) {
+  //let categoryPage = {
+  //content: [],
+  //length: 0,
+  //};
+
+  //return this.http.get<any>(
+  //`http://localhost:8080/category/pageable?page=${page}&size=${size}`,
+  //{
+  //headers: this.auth.buildHeader(),
+  //}
+  //);
+  //}
+
+  getPageable(page = 0, size = 10) {
     return this.http.get<any>(
-      `http://localhost:8080/category?page=${page}&size=${size}`,
+      `http://localhost:8080/category/pageable?page=${page}&size=${size}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -108,7 +128,7 @@ export class CategoryService {
   }
 
   getByLikeName(searchString: string) {
-    return this.http.get<ICategory[]>(
+    return this.http.get<any>(
       `http://localhost:8080/category/search?term=${searchString}`,
       {
         headers: this.auth.buildHeader(),
