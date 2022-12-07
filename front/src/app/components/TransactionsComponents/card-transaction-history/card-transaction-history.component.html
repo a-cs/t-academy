@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card" [ngClass]="transactionType== 'IN' ? 'in' : 'out'" (click)="openShowMoreDialog(transaction)">
-        <p class="capitalize">{{transaction.sku.name || ""}}</p>
-        <p class="capitalize">{{transaction.client.name || ""}}</p>
+        <p class="capitalize">{{transaction.sku || ""}}</p>
+        <p class="capitalize">{{transaction.client || ""}}</p>
         <p class="capitalize">{{transaction.date || ""| mask: '0000/00/00'}}</p>
         <p class="capitalize">{{transaction.quantity || ""}}</p>
         <div class="padding-right"></div>

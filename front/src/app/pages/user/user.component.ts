@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { tap } from 'rxjs';
 import IUser from 'src/app/interfaces/IUser';
 import { UserService } from 'src/app/service/user.service';
 
@@ -7,25 +9,37 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements AfterViewInit {
 
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator
   userList: IUser[]
   searchText: string = "";
+  totalPages: number;
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-    this.userService.get().subscribe(data=>{
-      this.userList = data
-      console.log(data);
-    })
+  ngAfterViewInit(): void {
+    this.searchText=""
+    this.paginator.page
+    .pipe(
+      tap(()=>{this.getUserList()})
+    )
+    .subscribe()
+    this.getUserList();
   }
 
 
   onSearchTextEntered(searchValue: string){
-    this.searchText = searchValue;
-    this.userService.getByUsernameLike(this.searchText).subscribe(data => {
-      this.userList = data
-      console.log(data)})
+    this.searchText = searchValue
+    this.paginator.pageIndex=0;
+    this.getUserList()
+  }
+
+  getUserList(){
+    this.userService.getByUsernameLike(this.searchText, this.paginator.pageSize, this.paginator.pageIndex)
+    .subscribe(data => {
+      this.paginator.length = data.totalElements
+      this.userList = data.content})
   }
 }

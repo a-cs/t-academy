@@ -11,9 +11,9 @@ import { AuthService } from './auth.service';
 export class UserService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getByUsernameLike(name: string) {
-    return this.http.get<IUser[]>(
-      `http://localhost:8080/user/search?username=${name}`,
+  getByUsernameLike(name: string, pageSize: number, pageIdx: number) {
+    return this.http.get<any>(
+      `http://localhost:8080/user/search?username=${name}&size=${pageSize}&page=${pageIdx}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -42,17 +42,23 @@ export class UserService {
 
   getRoles() {
     return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`, {
-
       headers: this.auth.buildHeader()
     })
-  
   }
+
   changePassword(token:string, password:string){
     const body = new HttpParams()
     .set("token", token)
     .set("password", password)
     return this.http.put<any>(`http://localhost:8080/user/setpassword`, body)
 
+  }
+
+  createUser(data: IUser){
+    console.log('json!', data);
+    return this.http.post<IUser>(`http://localhost:8080/user/signup`, data, {
+      headers: this.auth.buildHeader()
+    });
   }
 
   login(username: string, password: string) {

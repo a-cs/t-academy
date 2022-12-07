@@ -29,13 +29,12 @@ export class ModalShowMoreTransactionHistoryComponent implements OnInit {
   configureForm() {
     console.log("sku", this.transaction.sku)
     this.form = this.formBuilder.group({
-      sku: [this.transaction.sku.name, [Validators.required]],
+      sku: [this.transaction.sku, [Validators.required]],
       quantity: [this.transaction.quantity, [Validators.required]],
-      client: [this.transaction.client.name, [Validators.required]],
-      branch: [this.transaction.warehouseSlot.branchName, [Validators.required]],
+      client: [this.transaction.client, [Validators.required]],
+      branch: [this.transaction.branch, [Validators.required]],
       type: [this.transaction.type, [Validators.required]],
-      aisleBay: [this.transaction.warehouseSlot.aisle + this.transaction.warehouseSlot.bay, [Validators.required]],
-      warehouseSlot: [this.transaction.warehouseSlot, [Validators.required]],
+      aisleBay: [this.transaction.warehouseSlot, [Validators.required]],
       arrivalDate: [this.transaction.date, [Validators.required]]
     })
   }

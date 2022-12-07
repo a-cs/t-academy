@@ -17,7 +17,7 @@ export class TransactionService {
   }
 
   getAllPageable(page: number, size: number) {
-    return this.http.get<ITransaction[]>(`http://localhost:8080/transaction/prettify?page=${page}&size=${size}`, {
+    return this.http.get<any>(`http://localhost:8080/transaction/prettify?page=${page}&size=${size}`, {
       headers: this.auth.buildHeader(),
     });
   }
