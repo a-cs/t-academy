@@ -170,7 +170,7 @@ export class ModalUpdateSkuComponent {
       },
       () => {
         this.notification.success(
-          `Product ${this.sku.name.toUpperCase()} was successfuly updated`,
+          `Product ${this.sku.name.toUpperCase()} was successfully updated`,
           'Updated!',
           { progressBar: true }
         );
@@ -210,7 +210,7 @@ export class ModalUpdateSkuComponent {
           },
           () => {
             this.notification.warning(
-              `Product ${this.sku.name.toUpperCase()} was successfuly deleted`,
+              `Product ${this.sku.name.toUpperCase()} was successfully deleted`,
               'Deleted!',
               { progressBar: true }
             );

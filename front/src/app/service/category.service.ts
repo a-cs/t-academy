@@ -71,7 +71,7 @@ export class CategoryService {
         },
         () => {
           this.notification.warning(
-            'Category was successfuly deleted',
+            'Category was successfully deleted',
             'Deleted!',
             { progressBar: true }
           );
@@ -94,7 +94,7 @@ export class CategoryService {
         },
         () => {
           this.notification.success(
-            'Category was successfuly updated',
+            'Category was successfully updated',
             'Updated!',
             { progressBar: true }
           );
@@ -117,7 +117,7 @@ export class CategoryService {
         },
         () => {
           this.notification.success(
-            'Category successfuly created',
+            'Category successfully created',
             'Created!',
             {
               progressBar: true,
