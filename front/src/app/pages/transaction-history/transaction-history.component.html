@@ -1,0 +1,6 @@
+<app-header></app-header>
+<div class="title">
+    <p>Transactions History</p>
+</div>
+<app-card-transaction-history *ngFor="let transaction of transactions" [transaction]="transaction"></app-card-transaction-history>
+<app-footer></app-footer>

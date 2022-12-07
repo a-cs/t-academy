@@ -56,6 +56,9 @@ import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/m
 import { NotFoundComponent } from './components/404/not-found/not-found.component';
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +103,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ModalConfirmDeleteComponent,
     NotFoundComponent,
     NotFoundIconsBgComponent,
+    TransactionHistoryComponent,
+    CardTransactionHistoryComponent,
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,

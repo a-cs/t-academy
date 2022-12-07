@@ -10,7 +10,8 @@ export const routePermission = {
   measurementUnits: ["ROLE_ADMIN","ROLE_MANAGER","ROLE_OPERATOR"],
   categories: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   branches: ["ROLE_ADMIN","ROLE_MANAGER"],
-  users: ["ROLE_ADMIN","ROLE_MANAGER"]
+  users: ["ROLE_ADMIN","ROLE_MANAGER"],
+  transactionHistory: ["ROLE-OPERATOR", "ROLE_ADMIN"] //remove admin later
 }
 
 export const buttonPermission ={
@@ -26,6 +27,5 @@ export const buttonPermission ={
   addBranch: ["ROLE_ADMIN"],
   updateBranch: ["ROLE_ADMIN"],
   deleteBranch: ["ROLE_ADMIN"],
-  selectClient: ["ROLE_ADMIN, ROLE_MANAGER"],
-  editBranch: ["ROLE_ADMIN"]
+  selectClient: ["ROLE_ADMIN", "ROLE_MANAGER"]
 }

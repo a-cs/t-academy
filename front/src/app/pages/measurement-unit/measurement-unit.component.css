@@ -25,3 +25,9 @@
 .search-bar {
     margin-top: 2vh;
 }
+
+app-card-create-sku {
+    --custom-height: 15rem;
+    /*--custom-margin: 1rem 2rem;*/
+    --custom-i-font: 12rem;
+}

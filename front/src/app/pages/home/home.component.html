@@ -10,24 +10,32 @@
         <i class="material-icons">view_in_ar</i>
       </div>
       <p>Products</p>
-      
+
     </button>
     <button *ngIf='auth.validateRole(permissions.categories)' class="card" (click)="navigateTo('categories')">
-      
+
       <div class="center">
         <i class="material-icons">category</i>
       </div>
       <p>Categories</p>
     </button>
+
+    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('create-transaction')">
+      <div class="center">
+        <i class="material-icons material-icons-outlined">inventory_2</i>
+      </div>
+      <p>Create Transaction</p>
+    </button>
+
     <button *ngIf='auth.validateRole(permissions.measurementUnits)' class="card" (click)="navigateTo('measurement-units')">
-      
+
       <div class="center">
         <i class="material-icons">straighten</i>
       </div>
       <p>Measurement Units</p>
     </button>
     <button *ngIf="auth.validateRole(permissions.branches)" class="card" (click)="navigateTo('branches')">
-      
+
       <div class="center">
         <i class="material-icons">location_city</i>
       </div>
