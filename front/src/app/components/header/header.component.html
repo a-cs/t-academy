@@ -57,6 +57,13 @@
                 </a>
                 <div class="line"></div>
             </div>
+            <div *ngIf='auth.validateRole(permissions.warehouseSlot)' class="ngIf-Home">
+
+                <a (click)="navigate('/warehouse-slots')">
+                    <li class="item"><i class="material-icons">forklift</i>Warehouse Slots</li>
+                </a>
+                <div class="line"></div>
+            </div>
 
             <a (click)="signout()">
                 <li class="item"><i class="material-icons">logout</i>Sign out</li>

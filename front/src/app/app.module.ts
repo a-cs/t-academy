@@ -58,6 +58,18 @@ import { NotFoundComponent } from './components/404/not-found/not-found.componen
 import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
 import { CardCreateUserComponent } from './components/UsersComponents/card-create-user/card-create-user.component';
 import { ModalCreateUserComponent } from './components/UsersComponents/modal-create-user/modal-create-user.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxMaskModule } from 'ngx-mask';
+
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
+
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
+
+import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
+
 
 @NgModule({
   declarations: [
@@ -103,7 +115,13 @@ import { ModalCreateUserComponent } from './components/UsersComponents/modal-cre
     NotFoundComponent,
     NotFoundIconsBgComponent,
     CardCreateUserComponent,
-    ModalCreateUserComponent
+    ModalCreateUserComponent,
+    TransactionHistoryComponent,
+    CardTransactionHistoryComponent,
+    WarehouseSlotsComponent,
+    CardWarehouseSlotComponent,
+    ModalShowMoreTransactionHistoryComponent,
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +136,8 @@ import { ModalCreateUserComponent } from './components/UsersComponents/modal-cre
     FormsModule,
     MatSelectModule,
     MatPaginatorModule,
-    ToastrModule.forRoot(),
+    NgxMaskModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

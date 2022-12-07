@@ -1,10 +1,13 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.TransactionDTO;
 import com.twms.wms.entities.Transaction;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.enums.TransactionType;
 import com.twms.wms.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,5 +111,11 @@ public class TransactionService {
     public void deleteTransaction(Long transactionId){
         Transaction toDelete = this.readTransactionById(transactionId);
         transactionRepository.delete(toDelete);
+    }
+
+    public Page<TransactionDTO> readAllTransactionsPaginatedViaDTO(Pageable pageable) {
+        Page<Transaction> pageTransaction = transactionRepository.findAll(pageable);
+
+        return pageTransaction.map(transaction->new TransactionDTO(transaction));
     }
 }

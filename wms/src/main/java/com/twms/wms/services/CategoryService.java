@@ -4,6 +4,8 @@ import com.twms.wms.entities.Category;
 import com.twms.wms.repositories.CategoryRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,10 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Page<Category> readCategories(Pageable pageable){
+        return categoryRepository.findAll(pageable);
+    }
+
     public List<Category> readCategories(){
         return categoryRepository.findAll();
     }
@@ -54,8 +60,8 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    public List<Category> searchTerm(String searchTerm) {
+    public Page<Category> searchTerm(String searchTerm, Pageable pageable) {
         String terms = searchTerm.replace("-", " ");
-        return categoryRepository.findByNameContainingIgnoreCase(terms);
+        return categoryRepository.findByNameContainingIgnoreCase(terms, pageable);
     }
 }

@@ -42,6 +42,7 @@ public class Transaction {
         this.setSku(transaction.getSku());
         this.setUser(transaction.getUser());
         this.setDate(Timestamp.from(Instant.now()));
+        this.setType(transaction.getType());
         this.setWarehouseSlot(warehouseSlot);
     }
 }

@@ -2,7 +2,9 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import IMeasurementUnit from 'src/app/interfaces/IMeasurementUnit';
+import { AuthService } from 'src/app/service/auth.service';
 import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
+import { buttonPermission } from 'src/app/utils/utils';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -15,16 +17,30 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
   form: FormGroup
   measurementUnit: IMeasurementUnit
 
+  showDeleteButton: boolean
+  showUpdateButton:boolean
+  showButtons: boolean
+  
+  permissions = buttonPermission
+
+  isReadOnly: boolean
+
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IMeasurementUnit, 
                                        private formBuilder: FormBuilder,
                                        private measurementUnitService: MeasurementUnitService,
-                                       private dialog: MatDialog) {
+                                       private dialog: MatDialog,
+                                       public auth: AuthService) {
                 this.measurementUnit = Object.assign({}, this.data)
                }
 
   ngOnInit(): void {
     this.configureForm()
+    this.showDeleteButton = false
+    this.showUpdateButton = this.auth.validateRole(this.permissions.updateUnit)
+    this.showButtons = false
+
+    this.isReadOnly = this.showUpdateButton
   }
 
   configureForm() {
@@ -55,6 +71,13 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
         object: "measurement unit"
       }
     })
+  }
+
+  clickOnEdit() {
+    this.showDeleteButton = true
+    this.showUpdateButton = false
+    this.showButtons = true
+    this.isReadOnly = this.showUpdateButton
   }
 
 }

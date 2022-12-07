@@ -16,6 +16,12 @@ export class MeasurementUnitService {
     })
   }
 
+  getPageable(page: number, size: number){
+    return this.http.get<IMeasurementUnit[]>(`http://localhost:8080/measurement-unit/pages?page=${page}&size=${size}`, {
+      headers: this.auth.buildHeader()
+    })
+  }
+
   getById(id:number){
     return this.http.get<IMeasurementUnit>(`http://localhost:8080/measurement-unit/${id}`, {
       headers: this.auth.buildHeader()

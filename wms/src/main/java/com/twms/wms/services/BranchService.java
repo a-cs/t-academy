@@ -32,7 +32,10 @@ public class BranchService {
     public Branch createBranch(Branch branch){
         List<Branch> branchesWithSameName = branchRepository.findByName(branch.getName());
         if(branchesWithSameName.size()>0) throw new SQLIntegrityConstraintViolationException("Name should be unique!!");
-        if(addressService.getById(branch.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address does'nt exist!!");
+
+        if(branch.getAddress().getId()==null) branch.setAddress(addressService.post(branch.getAddress()));
+        else if(addressService.getById(branch.getAddress().getId())==null) throw new SQLIntegrityConstraintViolationException("Address not Found!!");
+
 
         Branch savedBranch =  branchRepository.save(branch);
         for (int i = 1; i <= branch.getMax_rows(); i++) {
