@@ -13,7 +13,6 @@ import { ClientService } from 'src/app/service/client.service';
 })
 export class ModalAddClientComponent implements OnInit {
   createForm: FormGroup;
-
   states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
   filteredStates:Observable<String[]>
   firstState:String; 
@@ -96,7 +95,10 @@ export class ModalAddClientComponent implements OnInit {
       address: newAddress
     };
     console.log(newClient)
-    this.clientService.create(newClient).subscribe(response => { window.location.reload() }, error => { console.log("err!", error) });
-    this.dialogRef.close(formSubmmited);
+    this.clientService.create(newClient).subscribe(response => { }, error => { console.log("err!", error) },()=>{
+      this.clientService.clientChanged.emit()
+      this.dialogRef.close(formSubmmited);
+    });
+    
   }
 }

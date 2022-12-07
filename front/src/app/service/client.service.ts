@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import IClient from '../interfaces/IClient';
 import { AuthService } from './auth.service';
 
@@ -7,6 +7,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ClientService {
+
+  public clientChanged = new EventEmitter<void>();
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
