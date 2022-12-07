@@ -131,7 +131,7 @@ export class ModalAddSkuComponent implements OnInit {
       },
       () => {
         this.notification.success(
-          `Product ${newSku.name.toUpperCase()} was successfuly created`,
+          `Product ${newSku.name.toUpperCase()} was successfully created`,
           'Created!',
           {
             progressBar: true,

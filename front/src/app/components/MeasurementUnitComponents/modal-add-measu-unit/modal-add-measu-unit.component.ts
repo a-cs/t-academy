@@ -59,7 +59,7 @@ export class ModalAddMeasuUnitComponent implements OnInit {
         this.notification.success(
           `Measurement ${newMeasurementUnit.description.toUpperCase()} [${
             newMeasurementUnit.symbol
-          }] successfuly created`,
+          }] successfully created`,
           'Created!',
           {
             progressBar: true,

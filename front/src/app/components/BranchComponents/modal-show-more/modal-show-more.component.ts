@@ -162,7 +162,7 @@ export class ModalShowMoreComponent implements OnInit {
       },
       () => {
         this.notification.success(
-          `Branch ${this.branch.name.toUpperCase()} was successfuly updated`,
+          `Branch ${this.branch.name.toUpperCase()} was successfully updated`,
           'Updated!',
           { progressBar: true }
         );
@@ -200,7 +200,7 @@ export class ModalShowMoreComponent implements OnInit {
           },
           () => {
             this.notification.warning(
-              `Branch ${this.branch.name.toUpperCase()} was successfuly deleted`,
+              `Branch ${this.branch.name.toUpperCase()} was successfully deleted`,
               'Deleted!',
               { progressBar: true }
             );

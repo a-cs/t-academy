@@ -22,20 +22,48 @@ export class ModalAddBranchComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalAddBranchComponent>
   ) {}
 
-  states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
-  filteredStates:Observable<String[]>
-  firstState:String; 
+  states = [
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO',
+  ];
+  filteredStates: Observable<String[]>;
+  firstState: String;
 
   ngOnInit(): void {
-    this.configureForm()
+    this.configureForm();
 
-    this.filteredStates = this.form.controls["state"].valueChanges.pipe(
+    this.filteredStates = this.form.controls['state'].valueChanges.pipe(
       startWith(''),
-      map((value:string) =>{
-        return this._filterStates(value)
+      map((value: string) => {
+        return this._filterStates(value);
       })
-    )
-    this.filteredStates.subscribe(value => this.firstState=value[0])
+    );
+    this.filteredStates.subscribe((value) => (this.firstState = value[0]));
   }
 
   configureForm() {
@@ -51,43 +79,47 @@ export class ModalAddBranchComponent implements OnInit {
     });
   }
 
-    stateFallback() {
-      if(this.states.includes(this.form.get('state')?.value.toUpperCase())){
-        this.firstState = this.form.get('state')?.value.toUpperCase();
-      }
-  
-      this.form.controls['state'].setValue(this.firstState)
-    }
-  
-    stateOnCLick() {
-      this.firstState = this.form.controls['state'].getRawValue(); 
+  stateFallback() {
+    if (this.states.includes(this.form.get('state')?.value.toUpperCase())) {
+      this.firstState = this.form.get('state')?.value.toUpperCase();
     }
 
-    private _filterStates(name: string): String[] {
-      console.log(this.states.filter(state => state?.toLowerCase().includes(name.toLowerCase())))
-      if(name!=undefined){
-        const filterValue = name.toLowerCase();
-        return this.states.filter(state => state?.toLowerCase().includes(filterValue));
-      }
-      else{
-        return this.states 
-      }
-      
-    }
+    this.form.controls['state'].setValue(this.firstState);
+  }
 
-    create() {
-      const newBranch: IBranch = {
-        name: this.form.value.name.toLowerCase(),
-        address: {
-          street: this.form.value.street.toLowerCase(),
-          number: this.form.value.number,
-          city: this.form.value.city.toLowerCase(),
-          state: this.form.value.state,
-          zipCode: this.form.value.zip_code
-        },
-        max_rows: this.form.value.max_rows,
-        max_columns: this.form.value.max_columns
-      }
+  stateOnCLick() {
+    this.firstState = this.form.controls['state'].getRawValue();
+  }
+
+  private _filterStates(name: string): String[] {
+    console.log(
+      this.states.filter((state) =>
+        state?.toLowerCase().includes(name.toLowerCase())
+      )
+    );
+    if (name != undefined) {
+      const filterValue = name.toLowerCase();
+      return this.states.filter((state) =>
+        state?.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return this.states;
+    }
+  }
+
+  create() {
+    const newBranch: IBranch = {
+      name: this.form.value.name.toLowerCase(),
+      address: {
+        street: this.form.value.street.toLowerCase(),
+        number: this.form.value.number,
+        city: this.form.value.city.toLowerCase(),
+        state: this.form.value.state,
+        zipCode: this.form.value.zip_code,
+      },
+      max_rows: this.form.value.max_rows,
+      max_columns: this.form.value.max_columns,
+    };
 
     this.branchService.create(newBranch).subscribe(
       (response) => {},
@@ -98,7 +130,7 @@ export class ModalAddBranchComponent implements OnInit {
       },
       () => {
         this.notification.success(
-          `Branch ${newBranch.name.toUpperCase()} was successfuly updated`,
+          `Branch ${newBranch.name.toUpperCase()} was successfully updated`,
           'Created!',
           { progressBar: true }
         );

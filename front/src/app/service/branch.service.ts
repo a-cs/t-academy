@@ -44,10 +44,9 @@ export class BranchService {
     });
   }
 
-
-  create(data:IBranch){
-    return this.http.post<IBranch>("http://localhost:8080/branch/",data, {
-      headers: this.auth.buildHeader()
-    })
+  create(data: IBranch) {
+    return this.http.post<IBranch>('http://localhost:8080/branch/', data, {
+      headers: this.auth.buildHeader(),
+    });
   }
 }

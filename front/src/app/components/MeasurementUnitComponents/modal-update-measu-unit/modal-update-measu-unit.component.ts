@@ -90,7 +90,7 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
           this.notification.success(
             `Category ${newMeasurementUnit.description.toUpperCase()} [${
               newMeasurementUnit.symbol
-            }] was successfuly updated`,
+            }] was successfully updated`,
             'Updated!',
             { progressBar: true }
           );
@@ -137,7 +137,7 @@ export class ModalUpdateMeasuUnitComponent implements OnInit {
               this.notification.warning(
                 `Measurement unit ${this.measurementUnit.description.toUpperCase()} [${
                   this.measurementUnit.symbol
-                }] was successfuly deleted`,
+                }] was successfully deleted`,
                 'Deleted!',
                 { progressBar: true }
               );
