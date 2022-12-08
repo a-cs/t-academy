@@ -63,10 +63,9 @@ export class ModalUpdateClientComponent implements OnInit {
   showDeleteButton: boolean;
   showUpdateButton: boolean;
   showButtons: boolean;
-
   isReadOnly: boolean;
-
   permissions = buttonPermission;
+  isWait: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public clientToUpdate: IClient,
@@ -161,13 +160,16 @@ export class ModalUpdateClientComponent implements OnInit {
       cnpj: newClientCnpj,
       address: newAddress,
     };
-    
+
+    this.isWait = true;
+
     this.clientService.update(newClient.id as number, newClient).subscribe(
       (response) => {},
       (error) => {
         this.notification.error(error.error.message, 'Error!', {
           progressBar: true,
         });
+        this.isWait = false;
       },
       () => {
         this.notification.success(
@@ -177,9 +179,9 @@ export class ModalUpdateClientComponent implements OnInit {
         );
         this.clientService.clientChanged.emit();
         this.dialogRef.close();
+        this.isWait = false;
       }
     );
-
   }
 
   stateFallback() {

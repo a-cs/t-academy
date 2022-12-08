@@ -22,6 +22,10 @@ export class ModalAddBranchComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalAddBranchComponent>
   ) {}
 
+  aisleDigits: number
+  bayDigits: number
+  totalDigits: number
+
   states = [
     'AC',
     'AL',
@@ -104,6 +108,7 @@ export class ModalAddBranchComponent implements OnInit {
       );
     } else {
       return this.states;
+
     }
   }
 
@@ -120,7 +125,12 @@ export class ModalAddBranchComponent implements OnInit {
       max_rows: this.form.value.max_rows,
       max_columns: this.form.value.max_columns,
     };
+    
+    this.aisleDigits = Math.floor(newBranch.max_columns/26)
+      this.bayDigits = Math.floor(newBranch.max_rows/10)
 
+      this.totalDigits = 2 + this.aisleDigits + this.bayDigits
+   if(this.totalDigits > 5) {
     this.branchService.create(newBranch).subscribe(
       (response) => {},
       (error) => {
@@ -138,5 +148,6 @@ export class ModalAddBranchComponent implements OnInit {
         this.dialogRef.close();
       }
     );
+    }
   }
 }
