@@ -170,22 +170,21 @@ export class CreateTransactionComponent implements OnInit {
                         let msg = ""
                         let title = ""
                         if (transaction.type === "IN") {
-                            msg = `Transaction of type ${transaction.type.toLowerCase()} created successfully!`
-                            title = "In!"
+                          title = "In!"
+                            msg = `Product: ${transaction.sku}</br>Quantity: ${transaction.quantity}</br>Slot: ${transaction.warehouseSlot}`
                         }
                         if (transaction.type === "OUT") {
-                            msg = `Transaction of type ${transaction.type.toLowerCase()} created successfully! </br> Remove item from ----`
-                            title = "Out!"
+                          title = "Out!"
+                          msg = `Product: ${transaction.sku}</br>Quantity: ${transaction.quantity}</br>Slot: ${transaction.warehouseSlot}`
                         }
                         console.log(msg)
                         this.notification.success(
                             msg,
                             title,
                             {
-                                tapToDismiss: true,
+                                // tapToDismiss: true,
                                 disableTimeOut: true,
                                 closeButton: true,
-                                // progressBar: true,
                                 enableHtml: true
                             }
                         );
