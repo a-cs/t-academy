@@ -144,9 +144,8 @@ export class ModalAddClientComponent implements OnInit {
       },
       () => {
         this.notification.success(
-          `Client ${newClient.name?.toUpperCase()}
-          successfully created`,
-          'Created!',
+          `An activation e-mail was sent to ${newClient.email}`,
+          'E-mail sent!',
           {
             progressBar: true,
           }
