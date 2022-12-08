@@ -44,7 +44,7 @@ public class TransactionController {
             transaction.getClient().setName(clientService.readClientById(transaction.getClient().getId()).getName());
         }
         if(transaction.getSku().getName()==null){
-            transaction.getSku().setName(skuService.findById(transaction.getSku().getId()).getName());
+            transaction.setSku(skuService.findById(transaction.getSku().getId()));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transaction));
     }

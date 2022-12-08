@@ -30,6 +30,7 @@ public class WarehouseSlotDTO {
         this.skuName = warehouseSlot.getSku().getName();
         this.skuId = warehouseSlot.getSku().getId();
         this.quantity = warehouseSlot.getQuantity();
+        this.symbol = warehouseSlot.getSku().getMeasurementUnit().getSymbol();
         this.clientName = warehouseSlot.getClient().getName();
         this.clientId = warehouseSlot.getClient().getId();
         this.arrivalDate = warehouseSlot.getArrivalDate();
