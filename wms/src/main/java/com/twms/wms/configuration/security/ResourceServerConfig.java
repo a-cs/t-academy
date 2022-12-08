@@ -39,33 +39,34 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        if(Arrays.asList(env.getActiveProfiles()).contains("test")){
+        if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
             http
                     .cors().and()
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
-        } else if(Arrays.asList(env.getActiveProfiles()).contains("dev")){
+        } else if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
             http
                     .cors().and()
                     .authorizeRequests()
-                    .antMatchers( "/user/setpassword", "/user/resetpassword").permitAll()
+                    .antMatchers("/user/setpassword", "/user/resetpassword").permitAll()
                     .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/warehouseSlot/client/filtered").hasAnyRole("MANAGER", "ADMIN")
-                    .antMatchers( "/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
+                    .antMatchers("/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/sku/**").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/measurement-unit/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
-                    .antMatchers( "/measurement-unit/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/measurement-unit/**").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/category/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
-                    .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/category/**").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/client").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
-                    .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
-                    .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
-                    .antMatchers("/roles/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/client/**").hasAnyRole("MANAGER", "ADMIN")
+                    .antMatchers("/user/**").hasAnyRole("MANAGER", "ADMIN")
+                    .antMatchers("/roles/**").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/transaction/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.POST, "/transaction/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
-                    .antMatchers("/transaction/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/transaction/**").hasAnyRole("MANAGER", "ADMIN")
+                    .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
 
                     .anyRequest().hasRole("ADMIN");
         }

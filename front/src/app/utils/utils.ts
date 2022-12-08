@@ -6,12 +6,13 @@ export const routePermission = {
   home: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"],
   products: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   clients: ["ROLE_ADMIN", "ROLE_MANAGER"],
-  clientInventory: ["ROLE_ADMIN", "ROLE_MANAGER","ROLE_CLIENT"],
+  clientInventory: ["ROLE_CLIENT"],
   measurementUnits: ["ROLE_ADMIN","ROLE_MANAGER","ROLE_OPERATOR"],
   categories: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   branches: ["ROLE_ADMIN","ROLE_MANAGER"],
   users: ["ROLE_ADMIN","ROLE_MANAGER"],
-  transactionHistory: ["ROLE-OPERATOR", "ROLE_ADMIN"], //remove admin later
+  transactionHistory: ["ROLE-OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"],
+  createTransaction: ["ROLE_MANAGER","ROLE_OPERATOR"],
   warehouseSlot: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"]
 }
 

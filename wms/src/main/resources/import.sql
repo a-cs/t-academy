@@ -3,20 +3,20 @@ insert into role(authority) values (1);
 insert into role(authority) values (2);
 insert into role(authority) values (3);
 
-insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Costa", "999", "Brasília", "DF", "12345678")
-insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Silva", "123", "São José dos Campos", "SP", "12345678")
-insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Cunha", "777", "Rondonópolis", "MT", "12345678")
+--insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Costa", "999", "Brasília", "DF", "12345678")
+--insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Silva", "123", "São José dos Campos", "SP", "12345678")
+--insert into address(street, number, city, state, zip_code) values ("Rua Exemplo da Cunha", "777", "Rondonópolis", "MT", "12345678")
 
-insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade Brasília", 1)
+--insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade Brasília", 1)
 --insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade SP", 2)
 --insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade MT", 3)
 
 
-insert into user(username, password,  email, enabled, access_level_id) values ('client', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'client_user@mail.com', true, 1)
+--insert into user(username, password,  email, enabled, access_level_id) values ('client', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'client_user@mail.com', true, 1)
 
-insert into user(username, password, branch_id, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'operator_user@mail.com', true, 2)
+--insert into user(username, password, branch_id, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'operator_user@mail.com', true, 2)
 --insert into user(username, password, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true, 2)
-insert into user(username, password, branch_id, email, enabled, access_level_id) values ('manager', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'manager_user@mail.com', true, 3)
+--insert into user(username, password, branch_id, email, enabled, access_level_id) values ('manager', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'manager_user@mail.com', true, 3)
 insert into user(username, password, email, enabled, access_level_id) values ('admin', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'admin_user@mail.com', true, 4)
 
 insert into measurement_unit (description,symbol) values ("kilogram", "kg")
@@ -34,8 +34,8 @@ insert into sku (name, category_id, measurement_unit_id) values ("coke", 2, 3)
 insert into sku (name, category_id, measurement_unit_id) values ("fanta", 2, 3)
 insert into sku (name, category_id, measurement_unit_id) values ("pepsi", 2, 3)
 
-insert into client (cnpj, email, name, address_id, user_id) values ("01234567891234", "joão@email.com", "João", 1, 1)
-insert into client (cnpj, email, name, address_id, user_id) values ("01234567894321", "maria@email.com", "Maria", 2, 2)
+--insert into client (cnpj, email, name, address_id, user_id) values ("01234567891234", "joão@email.com", "João", 1, 1)
+--insert into client (cnpj, email, name, address_id, user_id) values ("01234567894321", "maria@email.com", "Maria", 2, 2)
 
 --insert into warehouse_slot(branch_id, aisle, bay, arrival_date, quantity, client_id, sku_id) values (1, "A", 1, null, 10, 1, 1)
 --insert into warehouse_slot(branch_id, aisle, bay, arrival_date, quantity, client_id, sku_id) values (1, "B", 1, null, 10, 1, 2)
