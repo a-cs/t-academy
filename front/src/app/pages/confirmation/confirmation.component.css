@@ -20,20 +20,20 @@
     height: 100%;
     padding: 60px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
-  
+
   .left-content{
     flex: 0 1 60%;
     margin: auto 0;
     margin-right: 60px;
   }
-  
+
   .left-content img{
     width: 100%;
     /* margin-bottom: 20px; */
   }
-  
+
   .right-content{
     flex: 1 0 40%;
     margin: auto 0;
@@ -45,29 +45,29 @@
     border-radius: 24px;
     box-shadow: 24.2334px 5px 50.4863px 5px rgba(0, 0, 0, 0.2);
   }
-  
+
   .right-content .logo{
     width: 100%;
   }
-  
+
   .title{
     margin: 40px 0;
     text-align: center;
     font-size: 1.5rem;
     color: var(--text-secondary-color);
   }
-  
-  
+
+
   .form {
     height: 340px;
     display: flex;
     flex-direction: column;
   }
-  
+
   .group {
     margin-top: auto;
   }
-  
+
   .row {
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@
     margin-bottom: 20px;
     color: var(--footer-color);
   }
-  
+
   .row input{
     width: 100%;
     margin-top: 12px;
@@ -86,13 +86,13 @@
     border: none;
     background-color: var(--border-color);
   }
-  
+
   .input{
     display: flex;
     flex-direction: row;
     align-items: flex-end;
   }
-  
+
   .icon {
     background-color: var(--primary-color);
     color: var(--text-tittle-color);
@@ -104,37 +104,37 @@
     border-radius: 0 8px 8px 0;
     border: none;
   }
-  
+
   input:focus{
     outline: 2px solid black;
   }
-  
+
   input:focus + .icon{
     outline: 2px solid black;
   }
-  
+
   .material-icons {
     font-size: 28px;
   }
-  
+
   .row p {
     margin-top: 12px;
     margin-bottom: 0;
     color: var(--danger-color);
   }
-  
+
   #forgotPassword {
     margin-top: 8px;
     text-align: right;
     font-size: 1rem;
     transition: 0.2s;
   }
-  
+
   #forgotPassword:hover{
     color: var(--primary-color);
   }
-  
-  
+
+
   #loginButton {
     margin-top: auto;
     width: 100%;
@@ -148,28 +148,28 @@
     cursor: pointer;
     transition: 0.2s;
   }
-  
+
   #loginButton:hover{
     background-color: var(--primary-hover-color);
   }
-  
+
   #loginButton:disabled{
     background-color: var(--text-secondary-color);
   }
-  
-  
+
+
   @media screen and (max-width: 1000px) {
     .container {
       flex-direction: column;
       justify-content: center;
       align-items: center;
     }
-  
+
     .left-content{
       display: none;
     }
   }
-  
+
   @media screen and (max-width: 500px) {
     .container {
       padding: 60px 0;
@@ -178,5 +178,4 @@
       width: 90%;
     }
   }
-  
-  
+
