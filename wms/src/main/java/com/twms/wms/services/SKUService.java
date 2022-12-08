@@ -37,7 +37,7 @@ public class SKUService {
         if(sku.getMeasurementUnit().getId() == null)
             throw new IllegalArgumentException("Measurement Unit Id is missing.");
         if(skuRepository.findByNameAndCategoryIdAndMeasurementUnitId(sku.getName(), sku.getCategory().getId(),sku.getMeasurementUnit().getId())!=null){
-            throw new IllegalArgumentException("Repeated Element");
+            throw new IllegalArgumentException("Element Duplicated");
         }
         categoryService.readById(sku.getCategory().getId());
         measurementUnitService.read(sku.getMeasurementUnit().getId());
