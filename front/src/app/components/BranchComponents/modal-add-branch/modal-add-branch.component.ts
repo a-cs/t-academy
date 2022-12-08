@@ -130,7 +130,7 @@ export class ModalAddBranchComponent implements OnInit {
       this.bayDigits = Math.floor(newBranch.max_rows/10)
 
       this.totalDigits = 2 + this.aisleDigits + this.bayDigits
-   if(this.totalDigits > 5) {
+   if(this.totalDigits < 5) {
     this.branchService.create(newBranch).subscribe(
       (response) => {},
       (error) => {
