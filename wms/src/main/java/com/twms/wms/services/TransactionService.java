@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
@@ -56,7 +57,7 @@ public class TransactionService {
             AtomicInteger total = new AtomicInteger(slotList.stream().mapToInt(WarehouseSlot::getQuantity).sum());
 
             if(total.get() < transaction.getQuantity())
-                throw new RuntimeException("Not enough products.");
+                throw new IllegalArgumentException("Not enough products! This client only has a total of " + total.get() + " of this item.");
 
             slotList.forEach((slot) -> {
                 if(transaction.getQuantity() > 0){
@@ -83,6 +84,9 @@ public class TransactionService {
 
             });
         }
+        System.out.println();
+        System.out.println(transactionList.toString());
+        System.out.println();
         transaction.setDate(Timestamp.from(Instant.now()));
         return transactionList.stream().map(transact ->new TransactionDTO(transact)).toList();
     }

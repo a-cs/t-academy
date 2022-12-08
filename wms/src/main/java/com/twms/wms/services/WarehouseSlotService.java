@@ -4,10 +4,7 @@ package com.twms.wms.services;
 import com.twms.wms.dtos.BranchIdsProductIdsFilterDTO;
 import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
-import com.twms.wms.entities.Branch;
-import com.twms.wms.entities.SKU;
-import com.twms.wms.entities.WarehouseSlot;
-import com.twms.wms.entities.WarehouseSlotId;
+import com.twms.wms.entities.*;
 import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +22,8 @@ public class WarehouseSlotService {
 
     @Autowired
     BranchService branchService;
+    @Autowired
+    ClientService clientService;
 
     @Autowired
     SKUService skuService;
@@ -136,7 +135,6 @@ public class WarehouseSlotService {
     }
 
     public WarehouseSlot getFirstEmptySlot(Long branchId){
-        //TODO: Tratar erro
         Branch branch = branchService.readBranchById(branchId);
         WarehouseSlot slot = warehouseSlotRepository.findFirstBySkuIsNullAndWarehouseSlotIdBranchId(branchId);
         if(slot == null)
@@ -147,7 +145,12 @@ public class WarehouseSlotService {
     public List<WarehouseSlot> getOldestSlotByClientAndSkuAndBranch(Long clientId,
                                                               Long branchId,
                                                               Long skuId){
-        return warehouseSlotRepository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(clientId, branchId, skuId);
+        Branch branch = branchService.readBranchById(branchId);
+        Client client = clientService.readClientById(clientId);
+        List<WarehouseSlot> slotList = warehouseSlotRepository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(clientId, branchId, skuId);
+        if(slotList.size() == 0)
+            throw new EntityNotFoundException("The branch "+ branch.getName() + " and/or client "+ client.getName() +" do not have this item!");
+        return slotList;
     }
 
     public Page<WarehouseSlotDTO> getByClientIdAndBranchesandProducts(String sku, String client, Long branch, Pageable pageable) {
