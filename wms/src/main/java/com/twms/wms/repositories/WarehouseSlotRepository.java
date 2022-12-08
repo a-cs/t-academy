@@ -34,11 +34,11 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
                                                                                                Long branchId,
                                                                                                Long skuId);
 
-    Page<WarehouseSlot> findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseOrWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(
+    Page<WarehouseSlot> findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseAndWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(
             Long branchId,
-            String term,
+            String sku,
             Long branchId2,
-            String term2,
+            String client,
             Pageable pageable
     );
 

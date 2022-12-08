@@ -150,8 +150,8 @@ public class WarehouseSlotService {
         return warehouseSlotRepository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(clientId, branchId, skuId);
     }
 
-    public Page<WarehouseSlotDTO> getByClientIdAndBranchesandProducts(String term, Long branch, Pageable pageable) {
-        return warehouseSlotRepository.findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseOrWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(branch,term,branch,term,pageable).map(WarehouseSlotDTO::new);
+    public Page<WarehouseSlotDTO> getByClientIdAndBranchesandProducts(String sku, String client, Long branch, Pageable pageable) {
+        return warehouseSlotRepository.findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseAndWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(branch,sku,branch,client,pageable).map(WarehouseSlotDTO::new);
         //OrWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCase
     }
 }
