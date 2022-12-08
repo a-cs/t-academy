@@ -137,7 +137,11 @@ public class WarehouseSlotService {
 
     public WarehouseSlot getFirstEmptySlot(Long branchId){
         //TODO: Tratar erro
-        return warehouseSlotRepository.findFirstBySkuIsNullAndWarehouseSlotIdBranchId(branchId);
+        Branch branch = branchService.readBranchById(branchId);
+        WarehouseSlot slot = warehouseSlotRepository.findFirstBySkuIsNullAndWarehouseSlotIdBranchId(branchId);
+        if(slot == null)
+                throw new EntityNotFoundException("The branch "+ branch.getName() + " is full! There is no Warehouse slot currently available!");
+        return slot;
     }
 
     public List<WarehouseSlot> getOldestSlotByClientAndSkuAndBranch(Long clientId,

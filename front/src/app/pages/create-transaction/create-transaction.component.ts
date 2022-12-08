@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable, startWith } from 'rxjs';
 import IClient from 'src/app/interfaces/IClient';
+import ITransaction from 'src/app/interfaces/ITransaction';
+import ITransactionPayload from 'src/app/interfaces/ITransactionPayload';
+import { AuthService } from 'src/app/service/auth.service';
 import { ClientService } from 'src/app/service/client.service';
 import { SkuService } from 'src/app/service/sku.service';
+import { TransactionService } from 'src/app/service/transaction.service';
 
 import ISku from '../../interfaces/ISku';
 
@@ -22,8 +27,11 @@ export class CreateTransactionComponent implements OnInit {
   form: FormGroup
 
   constructor(
-    private skuService:SkuService,
-    private clientService:ClientService,
+    private skuService: SkuService,
+    private clientService: ClientService,
+    private transactionService: TransactionService,
+    private auth: AuthService,
+    private notification: ToastrService,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -46,7 +54,7 @@ export class CreateTransactionComponent implements OnInit {
 
   }
 
-  onGetSkus (data:ISku[]){
+  onGetSkus(data: ISku[]) {
     this.skus = data
     this.filteredSkus = this.form.controls["sku"].valueChanges.pipe(
       startWith(''),
@@ -62,7 +70,7 @@ export class CreateTransactionComponent implements OnInit {
     return this.skus.filter(sku => sku.name?.toLowerCase().includes(filterValue));
   }
 
-  onGetClients (data:IClient[]){
+  onGetClients(data: IClient[]) {
     this.clients = data
     this.filteredClients = this.form.controls["client"].valueChanges.pipe(
       startWith(''),
@@ -90,9 +98,9 @@ export class CreateTransactionComponent implements OnInit {
 
 
 
-  skuFallback(){}
+  skuFallback() { }
 
-  clientFallback(){}
+  clientFallback() { }
 
   displaySku(sku: ISku): string {
     return sku && sku.name ? sku.name : '';
@@ -102,7 +110,79 @@ export class CreateTransactionComponent implements OnInit {
     return client && client.name ? client.name : '';
   }
 
-  createTransaction(){
-    console.log({sku: this.form.controls["sku"].value, client: this.form.controls["client"].value, quantity: this.form.controls["quantity"].value, type: this.form.controls["type"].value, })
+  createTransaction() {
+    const branchId = this.auth.getUserBranchId()
+    if (branchId != null) {
+      const newTransaction: ITransactionPayload = {
+        user: {
+          id: this.auth.getUserId() as unknown as number
+        },
+        type: this.form.controls["type"].value,
+        client:{
+          id:this.form.controls["client"].value.id,
+        },
+        sku: {
+          id: this.form.controls["sku"].value.id,
+        },
+        quantity: this.form.controls["quantity"].value,
+        warehouseSlot: {
+          warehouseSlotId: {
+            branch: {
+              id: this.auth.getUserBranchId()
+            }
+          }
+        }
+        // user: {
+        //   id: this.auth.getUserId() as unknown as number
+        // },
+        // type: this.form.controls["type"].value,
+        // client: this.form.controls["client"].value,
+        // sku: this.form.controls["sku"].value,
+        // quantity: this.form.controls["quantity"].value,
+        // warehouseSlot: {
+        //   warehouseSlotId: {
+        //     branch: {
+        //       id: this.auth.getUserBranchId()
+        //     }
+        //   }
+        // }
+      }
+      console.log(newTransaction)
+      this.transactionService.create(newTransaction).subscribe(
+        (respose : ITransaction[]) => {
+          respose.map(transaction => {
+            console.log(transaction)
+            console.log(transaction.type)
+            let msg = ""
+            if(transaction.type === "IN")
+              msg = `Transaction of type ${transaction.type.toLowerCase()} created successfully!`
+            if(transaction.type === "OUT")
+              msg = `Transaction of type ${transaction.type.toLowerCase()} created successfully! </br> Remove item from ----`
+            console.log(msg)
+            this.notification.success(
+              msg,
+              'Created!',
+              {
+                progressBar: true,
+                enableHtml: true
+              }
+            );
+          })
+          console.log(respose)
+         },
+        (error) => {
+          console.log(error)
+          this.notification.error(error.error.message, 'Error', {
+            progressBar: true,
+          });
+        }
+      );
+    }
+    else {
+      this.notification.error("Only users with a Branch assigned, are allowed to create transactions!", 'Error', {
+        progressBar: true,
+      });
+    }
+
   }
 }
