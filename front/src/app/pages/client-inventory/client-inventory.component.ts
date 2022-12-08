@@ -7,6 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalShowClientInventoryComponent } from 'src/app/components/modal-show-client-inventory/modal-show-client-inventory.component';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-client-inventory',
@@ -25,12 +26,14 @@ export class ClientInventoryComponent implements OnInit {
   constructor(
     private warehouseSlotService: WarehouseSlotService,
     private branchService: BranchService,
+    private authService: AuthService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    console.log("id = ", this.authService.getUserId())
     this.warehouseSlotService
-      .getByIdClient(1, this.pageIndex, this.pageSize)
+      .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
         this.client_wareshouses_slots = data.content;
         this.length = data.totalPages;
@@ -74,9 +77,10 @@ export class ClientInventoryComponent implements OnInit {
     // }
 
     if (this.idList.length >= 0 == false) {
+      console.log("id = ", this.authService.getUserId())
       this.warehouseSlotService
         .getByClientIdByBranchesByProductsName(
-          1,
+          this.authService.getUserId() || 0,
           this.searchText,
           [],
           this.pageIndex,
@@ -91,9 +95,10 @@ export class ClientInventoryComponent implements OnInit {
     } else {
       console.log(this.idList)
       this.searchText = searchValue;
+      console.log("id = ", this.authService.getUserId())
       this.warehouseSlotService
         .getByClientIdByBranchesByProductsName(
-          1,
+          this.authService.getUserId() || 0,
           this.searchText,
           this.idList,
           this.pageIndex,
@@ -120,9 +125,9 @@ export class ClientInventoryComponent implements OnInit {
   handlePageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-
+    console.log("id = ", this.authService.getUserId())
     this.warehouseSlotService
-      .getByIdClient(1, this.pageIndex, this.pageSize)
+      .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
         this.client_wareshouses_slots = data.content;
         this.length = data.totalPages;

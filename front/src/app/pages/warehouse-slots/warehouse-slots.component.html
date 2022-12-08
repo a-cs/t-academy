@@ -3,9 +3,12 @@
     <div class="title">
         <p>Warehouse</p>
       </div>
+    <app-search-bar class="margin-search-bar"
+        (searchTextChanged)="onSearchTextEnteredSKUWareHouseSlot($event)"></app-search-bar>
+    <app-search-bar class="margin-search-bar"
+        (searchTextChanged)="onSearchTextEnteredClient($event)"></app-search-bar>
     <div class="cards">
         <app-card-warehouse-slot *ngFor="let slot of warehouseSlots" [warehouseSlot]="slot"></app-card-warehouse-slot>
     </div>
 </div>
 <app-footer></app-footer>
-

@@ -69,7 +69,10 @@ import { CardWarehouseSlotComponent } from './components/WarehouseComponents/car
 
 import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
 
-
+import {
+  MatProgressSpinner,
+  MatProgressSpinnerModule,
+} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -120,7 +123,7 @@ import { ModalShowMoreTransactionHistoryComponent } from './components/Transacti
     WarehouseSlotsComponent,
     CardWarehouseSlotComponent,
     ModalShowMoreTransactionHistoryComponent,
-    CreateTransactionComponent
+    CreateTransactionComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,7 +139,8 @@ import { ModalShowMoreTransactionHistoryComponent } from './components/Transacti
     MatSelectModule,
     MatPaginatorModule,
     NgxMaskModule.forRoot(),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule,
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

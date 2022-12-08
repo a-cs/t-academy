@@ -57,6 +57,6 @@ body {
 
 /* Overrides some Toastr styles */
 .toast-top-right {
-  top: 132px;
+  top: 10.5vh;
   right: 12px;
 }

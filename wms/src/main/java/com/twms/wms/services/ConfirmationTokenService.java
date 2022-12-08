@@ -32,7 +32,7 @@ public class ConfirmationTokenService {
         return confirmationToken;
     }
 
-    public void createTokenAndSendEmail(User user){
+    public void createTokenAndSendEmail(User user, boolean isNewUser){
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -40,8 +40,9 @@ public class ConfirmationTokenService {
                 LocalDateTime.now().plusHours(2),
                 user
         );
-
-        emailSender.send(user.getEmail(), EmailLayout.buildEmail(new UserDTO(user), token));
+        String emailbody = isNewUser ? EmailLayout.buildNewUserEmail(new UserDTO(user), token) :
+                EmailLayout.buildPasswordRecoverEmail(new UserDTO(user), token);
+        emailSender.send(user.getEmail(), emailbody);
         this.saveConfirmationToken(confirmationToken);
     }
 }

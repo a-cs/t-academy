@@ -15,6 +15,9 @@
     background-color: var(--border-color);
     border: 3px var(--text-secondary-color) solid;
 }
+.user-disabled .picture{
+    background-color: var(--footer-color);
+}
 .picture {
     margin: 0 2rem;
     border-radius: 50%;
@@ -26,7 +29,7 @@
 
 i{
     font-size: 90px;
-    padding: 2px 5px 8px 5px;
+    padding: 0px 8px 10px 2px;
     color: white;
 }
 

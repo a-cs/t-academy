@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
@@ -31,7 +32,7 @@ public class TransactionService {
     UserService userService;
 
     @Transactional
-    public List<Transaction> createTransaction(Transaction transaction){
+    public List<TransactionDTO> createTransaction(Transaction transaction){
         transaction.setUser(userService.getUserById(transaction.getUser().getId()));
         List<Transaction> transactionList = new ArrayList<>();
 
@@ -56,7 +57,7 @@ public class TransactionService {
             AtomicInteger total = new AtomicInteger(slotList.stream().mapToInt(WarehouseSlot::getQuantity).sum());
 
             if(total.get() < transaction.getQuantity())
-                throw new RuntimeException("Not enough products.");
+                throw new IllegalArgumentException("Not enough products! This client only has a total of " + total.get() + " of this item.");
 
             slotList.forEach((slot) -> {
                 if(transaction.getQuantity() > 0){
@@ -83,8 +84,11 @@ public class TransactionService {
 
             });
         }
+        System.out.println();
+        System.out.println(transactionList.toString());
+        System.out.println();
         transaction.setDate(Timestamp.from(Instant.now()));
-        return transactionList;
+        return transactionList.stream().map(transact ->new TransactionDTO(transact)).toList();
     }
 
     public List<Transaction> readAllTransactions(){return transactionRepository.findAll();}
@@ -94,7 +98,7 @@ public class TransactionService {
         return optionalClient.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
     }
 
-    public Transaction updateTransaction(Long transactionId, Transaction transaction){
+    public TransactionDTO updateTransaction(Long transactionId, Transaction transaction){
         Transaction oldTransaction = this.readTransactionById(transactionId);
 
         oldTransaction.setClient(transaction.getClient());

@@ -2,6 +2,10 @@ package com.twms.wms.dtos;
 
 import com.twms.wms.entities.*;
 import com.twms.wms.enums.TransactionType;
+import com.twms.wms.services.ClientService;
+import com.twms.wms.services.SKUService;
+import com.twms.wms.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +30,8 @@ public class TransactionDTO {
     private String branch;
 
     private TransactionType type;
+
+
 
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
