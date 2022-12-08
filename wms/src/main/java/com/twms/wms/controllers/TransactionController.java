@@ -31,12 +31,12 @@ public class TransactionController {
     public ResponseEntity<Transaction> getTransactionById(@PathVariable("idTransaction") Long idTransaction){return ResponseEntity.status(HttpStatus.OK).body(transactionService.readTransactionById(idTransaction));}
 
     @PostMapping
-    public ResponseEntity<List<Transaction>> postTransaction(@RequestBody Transaction transaction){
+    public ResponseEntity<List<TransactionDTO>> postTransaction(@RequestBody Transaction transaction){
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transaction));
     }
 
     @PutMapping("/{idTransaction}")
-    public ResponseEntity<Transaction> putTransaction(@PathVariable("idTransaction") Long idTransaction,
+    public ResponseEntity<TransactionDTO> putTransaction(@PathVariable("idTransaction") Long idTransaction,
                                             @RequestBody Transaction transaction){
         return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateTransaction(idTransaction,transaction));
     }
