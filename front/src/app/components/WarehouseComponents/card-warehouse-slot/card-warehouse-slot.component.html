@@ -1,14 +1,18 @@
 <div class="card">
     <div class="aisle-bay">
-        <p>{{warehouseSlot.aisle}}{{warehouseSlot.bay}}</p>
+        <p>{{warehouseSlot.aisle}}</p>
+        <p>{{warehouseSlot.bay}}</p>
     </div>
-    <div class="sku-name">
-        <p>SKU name</p>
-    </div>
-    <div class="info">
+    
+    <div class="infoBig">
+        <div class="sku-name">
+            <p>SKU name</p>
+        </div>
+        <div class="info">
         <p class="p-name">Client: nome do cliente</p>
         <p class="p-quantity">Quantity: {{warehouseSlot.quantity}} + UN</p>
         <p class="p-date">Arrival date: {{warehouseSlot.arrivalDate | mask: '0000/00/00'}}</p>
         <p class="p-branch">Branch: {{warehouseSlot.branchName}} </p>
     </div>
+</div>
 </div>
