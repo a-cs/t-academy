@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
 import { AuthService } from 'src/app/service/auth.service';
 import { WarehouseSlotService } from 'src/app/service/warehouse-slot.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-warehouse-slots',
@@ -21,10 +22,14 @@ export class WarehouseSlotsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.warehouseSlotService.get().subscribe(
+    this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+    .subscribe(
       data => {
-        this.warehouseSlots = data
-        console.log(this.warehouseSlots)
+        console.log(data)
+        this.warehouseSlots = data.content
+        this.length = data.totalElements
+        this.pageSize = data.size
+        this.pageIndex = data.number
       }
     )
   }
@@ -41,6 +46,7 @@ export class WarehouseSlotsComponent implements OnInit {
   branch: number = this.authService.getUserBranchId() || 0;
 
   onSearchTextEnteredSKUWareHouseSlot(searchValue: string){
+    this.searchTextSKU = searchValue;
     this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
     .subscribe(
       data => {
@@ -54,6 +60,28 @@ export class WarehouseSlotsComponent implements OnInit {
   }
 
   onSearchTextEnteredClient(searchValue: string){
+    this.searchTextClient = searchValue;
     this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+    .subscribe(
+      data => {
+        console.log(data)
+        this.warehouseSlots = data.content
+        this.length = data.totalElements
+        this.pageSize = data.size
+        this.pageIndex = data.number
+      }
+    )
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    console.log("id = ", this.authService.getUserId())
+    this.warehouseSlotService
+      .getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+      .subscribe((data) => {
+        this.warehouseSlots = data.content;
+        this.length = data.totalPages;
+      });
   }
 }
