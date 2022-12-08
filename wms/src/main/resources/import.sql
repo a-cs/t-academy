@@ -11,7 +11,9 @@ insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Uni
 --insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade SP", 2)
 --insert into branch(max_columns, max_rows, name, address_id) values (10, 10, "Unidade MT", 3)
 
-insert into user(username, password,  email, enabled, access_level_id) values ('client', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', ,'client_user@mail.com', true, 1)
+
+insert into user(username, password,  email, enabled, access_level_id) values ('client', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'client_user@mail.com', true, 1)
+
 insert into user(username, password, branch_id, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'operator_user@mail.com', true, 2)
 --insert into user(username, password, email, enabled, access_level_id) values ('operator', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','operator_user@mail.com', true, 2)
 insert into user(username, password, branch_id, email, enabled, access_level_id) values ('manager', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1,'manager_user@mail.com', true, 3)
