@@ -5,6 +5,28 @@
     <p>Home</p>
   </div>
   <div class="cards">
+
+    <button *ngIf='auth.validateRole(permissions.createTransaction)' class="card" (click)="navigateTo('create-transaction')">
+      <div class="center">
+        <i class="material-icons material-icons-outlined">inventory_2</i>
+      </div>
+      <p>Create Transaction</p>
+    </button>
+
+    <button *ngIf='auth.validateRole(permissions.transactionHistory)' class="card" (click)="navigateTo('transaction-history')">
+      <div class="center">
+        <i class="material-icons">article</i>
+      </div>
+      <p>Transaction History</p>
+    </button>
+
+    <button *ngIf='auth.validateRole(permissions.warehouseSlot)' class="card" (click)="navigateTo('warehouse-slots')">
+      <div class="center">
+        <i class="material-icons">forklift</i>
+      </div>
+      <p>Warehouse</p>
+    </button>
+
     <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('products')">
       <div class="center">
         <i class="material-icons">view_in_ar</i>
@@ -20,20 +42,6 @@
       <p>Categories</p>
     </button>
 
-    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('create-transaction')">
-      <div class="center">
-        <i class="material-icons material-icons-outlined">inventory_2</i>
-      </div>
-      <p>Create Transaction</p>
-    </button>
-
-    <button *ngIf='auth.validateRole(permissions.products)' class="card" (click)="navigateTo('transaction-history')">
-      <div class="center">
-        <i class="material-icons">article</i>
-      </div>
-      <p>Transaction-History</p>
-    </button>
-
     <button *ngIf='auth.validateRole(permissions.measurementUnits)' class="card" (click)="navigateTo('measurement-units')">
 
       <div class="center">
@@ -41,13 +49,7 @@
       </div>
       <p>Measurement Units</p>
     </button>
-    <button *ngIf="auth.validateRole(permissions.branches)" class="card" (click)="navigateTo('branches')">
-
-      <div class="center">
-        <i class="material-icons">location_city</i>
-      </div>
-      <p>Branches</p>
-    </button>
+    
     <button *ngIf='auth.validateRole(permissions.clientInventory)' class="card" (click)="navigateTo('client-inventory')">
       <div class="center">
         <i class="material-icons">shelves</i>
@@ -66,12 +68,16 @@
       </div>
       <p>Clients</p>
     </button>
-    <button *ngIf='auth.validateRole(permissions.warehouseSlot)' class="card" (click)="navigateTo('warehouse-slots')">
+
+    <button *ngIf="auth.validateRole(permissions.branches)" class="card" (click)="navigateTo('branches')">
+
       <div class="center">
-        <i class="material-icons">forklift</i>
+        <i class="material-icons">location_city</i>
       </div>
-      <p>Warehouse</p>
+      <p>Branches</p>
+
     </button>
+    
   </div>
 </div>
 <app-footer></app-footer>

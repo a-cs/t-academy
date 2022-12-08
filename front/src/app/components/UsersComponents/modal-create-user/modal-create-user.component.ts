@@ -96,7 +96,8 @@ export class ModalCreateUserComponent implements OnInit {
       username: this.form.value.username,
       email: this.form.value.email,
       enabled: this.form.value.enabled,
-      accessLevel: this.form.value.role
+      accessLevel: this.form.value.role,
+      branch: this.form.value.branch
     }
     this.userService.createUser(userInfo).subscribe(
       response => {

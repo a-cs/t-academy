@@ -14,42 +14,50 @@
                 <li class="item"><i class="material-icons">home</i>Home</li>
             </a>
             <div class="line"></div>
+
+            <div *ngIf='auth.validateRole(permissions.createTransaction)' class="ngIf-Home">
+                <a (click)="navigate('create-transaction')">
+                    <li class="item"><i class="material-icons">inventory_2</i>Create Transaction</li>
+                </a>
+                <div class="line"></div>
+            </div>
+
+            <div *ngIf='auth.validateRole(permissions.transactionHistory)' class="ngIf-Home">
+                <a (click)="navigate('transaction-history')">
+                    <li class="item"><i class="material-icons">article</i>Transaction History</li>
+                </a>
+                <div class="line"></div>
+            </div>
+
+            <div *ngIf='auth.validateRole(permissions.warehouseSlot)' class="ngIf-Home">
+
+                <a (click)="navigate('/warehouse-slots')">
+                    <li class="item"><i class="material-icons">forklift</i>Warehouse</li>
+                </a>
+                <div class="line"></div>
+            </div>
+
             <div *ngIf='auth.validateRole(permissions.products)' class="ngIf-Home">
                 <a (click)="navigate('/products')">
                     <li class="item"><i class="material-icons">view_in_ar</i>Products</li>
                 </a>
                 <div class="line"></div>
             </div>
+         
             <div *ngIf='auth.validateRole(permissions.categories)' class="ngIf-Home">
                 <a (click)="navigate('/categories')">
                     <li class="item"><i class="material-icons">category</i>Categories</li>
                 </a>
                 <div class="line"></div>
             </div>
+
             <div *ngIf='auth.validateRole(permissions.measurementUnits)' class="ngIf-Home">
                 <a (click)="navigate('/measurement-units')">
                     <li class="item"><i class="material-icons">straighten</i>Measurement Units</li>
                 </a>
                 <div class="line"></div>
             </div>
-            <div *ngIf='auth.validateRole(permissions.branches)' class="ngIf-Home">
-                <a (click)="navigate('/branches')">
-                    <li class="item"><i class="material-icons">location_city</i>Branches</li>
-                </a>
-                <div class="line"></div>
-            </div>
-            <div *ngIf='auth.validateRole(permissions.clients)' class="ngIf-Home">
-                <a (click)="navigate('/clients')">
-                    <li class="item"><i class="material-icons">groups</i>Clients</li>
-                </a>
-                <div class="line"></div>
-            </div>
-            <div *ngIf='auth.validateRole(permissions.users)' class="ngIf-Home">
-                <a (click)="navigate('/users')">
-                    <li class="item"><i class="material-icons">person</i>Users</li>
-                </a>
-                <div class="line"></div>
-            </div>
+
             <div *ngIf='auth.validateRole(permissions.clientInventory)' class="ngIf-Home">
 
                 <a (click)="navigate('/client-inventory')">
@@ -57,10 +65,24 @@
                 </a>
                 <div class="line"></div>
             </div>
-            <div *ngIf='auth.validateRole(permissions.warehouseSlot)' class="ngIf-Home">
 
-                <a (click)="navigate('/warehouse-slots')">
-                    <li class="item"><i class="material-icons">forklift</i>Warehouse</li>
+            <div *ngIf='auth.validateRole(permissions.users)' class="ngIf-Home">
+                <a (click)="navigate('/users')">
+                    <li class="item"><i class="material-icons">person</i>Users</li>
+                </a>
+                <div class="line"></div>
+            </div>
+
+            <div *ngIf='auth.validateRole(permissions.clients)' class="ngIf-Home">
+                <a (click)="navigate('/clients')">
+                    <li class="item"><i class="material-icons">groups</i>Clients</li>
+                </a>
+                <div class="line"></div>
+            </div>
+
+            <div *ngIf='auth.validateRole(permissions.branches)' class="ngIf-Home">
+                <a (click)="navigate('/branches')">
+                    <li class="item"><i class="material-icons">location_city</i>Branches</li>
                 </a>
                 <div class="line"></div>
             </div>

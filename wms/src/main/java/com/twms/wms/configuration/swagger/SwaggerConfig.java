@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.info.License;
 @Configuration
 public class SwaggerConfig {
     @Bean
-    public OpenAPI lojinhaOpenAPI() {
+    public OpenAPI twmsOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Warehouse Management System")
                         .description("API WMS")

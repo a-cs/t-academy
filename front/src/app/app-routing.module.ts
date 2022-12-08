@@ -108,13 +108,14 @@ const routes: Routes = [
       expectedRoles: routePermission.warehouseSlot
     }
     },
-    {
+  {
+    
     path: 'create-transaction',
     component: CreateTransactionComponent,
-    // canActivate: [AuthGuardService],
-    // data: {
-    //   expectedRoles: routePermission.users
-    // }
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.createTransaction
+   }
 
   },
   {
