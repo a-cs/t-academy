@@ -1,6 +1,5 @@
 package com.twms.wms.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twms.wms.dtos.UserDTO;
 import com.twms.wms.entities.Role;
@@ -14,7 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -28,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = "test")
 public class UserControllerTest {
 
     @Autowired
@@ -36,103 +41,85 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+//    @Autowired
+//    private OAuthMvcTest oAuthMvcTest;
+
     @MockBean
     private UserService userService;
 
     User user;
+    UserDTO userDTO;
     String userJson;
 
     @BeforeEach
     public void setup() throws Exception {
         user = new User();
+        user.setId(1L);
         user.setUsername("userTest");
+        user.setEmail("user@email.com");
+        user.setAccessLevel(new Role(1L, AccessLevel.ROLE_ADMIN));
         user.setPassword("passwordTest");
 
-        userJson = objectMapper.writeValueAsString(user);
+        userDTO = new UserDTO(user);
+
+        userJson=  "{\"id\":1,\"username\":\"userTest\",\"password\":\"passwordTest\",\"email\":\"user@email.com\",\"accessLevel\":{\"id\":1,\"authority\":\"ROLE_ADMIN\"},\"enabled\":false}";
+//        userJson = objectMapper.writeValueAsString(user);
     }
 
     @Test
+//    @WithMockUser(username = "admin_user@mail.com", password = "password", roles = {"ADMIN"})
     public void shouldReturnCreatedWhenCreatingUser() throws Exception {
 
-        Mockito.when(userService.createUser(user)).thenReturn(new UserDTO(user));
+        Mockito.when(userService.createUser(any(User.class))).thenReturn(userDTO);
 
         ResultActions result = mockMvc.perform(post("/user/signup")
                 .content(userJson)
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(jsonPath("$.username").value("userTest"));
-        result.andExpect(status().isCreated());
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.email").value("user@email.com"))
+                .andExpect(jsonPath("$.username").value("userTest"));
     }
 
     @Test
-    public void shouldReturnOkWhenGettingUserByUsername() throws Exception {
+    public void shouldReturnUserDTOPaginated() throws Exception {
 
-        Mockito.when(userService.getUserByUsername(user.getUsername())).thenReturn(new UserDTO(user));
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userDTOList.add(userDTO);
+        Page<UserDTO> dtoPage = new PageImpl<>(userDTOList);
+        Mockito.when(userService.getUserFilteredByUsername(any(String.class), any(Pageable.class)))
+                .thenReturn(dtoPage);
 
-        ResultActions result = mockMvc.perform(get("/user/search?username=userTest")
+        ResultActions result = mockMvc.perform(get("/user/search?username=userTest&page=0&size=1")
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.username").value("userTest"));
-    }
-    @Test
-    public void shouldReturnOkWhenGettingAllUsers() throws Exception {
-
-        Mockito.when(userService.getAllUsers()).thenReturn(new ArrayList<UserDTO>());
-
-        ResultActions result = mockMvc.perform(get("/user/all")
-                .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.content[0].username").value("userTest"));
         result.andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
     @Test
-    public void shouldReturnOkWhenUpdatingUserAccessLevel() throws Exception {
-        Role role = new Role(1L, AccessLevel.ROLE_CLIENT);
+    public void shouldReturnUserDTOWhenUpdatingUser() throws Exception {
 
-        user.addAccessLevel(role);
+        Mockito.when(userService.updateUser(any(UserDTO.class), any(Long.class))).thenReturn(userDTO);
 
-        String rolestr = objectMapper.writeValueAsString(role);
-
-        Mockito.when(userService.updateUserAccessLevel(any(), eq(1L), eq(true))).thenReturn(new UserDTO(user));
-
-        ResultActions result = mockMvc.perform(put("/user/permissions/add/1")
-                .content(rolestr)
+        ResultActions result = mockMvc.perform(put("/user/" + user.getId().toString())
+                .content(objectMapper.writeValueAsString(userDTO))
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.username").value("userTest"));
-        result.andExpect(jsonPath("$.accessLevel[0].authority").value(role.getAuthority().name()));
-
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("userTest"));
     }
+
     @Test
-    public void shouldReturnOkWhenRevokingUserAccessLevel() throws Exception {
-        Role role = new Role(1L, AccessLevel.ROLE_CLIENT);
+    public void shouldReturnListOfUserDTO() throws Exception {
 
-        String rolestr = objectMapper.writeValueAsString(role);
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userDTOList.add(userDTO);
+        Mockito.when(userService.getAllUsers()).thenReturn(userDTOList);
 
-        Mockito.when(userService.updateUserAccessLevel(any(), eq(1L), eq(false))).thenReturn(new UserDTO(user));
-
-        ResultActions result = mockMvc.perform(put("/user/permissions/revoke/1")
-                .content(rolestr)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.username").value("userTest"));
-        result.andExpect(jsonPath("$.accessLevel").isEmpty());
-    }
-    @Test
-    public void shouldReturnOkWhenUpdatingUserIsEnabled() throws Exception {
-
-        Mockito.when(userService.updateUserIsEnable(eq(1L), eq(true))).thenReturn(new UserDTO(user));
-
-        ResultActions result = mockMvc.perform(put("/user/1/enable/true")
-                .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.username").value("userTest"));
+        ResultActions result = mockMvc.perform(get("/user/all")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].username").value("userTest"));
     }
 }
