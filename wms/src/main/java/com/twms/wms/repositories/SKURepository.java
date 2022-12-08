@@ -12,6 +12,10 @@ public interface SKURepository extends JpaRepository<SKU, Long> {
 
     public Page<SKU> findByNameContainingIgnoreCase(String searchTerm, Pageable page);
 
+    public List<SKU> findByNameAndCategoryIdAndMeasurementUnitId(String name,
+                                                                 Long categoryId,
+                                                                 Long unitId);
+
     public List<SKU> findByIdIn(List<Long> ids);
 
 }
