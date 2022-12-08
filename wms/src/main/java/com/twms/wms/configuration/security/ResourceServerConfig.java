@@ -51,6 +51,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers( "/user/setpassword", "/user/resetpassword").permitAll()
                     .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/warehouseSlot/client/filtered").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers( "/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/sku/**").hasAnyRole("MANAGER", "ADMIN")
