@@ -18,6 +18,10 @@ export class ModalAddBranchComponent implements OnInit {
   filteredStates:Observable<String[]>
   firstState:String; 
 
+  aisleDigits: number
+  bayDigits: number
+  totalDigits: number
+
   constructor(private formBuilder: FormBuilder,
               private branchService: BranchService) { }
 
@@ -83,11 +87,18 @@ export class ModalAddBranchComponent implements OnInit {
         max_rows: this.form.value.max_rows,
         max_columns: this.form.value.max_columns
       }
-  
-      this.branchService.create(newBranch)
+
+      this.aisleDigits = Math.floor(newBranch.max_columns/26)
+      this.bayDigits = Math.floor(newBranch.max_rows/10)
+
+      this.totalDigits = 2 + this.aisleDigits + this.bayDigits
+
+      if(this.totalDigits > 5) {
+        this.branchService.create(newBranch)
         .subscribe(response => {
           window.location.reload()
         })
+      }     
     }
 
 }
