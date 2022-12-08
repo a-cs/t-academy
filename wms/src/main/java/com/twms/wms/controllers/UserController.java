@@ -54,11 +54,13 @@ public class UserController {
     public ResponseEntity<String> setUserPassword(@RequestParam Map<String, String> passwordMap){
         String token = passwordMap.get("token");
         String password = passwordMap.get("password");
-        return ResponseEntity.status(HttpStatus.OK).body(userService.setNewPassword(token, password));
+        userService.setNewPassword(token, password);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/resetpassword")
-    public ResponseEntity<String> resetPassword(@RequestParam String username){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.resetPassword(username));
+    public ResponseEntity<Void> resetPassword(@RequestParam String email){
+        userService.resetPassword(email);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

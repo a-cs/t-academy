@@ -8,34 +8,36 @@ import { buttonPermission } from 'src/app/utils/utils';
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
-  styleUrls: ['./branch.component.css']
+  styleUrls: ['./branch.component.css'],
 })
 export class BranchComponent implements OnInit {
+  component = ModalAddBranchComponent;
+  branches: IBranch[];
+  searchText: string;
 
-  component = ModalAddBranchComponent
-  branches: IBranch[]
-  searchText: string
+  permissions = buttonPermission;
 
-  permissions = buttonPermission
-
-  constructor(private branchService: BranchService, public auth: AuthService) { }
+  constructor(private branchService: BranchService, public auth: AuthService) {
+    this.branchService.branchChanged.subscribe(() => {
+      this.getData();
+    });
+  }
 
   ngOnInit(): void {
-    this.branchService.get().subscribe(
-      data => {
-        this.branches = data
-        console.log(this.branches)
-      }
-    )
+    this.getData();
+  }
+
+  getData() {
+    this.branchService.get().subscribe((data) => {
+      this.branches = data;
+    });
   }
 
   onSearchTextEntered(searchValue: string) {
-    this.searchText = searchValue
-    this.branchService.getByLikeName(this.searchText).subscribe(
-      data => {this.branches = data
-        console.log(this.branches)
-      }
-      )
+    this.searchText = searchValue;
+    this.branchService.getByLikeName(this.searchText).subscribe((data) => {
+      this.branches = data;
+      console.log(this.branches);
+    });
   }
-
 }

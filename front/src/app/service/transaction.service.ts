@@ -4,11 +4,10 @@ import ITransaction from '../interfaces/ITransaction';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionService {
-
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getAll() {
     return this.http.get<ITransaction[]>('http://localhost:8080/transaction', {
@@ -21,5 +20,4 @@ export class TransactionService {
       headers: this.auth.buildHeader(),
     });
   }
-
 }

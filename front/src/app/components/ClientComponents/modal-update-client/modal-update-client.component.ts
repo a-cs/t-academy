@@ -1,3 +1,4 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,6 +8,7 @@ import IClient from 'src/app/interfaces/IClient';
 import { AuthService } from 'src/app/service/auth.service';
 import { ClientService } from 'src/app/service/client.service';
 import { buttonPermission } from 'src/app/utils/utils';
+import { ModalConfirmDeleteComponent } from '../../modal-confirm-delete/modal-confirm-delete.component';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -119,8 +121,11 @@ export class ModalUpdateClientComponent implements OnInit {
     };
     this.clientService
       .update(newClient.id as number, newClient)
-      .subscribe(response => { window.location.reload() }, error => { console.log("err!", error) });
-    this.dialogRef.close(formSubmmited);
+      .subscribe(response => { }, error => { console.log("err!", error) }, () => {
+        this.clientService.clientChanged.emit();
+        this.dialogRef.close(formSubmmited);
+      });
+    
   }
 
   stateFallback() {
@@ -136,14 +141,29 @@ export class ModalUpdateClientComponent implements OnInit {
   }
 
   onDeleteItem() {
-    const dialogRef = this.dialog.open(ModalConfirmComponent, {
-      width: "600px",
-      height: "600px",
-      data: {
-        observable: this.clientService.delete(this.clientToUpdate.id as number),
-        object: "Client"
-      }
+    console.log(this.clientToUpdate);
 
+
+    const dialogRefDelete = this.dialog.open(
+      ModalConfirmDeleteComponent, {
+      width: "600px",
+      height: "600px"
+      }
+    );
+
+    dialogRefDelete.afterClosed().subscribe((deleteConfirmed) => {
+      if (deleteConfirmed) {
+        this.clientService
+          .delete(this.clientToUpdate.id as number)
+          .subscribe(
+            (response) => {},(error)=>{},()=>{
+              this.clientService.clientChanged.emit();
+              this.dialogRef.close();
+            }
+          );
+              
+      }
+      
     });
   }
 

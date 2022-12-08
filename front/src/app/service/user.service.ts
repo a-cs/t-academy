@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import IAccessLevel from '../interfaces/IAccessLevel';
 import IOAuthResponse from '../interfaces/IOAuthResponse';
 import IUser from '../interfaces/IUser';
@@ -9,6 +9,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class UserService {
+
+  public userChanged = new EventEmitter<void>()
+  
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getByUsernameLike(name: string, pageSize: number, pageIdx: number) {
@@ -54,6 +57,10 @@ export class UserService {
 
   }
 
+  forgotPassword(email:string){
+    return this.http.get<any>(`http://localhost:8080/user/resetpassword?email=${email}`)
+  }
+  
   createUser(data: IUser){
     console.log('json!', data);
     return this.http.post<IUser>(`http://localhost:8080/user/signup`, data, {

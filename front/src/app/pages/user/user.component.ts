@@ -17,7 +17,9 @@ export class UserComponent implements AfterViewInit {
   searchText: string = "";
   totalPages: number;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    this.userService.userChanged.subscribe(()=> this.getUserList())
+  }
 
   ngAfterViewInit(): void {
     this.searchText=""

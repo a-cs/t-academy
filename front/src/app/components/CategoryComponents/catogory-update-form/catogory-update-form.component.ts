@@ -13,7 +13,6 @@ import {
 import ICategory from 'src/app/interfaces/ICategory';
 import { AuthService } from 'src/app/service/auth.service';
 import { buttonPermission } from 'src/app/utils/utils';
-import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { ModalConfirmDeleteComponent } from 'src/app/components/modal-confirm-delete/modal-confirm-delete.component';
 import { CategoryService } from 'src/app/service/category.service';
 
@@ -25,13 +24,13 @@ import { CategoryService } from 'src/app/service/category.service';
 export class CategoryUpdateFormComponent implements OnInit {
   updateForm: FormGroup;
 
-  showDeleteButton: boolean
-  showUpdateButton:boolean
-  showButtons: boolean
-  
-  permissions = buttonPermission
+  showDeleteButton: boolean;
+  showUpdateButton: boolean;
+  showButtons: boolean;
 
-  isReadOnly: boolean
+  permissions = buttonPermission;
+
+  isReadOnly: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public categoryToUpdate: ICategory,
@@ -42,12 +41,13 @@ export class CategoryUpdateFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.showDeleteButton = false;
+    this.showUpdateButton = this.auth.validateRole(
+      this.permissions.updateCategory
+    );
+    this.showButtons = false;
 
-    this.showDeleteButton = false
-    this.showUpdateButton = this.auth.validateRole(this.permissions.updateCategory)
-    this.showButtons = false
-
-    this.isReadOnly = this.showUpdateButton
+    this.isReadOnly = this.showUpdateButton;
 
     this.updateForm = new FormGroup({
       id: new FormControl(this.categoryToUpdate.id, Validators.nullValidator),
@@ -56,7 +56,6 @@ export class CategoryUpdateFormComponent implements OnInit {
         Validators.nullValidator
       ),
     });
-
   }
 
   onUpdate() {
@@ -91,9 +90,9 @@ export class CategoryUpdateFormComponent implements OnInit {
   }
 
   clickOnEdit() {
-    this.showDeleteButton = true
-    this.showUpdateButton = false
-    this.showButtons = true
-    this.isReadOnly = this.showUpdateButton
+    this.showDeleteButton = true;
+    this.showUpdateButton = false;
+    this.showButtons = true;
+    this.isReadOnly = this.showUpdateButton;
   }
 }

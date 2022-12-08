@@ -118,7 +118,6 @@ input:focus + .icon{
   color: var(--primary-color);
 }
 
-
 #loginButton {
   margin-top: auto;
   width: 100%;
@@ -141,6 +140,16 @@ input:focus + .icon{
   background-color: var(--text-secondary-color);
 }
 
+#forgotLink {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+#forgotLink a{
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1000px) {
   .container {

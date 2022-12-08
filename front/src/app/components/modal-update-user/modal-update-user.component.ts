@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import IAccessLevel from 'src/app/interfaces/IAccessLevel';
 import IUser from 'src/app/interfaces/IUser';
@@ -22,8 +23,11 @@ export class ModalUpdateUserComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA)
     public user: IUser,
     private formBuilder: FormBuilder,
-    private userService:UserService) { 
-      this.userCopy = Object.assign({}, this.user)
+    private userService:UserService,
+    private dialogRef: MatDialogRef<ModalUpdateUserComponent>,
+    private notificationService: ToastrService) { 
+      this.userCopy = Object.assign({}, this.user,
+        )
     }
 
   ngOnInit(): void {
@@ -80,7 +84,21 @@ export class ModalUpdateUserComponent implements OnInit {
       accessLevel: this.form.value.role
     }
     this.userService.updateUser( userUpdated).subscribe(
-      response => { window.location.reload() }, error => { console.log("err!", error) }
+      (response) => { },
+      (error) => {
+        this.notificationService.error(error.error.message, 'Error!', {
+          progressBar: true,
+        });
+      },
+
+      () => {
+        this.notificationService.success(`User updated successfully.`,
+          'Success!',
+          { progressBar: true }
+        )
+        this.userService.userChanged.emit()
+        this.dialogRef.close()
+      }
       )
   }
 
