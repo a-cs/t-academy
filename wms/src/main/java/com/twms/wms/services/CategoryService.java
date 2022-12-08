@@ -1,7 +1,9 @@
 package com.twms.wms.services;
 
 import com.twms.wms.entities.Category;
+import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.CategoryRepository;
+import com.twms.wms.repositories.SKURepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,9 @@ public class CategoryService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    SKURepository skuRepository;
 
     @SneakyThrows
     @Transactional
@@ -53,11 +59,14 @@ public class CategoryService {
         return this.createGategory(categ);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws Exception{
         // Disable if someone is already using it #
-        Category category = this.readById(id);
+        boolean isAssociated = skuRepository.existsByCategoryId(id);
 
-        categoryRepository.delete(category);
+        if (isAssociated) {
+            throw new SQLIntegrityConstraintViolationException("Cannot delete category because it is associated with a product");
+        }
+        skuRepository.deleteById(id);
     }
 
     public Page<Category> searchTerm(String searchTerm, Pageable pageable) {
