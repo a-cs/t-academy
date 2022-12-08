@@ -1,3 +1,4 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -160,6 +161,7 @@ export class ModalUpdateClientComponent implements OnInit {
       cnpj: newClientCnpj,
       address: newAddress,
     };
+    
     this.clientService.update(newClient.id as number, newClient).subscribe(
       (response) => {},
       (error) => {
@@ -177,7 +179,7 @@ export class ModalUpdateClientComponent implements OnInit {
         this.dialogRef.close();
       }
     );
-    //this.dialogRef.close(formSubmmited);
+
   }
 
   stateFallback() {

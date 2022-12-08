@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ConfirmationComponent implements OnInit {
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
     private activateRoute: ActivatedRoute,
-    public router: Router) { }
+    public router: Router,
+    private notificationService: ToastrService) { }
 
   ngOnInit(): void {
     this.activateRoute.queryParams
@@ -40,16 +42,28 @@ export class ConfirmationComponent implements OnInit {
   changePassword(){
     let password = this.form.controls['password'].value
     let password_confirmation = this.form.controls['password_confirmation'].value
-    // console.log({username, password})
+    
     this.userService.changePassword(this.token, password).subscribe(
       response => {
-        console.log("res!", response)
-        // localStorage.setItem("T-WMS_token", response.access_token)
-        // this.router.navigate(["login"])
       },
-      error => {
-        console.log("err!", error)
-      })
+      (error) => {
+
+        this.notificationService.error(error.error.message, 'Error!', {
+          progressBar: true,
+        });
+      },
+
+      () => {
+        this.notificationService.success(`Your password was set successfully.`,
+          'Success!',
+          { progressBar: true }
+        )
+        setTimeout(() => {
+          this.router.navigate(["login"])
+        }, 2000);
+        ;
+      }
+    );
   }
 
   togglePasswordVisibility(item: any) {

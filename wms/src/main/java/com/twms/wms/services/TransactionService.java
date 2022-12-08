@@ -31,7 +31,7 @@ public class TransactionService {
     UserService userService;
 
     @Transactional
-    public List<Transaction> createTransaction(Transaction transaction){
+    public List<TransactionDTO> createTransaction(Transaction transaction){
         transaction.setUser(userService.getUserById(transaction.getUser().getId()));
         List<Transaction> transactionList = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class TransactionService {
             });
         }
         transaction.setDate(Timestamp.from(Instant.now()));
-        return transactionList;
+        return transactionList.stream().map(transact ->new TransactionDTO(transact)).toList();
     }
 
     public List<Transaction> readAllTransactions(){return transactionRepository.findAll();}
@@ -94,7 +94,7 @@ public class TransactionService {
         return optionalClient.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
     }
 
-    public Transaction updateTransaction(Long transactionId, Transaction transaction){
+    public TransactionDTO updateTransaction(Long transactionId, Transaction transaction){
         Transaction oldTransaction = this.readTransactionById(transactionId);
 
         oldTransaction.setClient(transaction.getClient());

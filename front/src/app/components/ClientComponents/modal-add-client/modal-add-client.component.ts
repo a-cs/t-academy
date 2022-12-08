@@ -15,38 +15,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ModalAddClientComponent implements OnInit {
   createForm: FormGroup;
   isWait: boolean = false;
-
-  states = [
-    'AC',
-    'AL',
-    'AP',
-    'AM',
-    'BA',
-    'CE',
-    'DF',
-    'ES',
-    'GO',
-    'MA',
-    'MT',
-    'MS',
-    'MG',
-    'PA',
-    'PB',
-    'PR',
-    'PE',
-    'PI',
-    'RJ',
-    'RN',
-    'RS',
-    'RO',
-    'RR',
-    'SC',
-    'SP',
-    'SE',
-    'TO',
-  ];
-  filteredStates: Observable<String[]>;
-  firstState: String;
+  states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+  filteredStates:Observable<String[]>
+  firstState:String; 
 
   constructor(
     private clientService: ClientService,

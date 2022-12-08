@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class ClientService {
   public clientChanged = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http:HttpClient, private auth:AuthService) { }
 
   getByLikeName(name: string, page: number, size: number) {
     return this.http.get<any>(

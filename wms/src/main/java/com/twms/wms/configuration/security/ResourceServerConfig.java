@@ -58,8 +58,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers( "/measurement-unit/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/category/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/client").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
                     .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/transaction/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.POST, "/transaction/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
+                    .antMatchers("/transaction/**").hasAnyRole( "MANAGER", "ADMIN")
 
                     .anyRequest().hasRole("ADMIN");
         }

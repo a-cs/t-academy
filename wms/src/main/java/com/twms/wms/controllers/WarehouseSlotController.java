@@ -71,10 +71,11 @@ public class WarehouseSlotController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds, pageable));
     }
     @GetMapping("/client/filtered")
-    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesandProducts(@RequestParam(defaultValue = "") String term,
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesandProducts(@RequestParam(defaultValue = "") String sku,
+                                                                                    @RequestParam(defaultValue = "") String client,
                                                                                     @RequestParam Long branch,
                                                                          Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranchesandProducts(term, branch, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranchesandProducts( sku, client, branch, pageable));
     }
 
 
@@ -85,7 +86,7 @@ public class WarehouseSlotController {
                                                                                             Pageable pageable
                                                                        ) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term, pageable));
+                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term , pageable));
     }
 
     @PostMapping("/client/{clientId}/filterByBranchesAndProducts")

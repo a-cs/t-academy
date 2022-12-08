@@ -54,28 +54,23 @@ public class UserService implements UserDetailsService {
             user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
 
-        confirmationTokenService.createTokenAndSendEmail(user);
+        confirmationTokenService.createTokenAndSendEmail(user, true);
         return new UserDTO(savedUser);
     }
 
-    public User createClientUser(String username, String clientEmail){
+    public User createClientUser(String clientName, String clientEmail){
         User clientUser = new User();
-        clientUser.setUsername(username);
+        clientUser.setUsername(clientName);
         clientUser.setEmail(clientEmail);
-        //TODO: Auto generate random password
-//        String clientPassword = username;
-//        clientUser.setPassword(clientPassword);
         User savedClientUser = new User(this.createUser(clientUser));
-//        savedClientUser.setPassword(clientPassword);
         return savedClientUser;
     }
 
-    public String resetPassword(String username){
-        User user = userRepository.findUserByUsername(username).orElseThrow(
-                ()->new EntityNotFoundException("User " + username + " do not exist")
+    public void resetPassword(String email){
+        User user = userRepository.findUserByEmail(email).orElseThrow(
+                ()->new EntityNotFoundException("Email " + email + " is not registered")
         );
-        confirmationTokenService.createTokenAndSendEmail(user);
-        return "An email was sent to your email address.";
+        confirmationTokenService.createTokenAndSendEmail(user, false);
     }
 
     public UserDTO getUserByUsername(String username){
@@ -110,7 +105,7 @@ public class UserService implements UserDetailsService {
         return new UserDTO(userRepository.save(savedUser));
     }
 
-    public String setNewPassword(String token, String password){
+    public void setNewPassword(String token, String password){
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
         if (confirmationToken.getConfirmedAt() != null){
             throw new IllegalArgumentException("Token has already been used.");
@@ -123,7 +118,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setEnabled(true);
         userRepository.save(user);
-        return "Password has been changed successfully.";
     }
 
     @Override
@@ -147,21 +141,4 @@ public class UserService implements UserDetailsService {
     public Page<UserDTO> getUsersPaginated(Pageable pageable) {
         return userRepository.findAll(pageable).map(UserDTO::new);
     }
-
-//    public String verificationEmailSender(){
-//        return "ok";
-//    }
-//
-//    public String userConfirmation(String token){
-//        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
-//        if (confirmationToken.getConfirmedAt() != null){
-//            throw new IllegalArgumentException("Email has already been confirmed");
-//        }
-//        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
-//            throw new IllegalArgumentException("Token has expired");
-//        }
-//        confirmationToken.setConfirmedAt(LocalDateTime.now());
-//        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
-//        return "User has been confirmed";
-//    }
 }
