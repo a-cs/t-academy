@@ -60,6 +60,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers("/category/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/client/**").hasAnyRole( "MANAGER", "ADMIN")
                     .antMatchers("/user/**").hasAnyRole( "MANAGER", "ADMIN")
+                    .antMatchers("/transaction/**").hasAnyRole( "OPERATOR","MANAGER", "ADMIN")
 
                     .anyRequest().hasRole("ADMIN");
         }
