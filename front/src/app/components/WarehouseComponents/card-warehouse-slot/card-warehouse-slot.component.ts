@@ -9,14 +9,9 @@ import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
 export class CardWarehouseSlotComponent implements OnInit {
 
   @Input() warehouseSlot: IWarehouseSlot
-  
-  aisleBay: string
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.aisleBay = this.warehouseSlot.aisle + this.warehouseSlot.bay
-    console.log(this.aisleBay)
-  }
+  ngOnInit(): void {}
 
 }

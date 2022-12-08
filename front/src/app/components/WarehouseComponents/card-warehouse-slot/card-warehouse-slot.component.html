@@ -3,13 +3,15 @@
         <p>{{warehouseSlot.aisle}}</p>
         <p>{{warehouseSlot.bay}}</p>
     </div>
-    <div class="sku-name">
-        <p>{{warehouseSlot.skuName}}</p>
-    </div>
-    <div class="info">
-        <p class="p-name">Client: {{warehouseSlot.clientName}}</p>
-        <p class="p-quantity">Quantity: {{warehouseSlot.quantity}} {{warehouseSlot.symbol}}</p>
-        <p class="p-date">Arrival date: {{warehouseSlot.arrivalDate | mask: '0000/00/00'}}</p>
-        <p class="p-branch">Branch: {{warehouseSlot.branchName}} </p>
+    <div class="infoBig">
+        <div class="sku-name">
+            <p>{{warehouseSlot.skuName}}</p>
+        </div>
+        <div class="info">
+            <p class="p-name">Client: {{warehouseSlot.clientName}}</p>
+            <p class="p-quantity">Quantity: {{warehouseSlot.quantity}} {{warehouseSlot.symbol}}</p>
+            <p class="p-date">Arrival date: {{warehouseSlot.arrivalDate | mask: '0000/00/00'}}</p>
+            <p class="p-branch">Branch: {{warehouseSlot.branchName}} </p>
+        </div>
     </div>
 </div>
