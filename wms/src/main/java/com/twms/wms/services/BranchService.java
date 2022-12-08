@@ -5,6 +5,7 @@ import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
 import com.twms.wms.repositories.BranchRepository;
+import com.twms.wms.repositories.SKURepository;
 import com.twms.wms.repositories.WarehouseSlotRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,9 @@ public class BranchService {
 
     @Autowired
     WarehouseSlotRepository warehouseSlotRepository;
+
+    @Autowired
+    SKURepository skuRepository;
 
     @SneakyThrows
     @Transactional
@@ -111,7 +116,19 @@ public class BranchService {
     }
 
     @Transactional
-    public void deleteBranch(Long branchId){
+    public void deleteBranch(Long branchId) throws SQLIntegrityConstraintViolationException {
+        List<Long> skusId = new ArrayList<>();
+
+        skuRepository.findAll().forEach(
+                (sku) -> {
+                    skusId.add(sku.getId());
+                }
+        );
+
+        if (warehouseSlotRepository.existsBySkuIdIn(skusId)) {
+            throw new SQLIntegrityConstraintViolationException("Cannot delete this branch because there are products in it.");
+        }
+
         Branch toDelete = this.readBranchById(branchId);
         branchRepository.delete(toDelete);
     }

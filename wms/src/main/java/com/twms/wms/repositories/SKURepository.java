@@ -18,4 +18,8 @@ public interface SKURepository extends JpaRepository<SKU, Long> {
 
     public List<SKU> findByIdIn(List<Long> ids);
 
+    public boolean existsByCategoryId(Long categoryId);
+
+    public boolean existsByMeasurementUnitId(Long measurementUnitId);
+
 }

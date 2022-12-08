@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -46,7 +47,7 @@ public class SKUController {
     }
 
     @DeleteMapping("/{skuId}")
-    public ResponseEntity<SKU> update(@PathVariable("skuId") Long skuId) {
+    public ResponseEntity<SKU> update(@PathVariable("skuId") Long skuId) throws SQLIntegrityConstraintViolationException {
         service.delete(skuId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

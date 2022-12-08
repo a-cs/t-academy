@@ -45,4 +45,8 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
     List<WarehouseSlot> findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(Long clientId,
                                                                                                  Long branchId,
                                                                                                  Long skuId);
+
+    boolean existsBySkuId(Long skuId);
+
+    boolean existsBySkuIdIn(List<Long> productsId);
 }

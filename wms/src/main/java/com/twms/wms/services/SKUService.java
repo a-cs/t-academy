@@ -2,6 +2,7 @@ package com.twms.wms.services;
 
 import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.SKURepository;
+import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class SKUService {
     CategoryService categoryService;
     @Autowired
     MeasurementUnitService measurementUnitService;
+
+    @Autowired
+    WarehouseSlotRepository warehouseSlotRepository;
 
     public List<SKU> read(){
         return skuRepository.findAll();
@@ -52,7 +57,10 @@ public class SKUService {
         return this.save(s);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws SQLIntegrityConstraintViolationException {
+        if (warehouseSlotRepository.existsBySkuId(id)) {
+            throw new SQLIntegrityConstraintViolationException("Cannot delete product because it is stored somewhere in the warehouse.");
+        }
         SKU s = this.findById(id);
         skuRepository.delete(s);
     }
