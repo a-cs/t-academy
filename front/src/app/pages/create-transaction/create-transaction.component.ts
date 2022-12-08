@@ -23,6 +23,8 @@ export class CreateTransactionComponent implements OnInit {
     filteredSkus: Observable<ISku[]>
     filteredClients: Observable<IClient[]>
     firstSku?: ISku
+    isUp: boolean = false
+    isDown: boolean = false
 
     form: FormGroup
 
@@ -51,6 +53,17 @@ export class CreateTransactionComponent implements OnInit {
 
 
         // this.filteredSkus.subscribe(ele => this.firstSku = ele[0])
+        
+        this.form.controls["type"].valueChanges.subscribe(value => 
+        {if(value == 'in'){
+          this.isUp = true
+          this.isDown = false
+        }
+        if(value == 'out'){
+          this.isUp = false
+          this.isDown = true
+        }}
+        )
 
     }
 

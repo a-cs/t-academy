@@ -18,6 +18,11 @@
     flex-direction: column;
 }
 
+.paginatorContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 @media (min-width:550px) and (max-width:850px) {
     .title{

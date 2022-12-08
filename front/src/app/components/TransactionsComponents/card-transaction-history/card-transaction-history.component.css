@@ -45,7 +45,11 @@ span {
     animation-fill-mode: forwards;
 }
 
-.in span {
+.in{
+    border-color: rgb(95, 255, 47);
+}
+
+.inS{
     border-color: rgb(95, 255, 47);
     margin-right: 0px;
     animation-name: marginRight;

@@ -31,6 +31,15 @@ export class ClientComponent implements OnInit {
       this.pageSize = data.size
       this.pageIndex = data.number
     });
+
+    this.clientService.clientChanged.subscribe(() =>{
+      this.clientService.getPageable(0,10).subscribe((data) => {
+      this.clients = data.content;
+      this.length = data.totalElements
+      this.pageSize = data.size
+      this.pageIndex = data.number
+      })
+    });
       
     console.log('CLIENTS PAGE!!');
   }
