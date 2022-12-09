@@ -1,0 +1,112 @@
+.card {
+    margin: 16px 8px;
+    width: 80vw; /* Pq percentual não funciona???*/
+    height: 180px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+}
+.user-enabled{
+    border: 3px var(--primary-color) solid;
+}
+.user-disabled{
+    background-color: var(--border-color);
+    border: 3px var(--text-secondary-color) solid;
+}
+.user-disabled .picture{
+    background-color: var(--footer-color);
+}
+.picture {
+    margin: 0 2rem;
+    border-radius: 50%;
+    background-color: var(--primary-hover-color);
+    height: 100px;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+i{
+    font-size: 90px;
+    padding: 0px 8px 10px 2px;
+    color: white;
+}
+
+.username {
+    margin: 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 1;
+}
+
+.username > p {
+    word-wrap: break-word;
+    margin-bottom: 0;
+}
+
+.vertical-line{
+    display: inline-block;
+    border-left: 3px solid var(--border-color);
+    margin: 0 10px;
+    height: 80%;
+}
+
+.user-role{
+    margin: 0 1rem;
+    color: var(--text-secondary-color);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--text-tittle-color);
+    border: 3px var(--primary-color) solid;
+    cursor: pointer;
+    font-size: 1.5rem;
+    height: 100%;
+    width: 12%;
+    margin: 0;
+    border-radius: 0 32px 32px 0;
+}
+
+.user-disabled > .btn{
+    background-color: var(--footer-color);
+    border: 3px var(--footer-color);
+}
+
+@media (max-width:1001px){
+
+    .card {
+        margin: 16px 8px;
+        width: 80vw; /* Pq percentual não funciona???*/
+        height: fit-content;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between; 
+    }
+
+    .picture {
+        margin: 0.5rem 0;
+    }
+
+    .username {
+        margin: 0.5rem 0;
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: var(--text-tittle-color);
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 100%;
+        height: 3rem;
+        margin: 0;
+        border-radius: 0 0 32px 32px;
+    }
+}

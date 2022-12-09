@@ -11,35 +11,13 @@ import { routePermission } from 'src/app/utils/utils';
 })
 export class HomeComponent implements OnInit {
   constructor(private router: Router,
-    public auth: AuthService) {}
+    public auth: AuthService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   permissions = routePermission
 
-  navigate() {
-    this.router.navigate(['/products']);
-  }
-
-  navigateToCategories() {
-    this.router.navigate(['/categories']);
-  }
-
-  navigateClientInventory(){
-    this.router.navigate(["client-inventory"])
-  }
-
-  navigateToMeasurementUnits() {
-    this.router.navigate(['/measurement-units']);
-  }
-
-  navigateToBranches() {
-    this.router.navigate(['/branches'])
-}
-  navigateUser(){
-    this.router.navigate(["/users"])
-  }
-  navigateToClients(){
-    this.router.navigate(["/clients"])
+  navigateTo(path: string) {
+    this.router.navigate([path])
   }
 }

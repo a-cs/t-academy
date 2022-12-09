@@ -6,6 +6,8 @@ import com.twms.wms.dtos.BranchIdsProductIdsFilterDTO;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.services.WarehouseSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,47 +37,63 @@ public class WarehouseSlotController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(branchId));
     }
 
-    @GetMapping("/branch/{branchId}/aisle/{aisleId}")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId,
-                                                           @PathVariable String aisleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(
-                branchId,
-                aisleId));
-    }
-
-    @GetMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
-    public ResponseEntity<WarehouseSlotDTO> getByTestId(@PathVariable("branchId") Long branchId,
-                                                           @PathVariable("aisleId") String aisleId,
-                                                           @PathVariable("bayId") int bay) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getById(branchId, aisleId, bay));
-    }
+//    @GetMapping("/branch/{branchId}/aisle/{aisleId}")
+//    public ResponseEntity<List<WarehouseSlotDTO>> getByTestId(@PathVariable Long branchId,
+//                                                           @PathVariable String aisleId) {
+//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getAllById(
+//                branchId,
+//                aisleId));
+//    }
+//
+//    @GetMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
+//    public ResponseEntity<WarehouseSlotDTO> getByTestId(@PathVariable("branchId") Long branchId,
+//                                                           @PathVariable("aisleId") String aisleId,
+//                                                           @PathVariable("bayId") int bay) {
+//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getById(branchId, aisleId, bay));
+//    }
 
     @GetMapping("/client/{clientId}")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId));
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId,
+                                                                Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId, pageable));
     }
 
+//    @GetMapping("/client/{clientId}/filterByBranches")
+//    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranches(@PathVariable Long clientId,
+//                                                                         @RequestBody ListIdsFilterDTO branchIds) {
+//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds));
+//    }
+
     @GetMapping("/client/{clientId}/filterByBranches")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
-                                                                       @RequestBody ListIdsFilterDTO branchIds) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds));
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranches(@PathVariable Long clientId,
+                                                                         @RequestBody ListIdsFilterDTO branchIds,
+                                                                         Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranches(clientId, branchIds, pageable));
+    }
+    @GetMapping("/client/filtered")
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesandProducts(@RequestParam(defaultValue = "") String sku,
+                                                                                    @RequestParam(defaultValue = "") String client,
+                                                                                    @RequestParam Long branch,
+                                                                         Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientIdAndBranchesandProducts( sku, client, branch, pageable));
     }
 
 
     @PostMapping("/client/{clientId}/filterByBranches/searchProduct")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByClientAndBranch(@PathVariable Long clientId,
-                                                                       @RequestBody ListIdsFilterDTO branchIds,
-                                                                       @RequestParam(defaultValue = "") String term
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientAndBranchesSearchByProductName(@PathVariable Long clientId,
+                                                                                            @RequestBody ListIdsFilterDTO branchIds,
+                                                                                            @RequestParam(defaultValue = "") String term,
+                                                                                            Pageable pageable
                                                                        ) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term));
+                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term , pageable));
     }
 
-    @GetMapping("/client/{clientId}/filterByBranchesAndProducts")
-    public ResponseEntity<List<WarehouseSlotDTO>> getByClientBranchAndProduct(@PathVariable Long clientId,
-                                                                       @RequestBody BranchIdsProductIdsFilterDTO branchIdsAndProductIds) {
-        System.out.println(branchIdsAndProductIds);
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientBranchAndProduct(clientId, branchIdsAndProductIds));
+    @PostMapping("/client/{clientId}/filterByBranchesAndProducts")
+    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientBranchAndProduct(@PathVariable Long clientId,
+                                                                       @RequestBody BranchIdsProductIdsFilterDTO branchIdsAndProductIds,
+                                                                              Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientBranchAndProduct(clientId, branchIdsAndProductIds, pageable));
     }
 
 

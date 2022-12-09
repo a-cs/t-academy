@@ -1,9 +1,11 @@
 package com.twms.wms.entities;
 
+import com.twms.wms.enums.TransactionType;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -15,6 +17,8 @@ public class Transaction {
     private Timestamp Date;
 
     private int quantity;
+
+    private TransactionType type;
 
     @ManyToOne
     private WarehouseSlot warehouseSlot;
@@ -28,5 +32,17 @@ public class Transaction {
     private SKU sku;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    public Transaction(){}
+    public Transaction(Transaction transaction, WarehouseSlot warehouseSlot){
+        this.setQuantity(transaction.getQuantity());
+        this.setClient(transaction.getClient());
+        this.setSku(transaction.getSku());
+        this.setUser(transaction.getUser());
+        this.setDate(Timestamp.from(Instant.now()));
+        this.setType(transaction.getType());
+        this.setWarehouseSlot(warehouseSlot);
+    }
 }

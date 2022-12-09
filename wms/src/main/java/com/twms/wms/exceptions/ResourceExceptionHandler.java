@@ -1,6 +1,7 @@
 package com.twms.wms.exceptions;
 
 import com.twms.wms.dtos.InvalidArgumentDTO;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimeStamp(Instant.now());
         error.setStatus(HttpStatus.IM_USED.value());
-        error.setError("Violation unique variable.");
+        error.setError("Data integrity violation.");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
 
@@ -66,6 +68,18 @@ public class ResourceExceptionHandler {
         error.setTimeStamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setError("Invalid argument.");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<StandardError> deleteAssociatedEntity(SQLException exception, HttpServletRequest request) {
+        StandardError error = new StandardError();
+        error.setTimeStamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setError("Cannot delete an item that is associated with another item.");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
 

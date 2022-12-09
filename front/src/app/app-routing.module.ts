@@ -11,6 +11,16 @@ import { ProductComponent } from './pages/product/product.component';
 import { UserComponent } from './pages/user/user.component';
 import { AuthGuardService } from './service/auth-guard.service';
 import { routePermission } from './utils/utils';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { ComponentType } from '@angular/cdk/portal';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+
+
+const pages404: any = [NotFoundComponent, NotFoundIconsBgComponent]
 
 const routes: Routes = [
   {
@@ -19,6 +29,14 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       expectedRoles: routePermission.products
+    }
+  },
+  {
+    path: 'transaction-history',
+    component: TransactionHistoryComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.transactionHistory
     }
   },
   {
@@ -80,6 +98,33 @@ const routes: Routes = [
     data: {
       expectedRoles: routePermission.users
     }
+  },
+  {
+
+    path: 'warehouse-slots',
+    component: WarehouseSlotsComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.warehouseSlot
+    }
+    },
+  {
+    
+    path: 'create-transaction',
+    component: CreateTransactionComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      expectedRoles: routePermission.createTransaction
+   }
+
+  },
+  {
+    path: 'confirmation',
+    component: ConfirmationComponent
+  },
+  {
+    path: '**',
+    component: pages404[Math.floor(Math.random() * 2)]
   }
 ];
 

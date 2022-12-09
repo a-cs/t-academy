@@ -1,0 +1,133 @@
+.card {
+    border: 4px var(--border-color) solid;
+    margin: 16px 8px;
+    padding: 1rem;
+    min-width: 300px;
+    max-width: 450px;
+    height: fit-content;
+    border-radius: 32px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sku-name {
+    font-size: 2rem;
+    text-align: center;
+    line-height: 3;
+    color: var(--text-primary-color);
+    padding: 0 1rem;
+    margin-right: 2rem;
+    height: min-content;
+}
+
+.sku-name p {
+    margin: 0;
+}
+
+.aisle-bay {
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 320px;
+    height: fit-content;
+    border: 4px var(--primary-hover-color) solid;
+    border-radius: 32px;
+    font-size: 6rem;
+    color: var(--primary-hover-color);
+    line-height: 0.9;
+    text-align: center;
+    padding: 0.8rem 1rem;
+    margin: 1.5rem auto;
+}
+
+.aisle-bay p {
+    margin:  auto;
+}
+.infoBig {
+    display: flex;
+}
+
+.info {
+    display: grid;
+    font-size: 1.4rem;
+    color: var(--text-secondary-color);
+    grid-template-columns: 1fr 0.1fr;
+    margin-bottom: 0.5rem;
+    margin-left: auto;
+    /*margin-right: 1rem;*/
+    line-height: normal;
+}
+
+.info p {
+    margin: 0;
+}
+
+.info .p-name {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.info .p-date {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 4;
+    line-height: normal;
+}
+
+.info .p-quantity {
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.info .p-branch {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    line-height: normal;
+}
+
+@media (max-width: 650px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
+        padding: 0 1rem;
+        max-width: 350px;
+    }
+
+    .aisle-bay {
+        margin: 1rem auto;
+        height: fit-content;
+        font-size: 5rem;
+    }
+    .aisle-bay p {
+        margin: 1rem auto;
+    }
+
+    .sku-name {
+        line-height: 1.3;
+    }
+
+    .infoBig {
+        flex-direction: column;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.4rem;
+        color: var(--text-secondary-color);
+        margin: auto;
+       /* margin-bottom: 1rem;*/
+    }
+
+    /*.info .p-date {
+        margin-left: 0.5rem;
+    }*/
+
+    .info p {
+        margin: 0.5rem;
+    }
+}
+

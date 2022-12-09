@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class BranchController {
     }
 
     @DeleteMapping("/{branchId}")
-    public ResponseEntity<Void> deleteBranch(@PathVariable("branchId") Long branchId){
+    public ResponseEntity<Void> deleteBranch(@PathVariable("branchId") Long branchId) throws SQLIntegrityConstraintViolationException {
         branchService.deleteBranch(branchId);
         return ResponseEntity.noContent().build();
     }

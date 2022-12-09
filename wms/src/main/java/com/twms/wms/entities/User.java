@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
@@ -27,37 +26,26 @@ public class User implements UserDetails {
     @Email
     private String email;
     @Size(min = 5, max = 128)
-    @NotNull(message = "Password cannot be Null")
-    @NotBlank
+//    @NotNull(message = "Password cannot be Null")
+//    @NotBlank
     private String password;
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "tb_user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
+    @ManyToOne
+    private Branch branch = null;
     @ManyToOne
     private Role accessLevel;
-//    private Set<Role> accessLevel = new HashSet<>();
     private boolean enabled = false;
 
     public User() {
     }
 
     public User(UserDTO userDTO) {
-        this.username = userDTO.getUsername();
         this.id = userDTO.getId();
-        this.accessLevel = userDTO.getAccessLevel();
+        this.username = userDTO.getUsername();
         this.email = userDTO.getEmail();
+        this.branch = userDTO.getBranch();
+        this.accessLevel = userDTO.getAccessLevel();
         this.enabled = userDTO.isEnabled();
     }
-
-//    public void addAccessLevel(Role role){
-//        this.accessLevel.add(role);
-//    }
-//    public void revokeAccessLevel(Role role){
-//        this.accessLevel.remove(role);
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,6 +1,7 @@
 package com.twms.wms.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +10,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @Embeddable
 public class WarehouseSlotId implements Serializable {

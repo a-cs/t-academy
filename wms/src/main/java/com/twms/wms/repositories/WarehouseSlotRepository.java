@@ -4,8 +4,9 @@ import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.SKU;
 import com.twms.wms.entities.WarehouseSlot;
 import com.twms.wms.entities.WarehouseSlotId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +18,35 @@ public interface WarehouseSlotRepository extends JpaRepository<WarehouseSlot, Wa
                                                                                                      String aisle,
                                                                                                      int bay);
 
-     List<WarehouseSlot> findByClientId(Long clientId);
+     Page<WarehouseSlot> findByClientId(Long clientId, Pageable pageable);
 
 
-     List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchIn(Long clientId, List<Branch> branches);
+     Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchIn(Long clientId, List<Branch> branches, Pageable pageable);
 
-     List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(Long clientId, List<Branch> branches, List<SKU> skus);
+     Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(Long clientId, List<Branch> branches, List<SKU> skus, Pageable pageable);
 
      List<WarehouseSlot> findAllBySkuIn(List<SKU> skus);
-    List<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(Long clientId, List<Branch> branches, String searchTerm);
+    Page<WarehouseSlot> findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(Long clientId, List<Branch> branches, String searchTerm, Pageable pageable);
+
+     WarehouseSlot findFirstBySkuIsNullAndWarehouseSlotIdBranchId(Long branchId);
+
+     WarehouseSlot findFirstByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(Long clientId,
+                                                                                               Long branchId,
+                                                                                               Long skuId);
+
+    Page<WarehouseSlot> findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseAndWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(
+            Long branchId,
+            String sku,
+            Long branchId2,
+            String client,
+            Pageable pageable
+    );
+
+    List<WarehouseSlot> findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(Long clientId,
+                                                                                                 Long branchId,
+                                                                                                 Long skuId);
+
+    boolean existsBySkuId(Long skuId);
+
+    boolean existsBySkuIdIn(List<Long> productsId);
 }

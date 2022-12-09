@@ -10,7 +10,6 @@ import { CategoryUpdateFormComponent } from '../catogory-update-form/catogory-up
   styleUrls: ['./category-item-card.component.css'],
 })
 export class CategoryItemCardComponent implements OnInit {
-  @Output() onItemUpdatedOrDeleted = new EventEmitter<void>();
   @Input() category: ICategory;
 
   constructor(
@@ -20,27 +19,27 @@ export class CategoryItemCardComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //onUpdateButtonPressed(category: ICategory) {
+  //const dialogConfig = this.getDialogConfiguration();
+
+  //const dialogRef = this.dialogRef.open(
+  //CategoryUpdateFormComponent,
+  //dialogConfig
+  //);
+
+  //dialogRef.afterClosed().subscribe((formSubmitted) => {
+  //if (formSubmitted) {
+  //this.onItemUpdatedOrDeleted.emit();
+  //}
+  //});
+  //}
+
   onUpdateButtonPressed(category: ICategory) {
-    const dialogConfig = this.getDialogConfiguration();
-
-    const dialogRef = this.dialogRef.open(
-      CategoryUpdateFormComponent,
-      dialogConfig
-    );
-
-    dialogRef.afterClosed().subscribe((formSubmitted) => {
-      if (formSubmitted) {
-        this.onItemUpdatedOrDeleted.emit();
-      }
+    const dialogRef = this.dialogRef.open(CategoryUpdateFormComponent, {
+      data: this.category,
+      autoFocus: false,
+      width: '600px',
+      height: '600px',
     });
-  }
-
-  getDialogConfiguration(): MatDialogConfig {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = this.category;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = '600px';
-    dialogConfig.height = '600px';
-    return dialogConfig;
   }
 }

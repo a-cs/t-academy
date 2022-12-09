@@ -2,12 +2,16 @@ package com.twms.wms.services;
 
 import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.SKURepository;
+import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,9 @@ public class SKUService {
     CategoryService categoryService;
     @Autowired
     MeasurementUnitService measurementUnitService;
+
+    @Autowired
+    WarehouseSlotRepository warehouseSlotRepository;
 
     public List<SKU> read(){
         return skuRepository.findAll();
@@ -34,6 +41,9 @@ public class SKUService {
             throw new IllegalArgumentException("Category Id is missing.");
         if(sku.getMeasurementUnit().getId() == null)
             throw new IllegalArgumentException("Measurement Unit Id is missing.");
+        if(skuRepository.findByNameAndCategoryIdAndMeasurementUnitId(sku.getName(), sku.getCategory().getId(),sku.getMeasurementUnit().getId())!=null){
+            throw new IllegalArgumentException("Element Duplicated");
+        }
         categoryService.readById(sku.getCategory().getId());
         measurementUnitService.read(sku.getMeasurementUnit().getId());
         return skuRepository.save(sku);
@@ -47,17 +57,24 @@ public class SKUService {
         return this.save(s);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws SQLIntegrityConstraintViolationException {
+        if (warehouseSlotRepository.existsBySkuId(id)) {
+            throw new SQLIntegrityConstraintViolationException("Cannot delete product because it is stored somewhere in the warehouse.");
+        }
         SKU s = this.findById(id);
         skuRepository.delete(s);
     }
 
-    public List<SKU> searchTerm(String searchTerm){
+    public Page<SKU> searchTerm(String searchTerm, Pageable pageable){
         String terms = searchTerm.replace("-", " ");
-        return skuRepository.findByNameContainingIgnoreCase(terms);
+        return skuRepository.findByNameContainingIgnoreCase(terms, pageable);
     }
 
     public List<SKU> findAllByIds(List<Long> ids) {
         return skuRepository.findByIdIn(ids);
+    }
+
+    public Page<SKU> readPaginated(Pageable pageable) {
+        return skuRepository.findAll(pageable);
     }
 }

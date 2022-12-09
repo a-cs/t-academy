@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="container">
+    <div class="title">
+        <p>Transactions History</p>
+    </div>
+
+    <div class="cards">
+        <app-card-transaction-history *ngFor="let transaction of transactions" [transaction]="transaction">
+        </app-card-transaction-history>
+    </div>
+    <div class="paginatorContainer">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+            [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+            [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
+<app-footer></app-footer>

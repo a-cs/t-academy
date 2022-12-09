@@ -1,0 +1,149 @@
+.card {
+    border: 4px var(--border-color) solid;
+    min-width: 500px;
+    height: 11vh;
+    border-radius: 32px 0 0 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: middle;
+    animation: 2s;
+    margin-bottom: 10px;
+}
+
+.card:first-child {
+    padding-left: 5%;
+}
+
+.card:last-child {
+    padding-right: 5%;
+}
+
+p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+span {
+    border-radius: 0px 32px 32px 0px;
+    height: 11vh;
+    width: 75px;
+    color: white;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.out {
+    border-color: red;
+    margin-left: 0px;
+    animation-name: marginLeft;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.in{
+    border-color: rgb(95, 255, 47);
+}
+
+.inS{
+    border-color: rgb(95, 255, 47);
+    margin-right: 0px;
+    animation-name: marginRight;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes marginLeft {
+    from {
+        margin-left: 0px;
+    }
+
+    to {
+        margin-left: 150px;
+    }
+}
+
+@keyframes marginRight {
+    from {
+        margin-right: 0px;
+    }
+
+    to {
+        margin-right: 150px;
+    }
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row
+}
+
+.container:hover {
+    transition: 0.2s;
+    transform: scale(0.96);
+}
+
+.container:active {
+    transition: 0.2s;
+    transform: scale(0.92);
+}
+
+.padding-right {
+    padding-right: 5%;
+}
+
+@media (min-width:700px) and (max-width:850px) {
+    .card{
+        min-width: 450px;
+    }
+}
+
+@media (min-width: 600px) and (max-width:699px) {
+    .card{
+        min-width: 350px;
+    }
+}
+
+@media (min-width: 525px) and (max-width:599px) {
+    .card{
+        min-width: 275px;
+    }
+}
+
+@media (min-width: 451px) and (max-width: 524px) {
+    .card{
+        min-width: 175px;
+        height: 18vh;
+        flex-direction: column;
+    }
+
+    .card:first-child{
+        padding-top: 2vh;
+    }
+
+    span{
+        height: 18vh;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 450px) {
+    .card{
+        min-width: 125px;
+        height: 18vh;
+        flex-direction: column;
+    }
+
+    .card:first-child{
+        padding-top: 2vh;
+    }
+
+    span{
+        height: 18vh;
+    }
+}

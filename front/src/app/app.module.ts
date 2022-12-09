@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { CardCreateSkuComponent } from './components/card-create-sku/card-create-sku.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -23,7 +24,7 @@ import { ModalAddSkuComponent } from './components/modal-add-sku/modal-add-sku.c
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UserComponent } from './pages/user/user.component';
-import { CardUserComponent } from './components/card-user/card-user.component';
+import { CardUserComponent } from './components/UsersComponents/card-user/card-user.component';
 import { ModalUpdateUserComponent } from './components/modal-update-user/modal-update-user.component';
 import { ClientInventoryComponent } from './pages/client-inventory/client-inventory.component';
 import { CardClientSkuComponent } from './components/card-client-sku/card-client-sku.component';
@@ -34,7 +35,6 @@ import { CategoryCreateFormComponent } from './components/CategoryComponents/cat
 import { CategoryCreateCardComponent } from './components/CategoryComponents/category-create-card/category-create-card.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { MeasurementUnitComponent } from './pages/measurement-unit/measurement-unit.component';
-
 
 import { CardClientComponent } from './components/ClientComponents/card-client/card-client.component';
 import { ModalUpdateClientComponent } from './components/ClientComponents/modal-update-client/modal-update-client.component';
@@ -50,9 +50,29 @@ import { BranchComponent } from './pages/branch/branch.component';
 import { ModalShowMoreComponent } from './components/BranchComponents/modal-show-more/modal-show-more.component';
 import { ModalAddBranchComponent } from './components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import { ModalShowClientInventoryComponent } from './components/modal-show-client-inventory/modal-show-client-inventory.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
+import { ToastrModule } from 'ngx-toastr';
+import { ModalConfirmDeleteComponent } from './components/modal-confirm-delete/modal-confirm-delete.component';
+import { NotFoundComponent } from './components/404/not-found/not-found.component';
+import { NotFoundIconsBgComponent } from './components/404/not-found-icons-bg/not-found-icons-bg.component';
+import { CardCreateUserComponent } from './components/UsersComponents/card-create-user/card-create-user.component';
+import { ModalCreateUserComponent } from './components/UsersComponents/modal-create-user/modal-create-user.component';
+import { NgxMaskModule } from 'ngx-mask';
 
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { CardTransactionHistoryComponent } from './components/TransactionsComponents/card-transaction-history/card-transaction-history.component';
 
+import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots.component';
+import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
+
+import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
+
+import {
+  MatProgressSpinner,
+  MatProgressSpinnerModule,
+} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +99,7 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryItemCardComponent,
     CategoryUpdateFormComponent,
     CategoryCreateFormComponent,
-    CategoryCreateCardComponent,    
+    CategoryCreateCardComponent,
     CardClientComponent,
     ModalUpdateClientComponent,
     ClientComponent,
@@ -91,7 +111,19 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     CategoryComponent,
     ModalAddBranchComponent,
     ModalShowClientInventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    ConfirmationComponent,
+    ModalConfirmDeleteComponent,
+    NotFoundComponent,
+    NotFoundIconsBgComponent,
+    CardCreateUserComponent,
+    ModalCreateUserComponent,
+    TransactionHistoryComponent,
+    CardTransactionHistoryComponent,
+    WarehouseSlotsComponent,
+    CardWarehouseSlotComponent,
+    ModalShowMoreTransactionHistoryComponent,
+    CreateTransactionComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,9 +136,13 @@ import { ModalShowClientInventoryComponent } from './components/modal-show-clien
     MatAutocompleteModule,
     MatButtonModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    NgxMaskModule.forRoot(),
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

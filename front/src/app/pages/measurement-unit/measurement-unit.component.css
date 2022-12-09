@@ -25,3 +25,23 @@
 .search-bar {
     margin-top: 2vh;
 }
+
+app-card-create-sku {
+    --custom-height: 15rem;
+    /*--custom-margin: 1rem 2rem;*/
+    --custom-i-font: 12rem;
+}
+
+@media (max-width: 740px) {
+    .title {
+      font-size: 5rem;
+      line-height: normal;
+    }
+  }
+  
+  @media (max-width: 540px) {
+    .title {
+      font-size: 3.5rem;
+      line-height: normal;
+    }
+  }

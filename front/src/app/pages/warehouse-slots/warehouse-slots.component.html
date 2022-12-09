@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="container">
+    <div class="title">
+        <p>Warehouse</p>
+    </div>
+    <label >SKU</label>
+    <app-search-bar class="margin-search-bar"
+        (searchTextChanged)="onSearchTextEnteredSKUWareHouseSlot($event)"></app-search-bar>
+    <label for="" id="margin-top">Client Name</label>
+    <app-search-bar class="margin-search-bar"
+        (searchTextChanged)="onSearchTextEnteredClient($event)"></app-search-bar>
+    <div class="cards">
+        <app-card-warehouse-slot *ngFor="let slot of warehouseSlots" [warehouseSlot]="slot"></app-card-warehouse-slot>
+    </div>
+    <mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [pageSizeOptions]="[1, 5, 10, 15, 20]"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [length]="length"
+  >
+  </mat-paginator>
+</div>
+<app-footer></app-footer>

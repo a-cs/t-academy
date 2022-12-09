@@ -1,6 +1,7 @@
 package com.twms.wms.services;
 
 import com.twms.wms.dtos.UserDTO;
+import com.twms.wms.email.EmailLayout;
 import com.twms.wms.email.EmailService;
 import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
@@ -35,8 +36,7 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
     @Autowired
     ConfirmationTokenService confirmationTokenService;
-    @Autowired
-    EmailService emailSender;
+
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @SneakyThrows
@@ -49,33 +49,28 @@ public class UserService implements UserDetailsService {
         } else if(emailExists){
             throw new SQLIntegrityConstraintViolationException("Email already registered.");
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
+        user.setPassword(bCryptPasswordEncoder.encode(UUID.randomUUID().toString()));
+        if(user.getAccessLevel()==null)
+            user.setAccessLevel(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT));
         User savedUser = userRepository.save(user);
 
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusHours(2),
-                savedUser
-        );
-        //emailSender.send(user.getEmail(),
-                //"<h3>Confirmation link: <a href='http://localhost:8080/user/confirm?token="+ token +"' target='_blank'>Click here to confirm</a></h3>");
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        confirmationTokenService.createTokenAndSendEmail(user, true);
         return new UserDTO(savedUser);
     }
 
-    public User createClientUser(String username, String clientEmail){
+    public User createClientUser(String clientName, String clientEmail){
         User clientUser = new User();
-        clientUser.setUsername(username);
+        clientUser.setUsername(clientName);
         clientUser.setEmail(clientEmail);
-        //TODO: Auto generate random password
-        String clientPassword = username;
-        clientUser.setPassword(clientPassword);
         User savedClientUser = new User(this.createUser(clientUser));
-        savedClientUser.setPassword(clientPassword);
         return savedClientUser;
+    }
+
+    public void resetPassword(String email){
+        User user = userRepository.findUserByEmail(email).orElseThrow(
+                ()->new EntityNotFoundException("Email " + email + " is not registered")
+        );
+        confirmationTokenService.createTokenAndSendEmail(user, false);
     }
 
     public UserDTO getUserByUsername(String username){
@@ -91,11 +86,11 @@ public class UserService implements UserDetailsService {
         );
         return savedUser;
     }
-    public List<UserDTO> getUserFilteredByUsername(String searchTerm){
-        List<User> userFiltered = userRepository.findByUsernameContainingIgnoreCase(searchTerm);
-        List<UserDTO> userDTOFiltered = userFiltered.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
+    public Page<UserDTO> getUserFilteredByUsername(String searchTerm, Pageable pageable){
+        Page<UserDTO> userFiltered = userRepository.findByUsernameContainingIgnoreCase(searchTerm, pageable).map(UserDTO::new);
+//        Page<UserDTO> userDTOFiltered = userFiltered.stream().map(user->new UserDTO(user)).collect(Collectors.toList());
 
-        return userDTOFiltered;
+        return userFiltered;
     }
 
     public List<UserDTO> getAllUsers(){
@@ -104,41 +99,30 @@ public class UserService implements UserDetailsService {
         return userDTOList;
     }
 
-//    public UserDTO updateUserAccessLevel(Role role, Long userId){
-//        User savedUser = this.getUserById(userId);
-//        Role thisRole = roleRepository.findById(role.getId()).orElseThrow(
-//                ()->new EntityNotFoundException("Role with id:" + role.getId() +" do not exist.")
-//        );
-//        savedUser.setAccessLevel(role);
-//        return new UserDTO(userRepository.save(savedUser));
-//    }
-
     public UserDTO updateUserIsEnable(Long userId, boolean isActivating){
         User savedUser = this.getUserById(userId);
         savedUser.setEnabled(isActivating);
         return new UserDTO(userRepository.save(savedUser));
     }
 
-//    public String verificationEmailSender(){
-//        return "ok";
-//    }
-
-    public String userConfirmation(String token){
+    public void setNewPassword(String token, String password){
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
         if (confirmationToken.getConfirmedAt() != null){
-            throw new IllegalArgumentException("Email has already been confirmed");
+            throw new IllegalArgumentException("Token has already been used.");
         }
         if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())){
             throw new IllegalArgumentException("Token has expired");
         }
         confirmationToken.setConfirmedAt(LocalDateTime.now());
-        this.updateUserIsEnable(confirmationToken.getUser().getId(), true);
-        return "User has been confirmed";
+        User user = this.getUserById(confirmationToken.getUser().getId());
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setEnabled(true);
+        userRepository.save(user);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User savedUser = userRepository.findUserByUsername(username).orElseThrow(
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User savedUser = userRepository.findUserByEmail(email).orElseThrow(
                 ()->new UsernameNotFoundException("User not found.")
         );
         return savedUser;
