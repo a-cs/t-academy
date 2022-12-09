@@ -20,7 +20,7 @@ export class ModalAddBranchComponent implements OnInit {
     private branchService: BranchService,
     private notification: ToastrService,
     private dialogRef: MatDialogRef<ModalAddBranchComponent>
-  ) {}
+  ) { }
 
   aisleDigits: number
   bayDigits: number
@@ -125,29 +125,29 @@ export class ModalAddBranchComponent implements OnInit {
       max_rows: this.form.value.max_rows,
       max_columns: this.form.value.max_columns,
     };
-    
-    this.aisleDigits = Math.floor(newBranch.max_columns/26)
-      this.bayDigits = Math.floor(newBranch.max_rows/10)
 
-      this.totalDigits = 2 + this.aisleDigits + this.bayDigits
-   if(this.totalDigits < 5) {
-    this.branchService.create(newBranch).subscribe(
-      (response) => {},
-      (error) => {
-        this.notification.error(error.error.message, 'Error!', {
-          progressBar: true,
-        });
-      },
-      () => {
-        this.notification.success(
-          `Branch ${newBranch.name.toUpperCase()} was successfully updated`,
-          'Created!',
-          { progressBar: true }
-        );
-        this.branchService.branchChanged.emit();
-        this.dialogRef.close();
-      }
-    );
+    this.aisleDigits = Math.floor(newBranch.max_columns / 26)
+    this.bayDigits = Math.floor(newBranch.max_rows / 10)
+
+    this.totalDigits = 2 + this.aisleDigits + this.bayDigits
+    if (this.totalDigits < 5) {
+      this.branchService.create(newBranch).subscribe(
+        (response) => { },
+        (error) => {
+          this.notification.error(error.error.message, 'Error!', {
+            progressBar: true,
+          });
+        },
+        () => {
+          this.notification.success(
+            `Branch ${newBranch.name.toUpperCase()} was successfully created`,
+            'Created!',
+            { progressBar: true }
+          );
+          this.branchService.branchChanged.emit();
+          this.dialogRef.close();
+        }
+      );
     }
   }
 }
