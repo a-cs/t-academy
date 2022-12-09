@@ -41,7 +41,7 @@ public class SKUService {
             throw new IllegalArgumentException("Category Id is missing.");
         if(sku.getMeasurementUnit().getId() == null)
             throw new IllegalArgumentException("Measurement Unit Id is missing.");
-        if(skuRepository.findByNameAndCategoryIdAndMeasurementUnitId(sku.getName(), sku.getCategory().getId(),sku.getMeasurementUnit().getId())!=null){
+        if(skuRepository.findByNameAndCategoryIdAndMeasurementUnitId(sku.getName(), sku.getCategory().getId(),sku.getMeasurementUnit().getId()).isEmpty()){
             throw new IllegalArgumentException("Element Duplicated");
         }
         categoryService.readById(sku.getCategory().getId());
