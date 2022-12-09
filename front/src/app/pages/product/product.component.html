@@ -7,20 +7,16 @@
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
     <div class="cards">
-        <app-card-create-sku *ngIf="auth.validateRole(btnPermission.addProduct)" [component] = "component"></app-card-create-sku>
+        <app-card-create-sku *ngIf="auth.validateRole(btnPermission.addProduct)" [component]="component">
+        </app-card-create-sku>
         <app-card-sku *ngFor="let sku of skus" [sku]="sku"></app-card-sku>
     </div>
-    <mat-paginator #paginator
-               class="demo-paginator"
-               (page)="handlePageEvent($event)"
-               [length]="length"
-               [pageSize]="pageSize"
-               [disabled]="disabled"
-               [showFirstLastButtons]="showFirstLastButtons"
-               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-               [hidePageSize]="hidePageSize"
-               [pageIndex]="pageIndex"
-               aria-label="Select page">
-    </mat-paginator>
+    <div class="center">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+            [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+            [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+    </div>
 </div>
 <app-footer></app-footer>

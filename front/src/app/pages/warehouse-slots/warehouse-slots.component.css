@@ -34,6 +34,11 @@
     justify-content: center;
 }
 
+.center{
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 665px) {
   .title {
     font-size: 5rem;

@@ -12,9 +12,18 @@ import { PageEvent } from '@angular/material/paginator';
 export class WarehouseSlotsComponent implements OnInit {
   
   warehouseSlots: IWarehouseSlot[]
-  pageSize = 10;
+  
+  length = 50;
+  pageSize = 6;
   pageIndex = 0;
-  length = 0;
+  pageSizeOptions = [5, 10, 25];
+
+  hidePageSize = true;
+  showPageSizeOptions = false;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent: PageEvent;
 
   constructor(
     private warehouseSlotService: WarehouseSlotService,
@@ -74,14 +83,19 @@ export class WarehouseSlotsComponent implements OnInit {
   }
 
   handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+
     console.log("id = ", this.authService.getUserId())
     this.warehouseSlotService
       .getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
       .subscribe((data) => {
         this.warehouseSlots = data.content;
         this.length = data.totalPages;
+        this.pageSize = data.size;
+        this.pageIndex = data.number;
       });
   }
 }

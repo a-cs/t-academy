@@ -12,9 +12,18 @@ import { buttonPermission } from 'src/app/utils/utils';
 })
 export class CategoryComponent implements OnInit {
   categories: ICategory[] = [];
-  pageSize = 10;
+  
+  length = 50;
+  pageSize = 6;
   pageIndex = 0;
-  length = 0;
+  pageSizeOptions = [5, 10, 25];
+
+  hidePageSize = true;
+  showPageSizeOptions = false;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent: PageEvent;
 
   constructor(
     private categoryService: CategoryService,
@@ -48,8 +57,19 @@ export class CategoryComponent implements OnInit {
   }
 
   handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+
     this.categoryService.categoryUpdatedOrDeleted.emit();
+    this.categoryService
+      .getPageable(this.pageIndex, this.pageSize)
+      .subscribe((data) => {
+        this.categories = data.content;
+        this.length = data.totalPages;
+        this.pageSize = data.size;
+        this.pageIndex = data.number;
+      });
   }
 }
