@@ -16,3 +16,6 @@ spring:
           ssl:
             enable: false
     test-connection: false
+client-authorization:
+  id: ${clientInfo.id}
+  secret: ${clientInfo.secret}
