@@ -5,34 +5,24 @@
   </div>
 
   <div class="search-bar">
-    <app-search-bar
-      (searchTextChanged)="onSearchTextEntered($event)"
-    ></app-search-bar>
+    <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
   </div>
 
   <p *ngFor="let client of clients"></p>
 
   <div class="cards">
     <app-modal-create-client></app-modal-create-client>
-    <app-card-client
-      (onItemUpdatedOrDeleted)="refreshComponent()"
-      *ngFor="let client of clients"
-      [client]="client"
-    ></app-card-client>
+    <app-card-client (onItemUpdatedOrDeleted)="refreshComponent()" *ngFor="let client of clients" [client]="client">
+    </app-card-client>
   </div>
 
-  <mat-paginator #paginator
-               class="demo-paginator"
-               (page)="handlePageEvent($event)"
-               [length]="length"
-               [pageSize]="pageSize"
-               [disabled]="disabled"
-               [showFirstLastButtons]="showFirstLastButtons"
-               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-               [hidePageSize]="hidePageSize"
-               [pageIndex]="pageIndex"
-               aria-label="Select page">
-  </mat-paginator>
+  <div class="center">
+    <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+      [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
+  </div>
 
 </div>
 <app-footer></app-footer>

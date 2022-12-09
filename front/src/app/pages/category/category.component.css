@@ -24,3 +24,8 @@
 .search-bar {
   margin-top: 2vh;
 }
+
+.center{
+  display: flex;
+  justify-content: center;
+}

@@ -4,32 +4,23 @@
     <p>Category</p>
   </div>
   <div class="search-bar">
-    <app-search-bar
-      (searchTextChanged)="onSearchTextEntered($event)"
-    ></app-search-bar>
+    <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
   </div>
 
   <p *ngFor="let c of categories"></p>
 
   <div class="cards">
-    <app-category-item-create-card
-      *ngIf="auth.validateRole(btnPermission.addCategory)"
-      (onItemAdded)="getCategories()"
-    ></app-category-item-create-card>
-    <app-category-item-card
-      (onItemUpdatedOrDeleted)="getCategories()"
-      *ngFor="let c of categories"
-      [category]="c"
-    ></app-category-item-card>
+    <app-category-item-create-card *ngIf="auth.validateRole(btnPermission.addCategory)" (onItemAdded)="getCategories()">
+    </app-category-item-create-card>
+    <app-category-item-card (onItemUpdatedOrDeleted)="getCategories()" *ngFor="let c of categories" [category]="c">
+    </app-category-item-card>
   </div>
-  <mat-paginator
-    #paginator
-    (page)="handlePageEvent($event)"
-    [pageSizeOptions]="[1, 5, 10, 15, 20]"
-    [pageSize]="pageSize"
-    [pageIndex]="pageIndex"
-    [length]="length"
-  >
-  </mat-paginator>
+  <div class="center">
+    <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+      [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
+  </div>
 </div>
 <app-footer></app-footer>
