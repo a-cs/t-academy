@@ -27,11 +27,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<UserDTO> readUser(@PathVariable("username") String username){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByUsername(username));
-    }
-
     @GetMapping("/search")
     public ResponseEntity<Page<UserDTO>> readUserFiltered(@RequestParam("username") String username, Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFilteredByUsername(username, pageable));
