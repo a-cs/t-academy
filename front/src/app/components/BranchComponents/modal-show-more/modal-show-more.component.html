@@ -1,7 +1,14 @@
 <div class="top">
+    <button mat-icon-button *ngIf="auth.validateRole(permissions.updateBranch) && showUpdateButton" class="edit" (click)="clickOnEdit()">
+        <mat-icon>mode_edit</mat-icon>
+    </button>
     <div class="title">
         <p class="capitalize">Branch</p>
     </div>
+    
+    <button mat-icon-button *ngIf="showDeleteButton" (click)="openConfirmDialog()">
+        <mat-icon>delete_forever</mat-icon>
+    </button>
 </div>
 <form [formGroup]="form" (ngSubmit)="update()">
     <div class="row">
