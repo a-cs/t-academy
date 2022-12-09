@@ -2,7 +2,7 @@ export function capitalize(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
 
-export const routePermission = { 
+export const routePermission = {
   home: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR", "ROLE_CLIENT"],
   products: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   clients: ["ROLE_ADMIN", "ROLE_MANAGER"],
@@ -11,7 +11,7 @@ export const routePermission = {
   categories: ["ROLE_ADMIN","ROLE_MANAGER", "ROLE_OPERATOR"],
   branches: ["ROLE_ADMIN","ROLE_MANAGER"],
   users: ["ROLE_ADMIN","ROLE_MANAGER"],
-  transactionHistory: ["ROLE-OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"],
+  transactionHistory: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"],
   createTransaction: ["ROLE_MANAGER","ROLE_OPERATOR"],
   warehouseSlot: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"]
 }
