@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,18 +25,22 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 @ExtendWith(SpringExtension.class)
 public class UserServiceTest {
 
     @InjectMocks
+    @Spy
     private UserService userService;
     @Mock
     private UserRepository userRepository;
     @Mock
     private RoleRepository roleRepository;
     @Mock
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Mock
+    private ConfirmationTokenService confirmationTokenService;
 
     User user;
 
@@ -50,6 +55,8 @@ public class UserServiceTest {
         user.setEmail("user@email.com");
         user.setPassword("passwordTest");
 
+        //user.setEnabled(false);
+
         Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.empty());
         Mockito.when(bCryptPasswordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
         Mockito.when(roleRepository.findByAuthority(AccessLevel.ROLE_CLIENT)).thenReturn(clientRole);
@@ -59,6 +66,11 @@ public class UserServiceTest {
     public void returnUserOnCreateNewUser(){
 
         Mockito.when(userRepository.save(user)).thenReturn(user);
+        Mockito.when(userRepository.findUserByUsername(any())).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findUserByEmail(any())).thenReturn(Optional.empty());
+        Mockito.when(bCryptPasswordEncoder.encode(any())).thenReturn("random value");
+        //Mockito.doNothing().when(confirmationTokenService.createTokenAndSendEmail(any(),eq(true)));
+
         UserDTO responseUserDTO = userService.createUser(user);
 
         Assertions.assertNotNull(responseUserDTO);
@@ -73,11 +85,11 @@ public class UserServiceTest {
         clientUser.setUsername(user.getUsername());
         clientUser.setPassword("encodedPassword");
         clientUser.setAccessLevel(user.getAccessLevel());
-        Mockito.when(userRepository.save(clientUser)).thenReturn(user);
+        Mockito.doReturn(new UserDTO(user)).when(userService).createUser(any());
 
         Assertions.assertNotNull(userService.createClientUser(user.getUsername(), user.getEmail()));
         Assertions.assertEquals(User.class,userService.createClientUser(user.getUsername(), user.getEmail()).getClass());
-        Mockito.verify(userRepository, Mockito.times(2)).save(any(User.class));
+        //Mockito.verify(userRepository, Mockito.times(2)).save(any(User.class));
     }
 
     @Test
@@ -120,12 +132,12 @@ public class UserServiceTest {
 
     }
     @Test
-    public void returnUserDTOWithUpdatedIsEnabled(){
+    public void returnUserDTOWithUpdatedIsDisabled(){
 
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Mockito.when(userRepository.save(user)).thenReturn(user);
 
-        Assertions.assertEquals(new UserDTO(user), userService.updateUserIsEnable(user.getId(), true));
+        Assertions.assertEquals(new UserDTO(user), userService.updateUserIsEnable(user.getId(), false));
 
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
 

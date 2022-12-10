@@ -6,6 +6,8 @@ import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.Client;
 import com.twms.wms.repositories.AddressRepository;
 import com.twms.wms.repositories.BranchRepository;
+import com.twms.wms.repositories.SKURepository;
+import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(SpringExtension.class)
 public class BranchServiceTest {
     @InjectMocks
@@ -28,6 +32,12 @@ public class BranchServiceTest {
 
     @Mock
     private AddressService addressService;
+
+    @Mock
+    private SKURepository skuRepository;
+
+    @Mock
+    private WarehouseSlotRepository warehouseSlotRepository;
 
     @Test
     public void shouldRespondNotNullToSaveBranch(){
@@ -63,6 +73,9 @@ public class BranchServiceTest {
 
         Mockito.when(repository.findById(branch.getId())).thenReturn(Optional.of(branch));
         Mockito.doNothing().when(repository).delete(branch);
+
+        Mockito.when(skuRepository.findAll()).thenReturn(new ArrayList<>());
+        Mockito.when(warehouseSlotRepository.existsBySkuIdIn(any())).thenReturn(false);
 
         Assertions.assertDoesNotThrow(()->service.deleteBranch(branch.getId()));
         Mockito.verify(repository, Mockito.times(1)).delete(branch);

@@ -6,12 +6,14 @@ import com.twms.wms.entities.SKU;
 import com.twms.wms.repositories.CategoryRepository;
 import com.twms.wms.repositories.MeasurementUnitRepository;
 import com.twms.wms.repositories.SKURepository;
+import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,26 +21,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(SpringExtension.class)
 public class SKUServiceTest {
 
     @InjectMocks
+    @Spy
     private SKUService skuServiceservice;
 
     @Mock
-    private CategoryService categoryService;
-
-    @Mock
-    private MeasurementUnitService measurementUnitService;
+    private WarehouseSlotRepository warehouseSlotRepository;
 
     @Mock
     private SKURepository repository;
 
     @Mock
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @Mock
-    private MeasurementUnitRepository measurementUnitRepository;
+    private MeasurementUnitService measurementUnit;
+
+
 
     @Test
     public void shouldReturnListAfterRead() {
@@ -62,6 +66,8 @@ public class SKUServiceTest {
         sku.setMeasurementUnit(unit);
 
         Mockito.when(repository.save(sku)).thenReturn(sku);
+        //Mockito.when(repository.save(sku)).thenReturn(sku);
+        //Mockito.when(repository.save(sku)).thenReturn(sku);
         Assertions.assertNotNull(skuServiceservice.save(sku));
         Assertions.assertEquals(skuServiceservice.save(sku), sku);
         Mockito.verify(repository,Mockito.times(2)).save(sku);
@@ -93,8 +99,8 @@ public class SKUServiceTest {
         sku.setId(1L);
         sku.setName("testName");
 
-        Mockito.when(repository.findById(sku.getId())).thenReturn(Optional.of(sku));
-
+        Mockito.doReturn(sku).when(skuServiceservice).findById(any());
+        Mockito.when(warehouseSlotRepository.existsBySkuIdIn(any())).thenReturn(false);
         Mockito.doNothing().when(repository).delete(sku);
         Assertions.assertDoesNotThrow(() -> skuServiceservice.delete(sku.getId()));
         Mockito.verify(repository,Mockito.times(1)).delete(sku);

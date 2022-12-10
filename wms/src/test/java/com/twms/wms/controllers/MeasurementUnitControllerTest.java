@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,12 +40,16 @@ public class MeasurementUnitControllerTest {
     Long existingId;
     Long nonExistingId;
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         existingId = 1L;
         nonExistingId = 2L;
 
-        Mockito.doNothing().when(measurementUnitService).delete(existingId);
-        Mockito.doThrow(EntityNotFoundException.class).when(measurementUnitService).delete(nonExistingId);
+
+            Mockito.doNothing().when(measurementUnitService).delete(existingId);
+            //Mockito.when()
+            Mockito.doThrow(EntityNotFoundException.class).when(measurementUnitService).delete(nonExistingId);
+
+
     }
 
     @Test

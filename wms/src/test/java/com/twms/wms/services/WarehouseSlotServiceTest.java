@@ -49,28 +49,34 @@ public class WarehouseSlotServiceTest {
             Instant.now()
     );
 
+    private WarehouseSlot warehouseSlot2 = warehouseSlot;
+
+
     @BeforeEach()
     public void setUp() {
         branch.setId(1L);
+        warehouseSlot2.getSku().setMeasurementUnit(new MeasurementUnit());
     }
 
     @Test
     public void shouldSaveEntityToDatabase() {
+
+
         // given
-        Mockito.when(repository.save(warehouseSlot)).thenReturn(warehouseSlot);
+        Mockito.when(repository.save(warehouseSlot2)).thenReturn(warehouseSlot2);
 
         // when
-        WarehouseSlotDTO response = service.post(warehouseSlot);
+        WarehouseSlotDTO response = service.post(warehouseSlot2);
 
         // assert
         Assertions.assertNotNull(response);
-        verify(repository).save(warehouseSlot);
+        verify(repository).save(warehouseSlot2);
     }
 
     @Test
     public void shouldReturnAllEntities() {
         // given
-        when(repository.findAll()).thenReturn(List.of(warehouseSlot));
+        when(repository.findAll()).thenReturn(List.of(warehouseSlot2));
 
         // when
         List<WarehouseSlotDTO> response = service.getAll();
@@ -84,7 +90,7 @@ public class WarehouseSlotServiceTest {
     public void shouldReturnAllEntitiesFromBranch() {
         // given
         when(branchService.readBranchById(any(Long.class))).thenReturn(branch);
-        when(repository.findAllByWarehouseSlotIdBranch(any(Branch.class))).thenReturn(List.of(warehouseSlot));
+        when(repository.findAllByWarehouseSlotIdBranch(any(Branch.class))).thenReturn(List.of(warehouseSlot2));
 
         // when
         List<WarehouseSlotDTO> response = service.getAllById(branch.getId());
@@ -117,7 +123,7 @@ public class WarehouseSlotServiceTest {
                 any(Branch.class),
                 any(String.class),
                 any(Integer.class)
-        )).thenReturn(Optional.of(warehouseSlot));
+        )).thenReturn(Optional.of(warehouseSlot2));
 
         // assert
         Assertions.assertDoesNotThrow(() -> service.getById(
