@@ -80,6 +80,13 @@ public class UserService implements UserDetailsService {
         return new UserDTO(user);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email).orElseThrow(
+                ()->new EntityNotFoundException("User email " + email + " do not exist")
+        );
+        return new UserDTO(user);
+    }
+
     public User getUserById(Long userId){
         User savedUser = userRepository.findById(userId).orElseThrow(
                 ()->new EntityNotFoundException("User not found.")
