@@ -28,6 +28,9 @@ public class WarehouseSlotService {
     @Autowired
     SKUService skuService;
 
+    @Autowired
+    UserService userService;
+
     public WarehouseSlotDTO post(WarehouseSlot ws) {
         WarehouseSlot persisted = warehouseSlotRepository.save(ws);
         return WarehouseSlotDTO.fromWarehouseSlot(persisted);
@@ -64,6 +67,12 @@ public class WarehouseSlotService {
     public Page<WarehouseSlotDTO> getByClientId(Long clientId, Pageable pageable) {
         Page<WarehouseSlot> slots = warehouseSlotRepository.findByClientId(clientId, pageable);
         return slots.map(WarehouseSlotDTO::new);
+    }
+
+    public Page<WarehouseSlotDTO> getByUserId(Long userId, Pageable pageable) {
+        User user = userService.getUserById(userId);
+        Client client = clientService.getClientByEmail(user.getEmail());
+        return this.getByClientId(client.getId(), pageable);
     }
 
     public Page<WarehouseSlotDTO> getByClientIdAndBranches(Long clientId, ListIdsFilterDTO branchIds, Pageable pageable) {
@@ -113,6 +122,12 @@ public class WarehouseSlotService {
                 pageable
         );
         return slots.map(WarehouseSlotDTO::new);
+    }
+
+    public Page<WarehouseSlotDTO> getByUserBranchFilteredByProductName(Long userId, ListIdsFilterDTO branchIdsDTO, String searchTerm, Pageable pageable) {
+        User user = userService.getUserById(userId);
+        Client client = clientService.getClientByEmail(user.getEmail());
+        return this.getByClientBranchFilteredByProductName(client.getId(), branchIdsDTO, searchTerm, pageable);
     }
 
     public WarehouseSlotDTO putById(WarehouseSlot ws, Long branchId, String aisleId, int bayId) {

@@ -84,4 +84,7 @@ public class ClientService {
         return clientRepository.findAll(pageable);
     }
 
+    public Client getClientByEmail(String email) {
+        return clientRepository.findByEmail(email);
+    }
 }

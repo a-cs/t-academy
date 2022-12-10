@@ -52,10 +52,16 @@ public class WarehouseSlotController {
 //        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getById(branchId, aisleId, bay));
 //    }
 
+//    @GetMapping("/client/{clientId}")
+//    public ResponseEntity<Page<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId,
+//                                                                Pageable pageable) {
+//        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId, pageable));
+//    }
+
     @GetMapping("/client/{clientId}")
     public ResponseEntity<Page<WarehouseSlotDTO>> getByClientId(@PathVariable Long clientId,
                                                                 Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByClientId(clientId, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(warehouseSlotService.getByUserId(clientId, pageable));
     }
 
 //    @GetMapping("/client/{clientId}/filterByBranches")
@@ -86,7 +92,7 @@ public class WarehouseSlotController {
                                                                                             Pageable pageable
                                                                        ) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                warehouseSlotService.getByClientBranchFilteredByProductName(clientId, branchIds, term , pageable));
+                warehouseSlotService.getByUserBranchFilteredByProductName(clientId, branchIds, term , pageable));
     }
 
     @PostMapping("/client/{clientId}/filterByBranchesAndProducts")
