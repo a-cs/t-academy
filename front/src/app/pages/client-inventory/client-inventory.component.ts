@@ -20,9 +20,19 @@ export class ClientInventoryComponent implements OnInit {
   branchesList: IBranch[];
   firstBranch: string;
   idList: number[] = [];
-  pageSize = 10;
+
+  length = 50;
+  pageSize = 6;
   pageIndex = 0;
-  length = 0;
+  pageSizeOptions = [5, 10, 25];
+
+  hidePageSize = true;
+  showPageSizeOptions = false;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent: PageEvent;
+
   constructor(
     private warehouseSlotService: WarehouseSlotService,
     private branchService: BranchService,
@@ -36,7 +46,9 @@ export class ClientInventoryComponent implements OnInit {
       .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
         this.client_wareshouses_slots = data.content;
-        this.length = data.totalPages;
+        this.length = data.totalElements
+        this.pageSize = data.size
+        this.pageIndex = data.number
       });
 
     this.branchService.get().subscribe((res) => {
@@ -90,7 +102,9 @@ export class ClientInventoryComponent implements OnInit {
           this.client_wareshouses_slots =
             (client_wareshouses_slots.content as unknown as IWarehouseSlot[]) ||
             [];
-          this.length = client_wareshouses_slots.totalPages;
+          this.length = client_wareshouses_slots.totalElements;
+          this.pageSize = client_wareshouses_slots.size;
+          this.pageIndex = client_wareshouses_slots.number;
         });
     } else {
       console.log(this.idList)
@@ -109,7 +123,9 @@ export class ClientInventoryComponent implements OnInit {
           this.client_wareshouses_slots =
             (client_wareshouses_slots.content as unknown as IWarehouseSlot[]) ||
             [];
-          this.length = client_wareshouses_slots.totalPages;
+          this.length = client_wareshouses_slots.totalElements;
+          this.pageSize = client_wareshouses_slots.size;
+          this.pageIndex = client_wareshouses_slots.number;
         });
     }
   }
@@ -123,6 +139,7 @@ export class ClientInventoryComponent implements OnInit {
   }
 
   handlePageEvent(e: PageEvent) {
+    this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     console.log("id = ", this.authService.getUserId())
@@ -130,7 +147,9 @@ export class ClientInventoryComponent implements OnInit {
       .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
         this.client_wareshouses_slots = data.content;
-        this.length = data.totalPages;
+        this.length = data.totalElements;
+          this.pageSize = data.size;
+          this.pageIndex = data.number;
       });
   }
 }

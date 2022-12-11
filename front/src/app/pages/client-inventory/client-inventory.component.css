@@ -60,6 +60,11 @@
     }
 }
 
+.center{
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 701px) and (max-width: 1600px){
 
 
