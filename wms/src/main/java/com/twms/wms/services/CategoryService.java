@@ -66,7 +66,7 @@ public class CategoryService {
         if (isAssociated) {
             throw new SQLIntegrityConstraintViolationException("Cannot delete category because it is associated with a product");
         }
-        skuRepository.deleteById(id);
+        categoryRepository.deleteById(id);
     }
 
     public Page<Category> searchTerm(String searchTerm, Pageable pageable) {

@@ -4,6 +4,7 @@ import com.twms.wms.entities.Address;
 import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.Category;
 import com.twms.wms.repositories.CategoryRepository;
+import com.twms.wms.repositories.SKURepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,9 @@ public class CategoryServiceTest {
     @Mock
     private CategoryRepository repository;
 
+    @Mock
+    private SKURepository skuRepository;
+
     @Test
     public void returnCategoryWhenCreateCategory(){
         Category category = new Category();
@@ -48,10 +52,11 @@ public class CategoryServiceTest {
         category.setName("NewCategory");
 
         Mockito.when(repository.findById(category.getId())).thenReturn(Optional.of(category));
-        Mockito.doNothing().when(repository).delete(category);
+        Mockito.when(skuRepository.existsByCategoryId(any())).thenReturn(false);
+        Mockito.doNothing().when(repository).deleteById(category.getId());
 
         Assertions.assertDoesNotThrow(()->service.delete(category.getId()));
-        Mockito.verify(repository, Mockito.times(1)).delete(category);
+        Mockito.verify(repository, Mockito.times(1)).deleteById(any());
     }
 
     @Test
