@@ -117,4 +117,23 @@ public class ClientServiceTest {
 
     }
 
+    @Test
+    public void shouldReturnClientWhenSearchedByEmail(){
+        Client client = new Client();
+        Address address = new Address();
+
+        address.setId(1L);
+
+        client.setName("Teste");
+        client.setCNPJ("00623904000173");
+        client.setId(1L);
+        client.setAddress(address);
+
+        Mockito.when(repository.findByEmail(any())).thenReturn(client);
+
+        Assertions.assertDoesNotThrow(()->clientService.getClientByEmail("teste@mail.com"));
+        Mockito.verify(repository, Mockito.times(1)).findByEmail(any());
+
+    }
+
 }
