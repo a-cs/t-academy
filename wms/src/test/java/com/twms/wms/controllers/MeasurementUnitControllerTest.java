@@ -83,6 +83,13 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
+    public void shouldReturnOkWhenGetPageableCategories() throws Exception {
+        ResultActions result = mockMvc.perform(get("/measurement-unit/pages")
+                .accept(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+    }
+
+    @Test
     public void shouldThrowEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 delete("/measurement-unit/{id}", nonExistingId));
