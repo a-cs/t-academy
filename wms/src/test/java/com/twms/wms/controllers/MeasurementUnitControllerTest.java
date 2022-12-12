@@ -18,9 +18,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import javax.persistence.EntityNotFoundException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -114,6 +115,15 @@ public class MeasurementUnitControllerTest {
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(jsonPath("$.description").exists());
         resultActions.andExpect(jsonPath("$.description").value("Kilogram"));
+    }
 
+    @Test
+    public void shouldReturnOkWhenSearchByName() throws Exception {
+        List<MeasurementUnit> expected = new ArrayList<>();
+        Mockito.when(measurementUnitService.searchTerm(anyString())).thenReturn(expected);
+
+        mockMvc.perform(get("/measurement-unit/search")
+                .param("term", anyString()))
+                .andExpect(status().isOk());
     }
 }
