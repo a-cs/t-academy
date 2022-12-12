@@ -55,7 +55,7 @@ export class SkuService {
   }
 
   create(data: ISku) {
-    return this.http.post<ISku>('${environment.api}sku', data, {
+    return this.http.post<ISku>(`${environment.api}sku`, data, {
       headers: this.auth.buildHeader(),
     });
   }

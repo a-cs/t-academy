@@ -13,7 +13,7 @@ export class TransactionService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getAll() {
-    return this.http.get<ITransaction[]>('${environment.api}transaction', {
+    return this.http.get<ITransaction[]>(`${environment.api}transaction`, {
       headers: this.auth.buildHeader(),
     });
   }
@@ -25,7 +25,7 @@ export class TransactionService {
   }
 
   create(data: ITransactionPayload) {
-    return this.http.post<ITransaction[]>('${environment.api}transaction', data, {
+    return this.http.post<ITransaction[]>(`${environment.api}transaction`, data, {
       headers: this.auth.buildHeader(),
     });
   }
