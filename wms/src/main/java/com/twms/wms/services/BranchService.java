@@ -66,9 +66,9 @@ public class BranchService {
     }
 
     private String toAlphabetic(int i) {
-        if( i<0 ) {
-            return "-"+toAlphabetic(-i-1);
-        }
+//        if( i<0 ) {
+//            return "-"+toAlphabetic(-i-1);
+//        }
 
         int quot = i/26;
         int rem = i%26;

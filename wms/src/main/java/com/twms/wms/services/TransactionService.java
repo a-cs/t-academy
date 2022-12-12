@@ -98,24 +98,24 @@ public class TransactionService {
         return optionalClient.orElseThrow(()->new EntityNotFoundException("Branch Not Created or Removed!!"));
     }
 
-    public TransactionDTO updateTransaction(Long transactionId, Transaction transaction){
-        Transaction oldTransaction = this.readTransactionById(transactionId);
-
-        oldTransaction.setClient(transaction.getClient());
-        oldTransaction.setSku(transaction.getSku());
-        oldTransaction.setQuantity(transaction.getQuantity());
-        oldTransaction.setDate(transaction.getDate());
-        oldTransaction.setWarehouseSlot(transaction.getWarehouseSlot());
-        oldTransaction.setUser(transaction.getUser());
-
-        return this.createTransaction(oldTransaction).get(0);
-    }
-
-    @Transactional
-    public void deleteTransaction(Long transactionId){
-        Transaction toDelete = this.readTransactionById(transactionId);
-        transactionRepository.delete(toDelete);
-    }
+//    public TransactionDTO updateTransaction(Long transactionId, Transaction transaction){
+//        Transaction oldTransaction = this.readTransactionById(transactionId);
+//
+//        oldTransaction.setClient(transaction.getClient());
+//        oldTransaction.setSku(transaction.getSku());
+//        oldTransaction.setQuantity(transaction.getQuantity());
+//        oldTransaction.setDate(transaction.getDate());
+//        oldTransaction.setWarehouseSlot(transaction.getWarehouseSlot());
+//        oldTransaction.setUser(transaction.getUser());
+//
+//        return this.createTransaction(oldTransaction).get(0);
+//    }
+//
+//    @Transactional
+//    public void deleteTransaction(Long transactionId){
+//        Transaction toDelete = this.readTransactionById(transactionId);
+//        transactionRepository.delete(toDelete);
+//    }
 
     public Page<TransactionDTO> readAllTransactionsPaginatedViaDTO(Pageable pageable) {
         Page<Transaction> pageTransaction = transactionRepository.findAll(pageable);
