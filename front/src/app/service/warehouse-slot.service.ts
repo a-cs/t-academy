@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import IWarehouseSlot from '../interfaces/IWarehouseSlot';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,21 +11,21 @@ export class WarehouseSlotService {
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   //getByIdClient(id:number){
-  //return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot/client/${id}`,{
+  //return this.http.get<IWarehouseSlot[]>(`${environment.api}warehouseSlot/client/${id}`,{
   //headers: this.auth.buildHeader()
   //})
   //}
 
 
   get() {
-    return this.http.get<IWarehouseSlot[]>(`http://localhost:8080/warehouseSlot`, {
+    return this.http.get<IWarehouseSlot[]>(`${environment.api}warehouseSlot`, {
       headers: this.auth.buildHeader()
     })
   }
 
   getByIdClient(id: number, pageIndex: number = 0, pageSize = 10) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}?page=${pageIndex}&size=${pageSize}`,
+      `${environment.api}warehouseSlot/client/${id}?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       })
@@ -33,7 +34,7 @@ export class WarehouseSlotService {
 
   // getByClientIdByBranches(id: number) {
   // return this.http.get<IWarehouseSlot[]>(
-  // `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches`,
+  // `${environment.api}warehouseSlot/client/${id}/filterByBranches`,
   // {
   // headers: this.auth.buildHeader(),
   // }
@@ -42,7 +43,7 @@ export class WarehouseSlotService {
 
   // getByClientIdByBranchesByProducts(id: number) {
   // return this.http.get<IWarehouseSlot[]>(
-  // `http://localhost:8080/warehouseSlot/client/${id}/filterByBranchesAndProducts`,
+  // `${environment.api}warehouseSlot/client/${id}/filterByBranchesAndProducts`,
   // {
   // headers: this.auth.buildHeader(),
   // }
@@ -56,7 +57,7 @@ export class WarehouseSlotService {
   // ) {
   // const body = { ids: idsList };
   // return this.http.post<IWarehouseSlot[]>(
-  // `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}`,
+  // `${environment.api}warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}`,
   // body,
   // {
   // headers: this.auth.buildHeader(),
@@ -70,7 +71,7 @@ export class WarehouseSlotService {
     pageSize: number = 10
   ) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches?page=${pageIndex}&size=${pageSize}`,
+      `${environment.api}warehouseSlot/client/${id}/filterByBranches?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -83,7 +84,7 @@ export class WarehouseSlotService {
     pageSize: number = 10
   ) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranchesAndProducts?page=${pageIndex}&size=${pageSize}`,
+      `${environment.api}warehouseSlot/client/${id}/filterByBranchesAndProducts?page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -99,7 +100,7 @@ export class WarehouseSlotService {
   ) {
     const body = { ids: idsList };
     return this.http.post<any>(
-      `http://localhost:8080/warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}&page=${pageIndex}&size=${pageSize}`,
+      `${environment.api}warehouseSlot/client/${id}/filterByBranches/searchProduct?term=${term}&page=${pageIndex}&size=${pageSize}`,
       body,
       {
         headers: this.auth.buildHeader(),
@@ -115,7 +116,7 @@ export class WarehouseSlotService {
     pageSize: number = 10
   ) {
     return this.http.get<any>(
-      `http://localhost:8080/warehouseSlot/client/filtered?branch=${branchId}&sku=${sku}&client=${client}&page=${pageIndex}&size=${pageSize}`,
+      `${environment.api}warehouseSlot/client/filtered?branch=${branchId}&sku=${sku}&client=${client}&page=${pageIndex}&size=${pageSize}`,
       {
         headers: this.auth.buildHeader(),
       }

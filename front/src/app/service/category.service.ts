@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import ICategory from '../interfaces/ICategory';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,13 @@ export class CategoryService {
   ) {}
 
   //get() {
-  //return this.http.get<ICategory[]>('http://localhost:8080/category', {
+  //return this.http.get<ICategory[]>('${environment.api}category', {
   //headers: this.auth.buildHeader(),
   //});
   //}
 
   get() {
-    return this.http.get<ICategory[]>(`http://localhost:8080/category`, {
+    return this.http.get<ICategory[]>(`${environment.api}category`, {
       headers: this.auth.buildHeader(),
     });
   }
@@ -35,7 +36,7 @@ export class CategoryService {
   //};
 
   //return this.http.get<any>(
-  //`http://localhost:8080/category/pageable?page=${page}&size=${size}`,
+  //`${environment.api}category/pageable?page=${page}&size=${size}`,
   //{
   //headers: this.auth.buildHeader(),
   //}
@@ -44,7 +45,7 @@ export class CategoryService {
 
   getPageable(page = 0, size = 10) {
     return this.http.get<any>(
-      `http://localhost:8080/category/pageable?page=${page}&size=${size}`,
+      `${environment.api}category/pageable?page=${page}&size=${size}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -52,14 +53,14 @@ export class CategoryService {
   }
 
   getById(id: number) {
-    return this.http.get<ICategory>(`http://localhost:8080/category/${id}`, {
+    return this.http.get<ICategory>(`${environment.api}category/${id}`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   delete(id: number): void {
     this.http
-      .delete(`http://localhost:8080/category/${id}`, {
+      .delete(`${environment.api}category/${id}`, {
         headers: this.auth.buildHeader(),
       })
       .subscribe(
@@ -82,7 +83,7 @@ export class CategoryService {
 
   update(id: number, data: ICategory) {
     return this.http
-      .put<ICategory>(`http://localhost:8080/category/${id}`, data, {
+      .put<ICategory>(`${environment.api}category/${id}`, data, {
         headers: this.auth.buildHeader(),
       })
       .subscribe(
@@ -105,7 +106,7 @@ export class CategoryService {
 
   create(data: ICategory): void {
     this.http
-      .post<ICategory>('http://localhost:8080/category', data, {
+      .post<ICategory>('${environment.api}category', data, {
         headers: this.auth.buildHeader(),
       })
       .subscribe(
@@ -129,7 +130,7 @@ export class CategoryService {
 
   getByLikeName(searchString: string) {
     return this.http.get<any>(
-      `http://localhost:8080/category/search?term=${searchString}`,
+      `${environment.api}category/search?term=${searchString}`,
       {
         headers: this.auth.buildHeader(),
       }

@@ -4,6 +4,7 @@ import IAccessLevel from '../interfaces/IAccessLevel';
 import IOAuthResponse from '../interfaces/IOAuthResponse';
 import IUser from '../interfaces/IUser';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ import { AuthService } from './auth.service';
 export class UserService {
 
   public userChanged = new EventEmitter<void>()
-  
+
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getByUsernameLike(name: string, pageSize: number, pageIdx: number) {
     return this.http.get<any>(
-      `http://localhost:8080/user/search?username=${name}&size=${pageSize}&page=${pageIdx}`,
+      `${environment.api}user/search?username=${name}&size=${pageSize}&page=${pageIdx}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -25,26 +26,26 @@ export class UserService {
 
   get() {
     console.log(this.auth.buildHeader());
-    return this.http.get<IUser[]>('http://localhost:8080/user/all', {
+    return this.http.get<IUser[]>('${environment.api}user/all', {
       headers: this.auth.buildHeader(),
     });
   }
 
   getById(id: number) {
-    return this.http.get<IUser>(`http://localhost:8080/user/${id}`, {
+    return this.http.get<IUser>(`${environment.api}user/${id}`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   updateUser(data: IUser) {
     console.log('json!', data);
-    return this.http.put<IUser>(`http://localhost:8080/user/${data.id}`, data, {
+    return this.http.put<IUser>(`${environment.api}user/${data.id}`, data, {
       headers: this.auth.buildHeader(),
     });
   }
 
   getRoles() {
-    return this.http.get<IAccessLevel[]>(`http://localhost:8080/roles`, {
+    return this.http.get<IAccessLevel[]>(`${environment.api}roles`, {
       headers: this.auth.buildHeader()
     })
   }
@@ -53,17 +54,17 @@ export class UserService {
     const body = new HttpParams()
     .set("token", token)
     .set("password", password)
-    return this.http.put<any>(`http://localhost:8080/user/setpassword`, body)
+    return this.http.put<any>(`${environment.api}user/setpassword`, body)
 
   }
 
   forgotPassword(email:string){
-    return this.http.get<any>(`http://localhost:8080/user/resetpassword?email=${email}`)
+    return this.http.get<any>(`${environment.api}user/resetpassword?email=${email}`)
   }
-  
+
   createUser(data: IUser){
     console.log('json!', data);
-    return this.http.post<IUser>(`http://localhost:8080/user/signup`, data, {
+    return this.http.post<IUser>(`${environment.api}user/signup`, data, {
       headers: this.auth.buildHeader()
     });
   }
@@ -76,7 +77,7 @@ export class UserService {
 
     return this.http.post<IOAuthResponse>(
       `
-        http://localhost:8080/oauth/token`,
+        ${environment.api}oauth/token`,
       body.toString(),
       {
         headers: new HttpHeaders()
