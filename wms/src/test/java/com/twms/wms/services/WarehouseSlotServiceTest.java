@@ -1,19 +1,26 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.*;
 import com.twms.wms.repositories.WarehouseSlotRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +30,7 @@ import static org.mockito.Mockito.*;
 public class WarehouseSlotServiceTest {
 
     @InjectMocks
+    @Spy
     private WarehouseSlotService service;
 
     @Mock
@@ -33,6 +41,9 @@ public class WarehouseSlotServiceTest {
 
     @Mock
     private ClientService clientService;
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private WarehouseSlotRepository repository;
@@ -50,7 +61,6 @@ public class WarehouseSlotServiceTest {
     );
 
     private WarehouseSlot warehouseSlot2 = warehouseSlot;
-
 
     @BeforeEach()
     public void setUp() {
@@ -167,4 +177,38 @@ public class WarehouseSlotServiceTest {
         // assert
         verify(repository, times(1)).deleteById(any());
     }
+
+    @Test
+    public void shouldReturnPaginatedListWhenRequestedByClientId(){
+
+        when(repository.findByClientId(any(Long.class),any(Pageable.class))).thenReturn(new PageImpl(List.of(warehouseSlot)));
+
+        Assertions.assertNotNull(service.getByClientId(1l,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatedListWhenRequestedByUserId(){
+        User user = new User();
+        user.setEmail("any@who");
+        user.setId(1L);
+        when(userService.getUserById(any(Long.class))).thenReturn(user);
+        when(clientService.getClientByEmail(any(String.class))).thenReturn(new Client());
+        doReturn(new PageImpl(List.of(warehouseSlot))).when(service).getByUserId(any(Long.class),any(Pageable.class));
+
+        Assertions.assertNotNull(service.getByUserId(1l,PageRequest.of(1,1)));
+    }
+
+    @Test
+    public void shouldReturnPaginatedListWhenRequestedByClientIdAndBranch(){
+        ListIdsFilterDTO branchs = new ListIdsFilterDTO();
+        branchs.setIds(List.of(1L,2L));
+
+        when(branchService.getBranchesByIds(any(ListIdsFilterDTO.class))).thenReturn(new ArrayList<Branch>());
+        when(repository.findByClientIdAndWarehouseSlotIdBranchIn(any(Long.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<WarehouseSlot>()));
+
+        Assertions.assertNotNull(service.getByClientIdAndBranches(1L,new ListIdsFilterDTO(),PageRequest.of(1,1)));
+
+    }
+
 }

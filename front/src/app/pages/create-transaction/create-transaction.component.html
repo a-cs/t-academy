@@ -31,17 +31,22 @@
       </div>
       <div class="row">
         <label for="quantity">Quantity</label>
-        <input type="number" min="0"  placeholder="Type a quantity" formControlName="quantity">
+        <input type="number" min="0" placeholder="Type a quantity" formControlName="quantity">
       </div>
 
-      <div class="row">
-        <label for="type">Type</label>
-        <select formControlName="type">
-          <option value="" hidden selected="selected">Choose a type</option>
-          <option value="IN">In</option>
-          <option value="OUT">Out</option>
-        </select>
+
+      <div class="row InOut">
+        <span class="margin-left" [ngClass]="InOut ? 'In' : ''"><i class="material-icons">arrow_circle_down</i>In</span>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="InOut" (click)="toggleMenu()">
+          <span class="slider round"></span>
+        </label>
+        <span class="margin-right" [ngClass]="InOut ? '' : 'Out'">
+          <i class="material-icons">arrow_circle_up</i>Out
+        </span>
       </div>
+
+
 
       <div class="buttons">
         <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Create Transaction</button>
@@ -50,9 +55,5 @@
 
   </div>
 </div>
-<!-- <div class="arrows">
-  <div class="upwardArrow" [ngClass]="isUp ? 'Up' : ''"></div>
-  <div class="downwardArrow" [ngClass]="isDown ? 'Down' : ''"></div>
-</div> -->
 
 <app-footer></app-footer>

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,40 @@ public class MeasurementUnitServiceTest {
         Mockito.when(skuRepository.existsByMeasurementUnitId(any())).thenReturn(false);
 
         Assertions.assertDoesNotThrow(() -> measurementUnitService.delete(measurementUnit.getId()));
+    }
+    @Test
+    public void shouldThrowExceptionWhenDeletingALinkedField() {
+
+        Mockito.when(measurementUnitRepository.findById(measurementUnit.getId()))
+                                              .thenReturn(Optional.of(measurementUnit));
+        Mockito.doNothing().when(measurementUnitRepository).delete(measurementUnit);
+
+        Mockito.when(skuRepository.existsByMeasurementUnitId(any())).thenReturn(true);
+
+        Assertions.assertThrows(SQLIntegrityConstraintViolationException.class,() -> measurementUnitService.delete(measurementUnit.getId()));
+
+    }
+
+    @Test
+    public void shouldReturnListWhenReadAll(){
+        List<MeasurementUnit> mus = new ArrayList<>();
+        Mockito.when(measurementUnitRepository.findAll()).thenReturn(mus);
+
+        Assertions.assertNotNull(measurementUnitService.read());
+
+        Mockito.verify(measurementUnitRepository,Mockito.times(1)).findAll();
+
+    }
+
+    @Test
+    public void shouldReturnListWhenSearchedTerm(){
+        List<MeasurementUnit> mus = new ArrayList<>();
+        Mockito.when(measurementUnitRepository.findByDescriptionContainingIgnoreCaseOrSymbolContainingIgnoreCase(any(),any())).thenReturn(mus);
+
+        Assertions.assertNotNull(measurementUnitService.searchTerm("any"));
+
+        Mockito.verify(measurementUnitRepository,Mockito.times(1)).findByDescriptionContainingIgnoreCaseOrSymbolContainingIgnoreCase(any(),any());
+
     }
 
     @Test

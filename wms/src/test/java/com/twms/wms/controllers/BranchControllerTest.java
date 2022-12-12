@@ -16,8 +16,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -81,4 +83,21 @@ public class BranchControllerTest {
                 .andExpect(jsonPath("$.name").value("Test"));
     }
 
+    @Test
+    public void shouldReturnOkWhenGetSingleBranch() throws Exception {
+        Mockito.when(service.readBranchById(anyLong())).thenReturn(new Branch());
+
+        mockMvc.perform(get("/branch/{branchId}", anyLong()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnOkWhenSearchByBranchName() throws Exception {
+        List<Branch> expected = new ArrayList<>();
+        Mockito.when(service.searchTerm(anyString())).thenReturn(expected);
+
+        mockMvc.perform(get("/branch/search")
+                        .param("term", anyString()))
+                .andExpect(status().isOk());
+    }
 }

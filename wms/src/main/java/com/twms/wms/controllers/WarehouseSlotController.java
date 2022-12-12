@@ -103,23 +103,23 @@ public class WarehouseSlotController {
     }
 
 
-    @PutMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
-    public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlot ws,
-                                                    @PathVariable("branchId") Long branchId,
-                                                    @PathVariable("aisleId") String aisledId,
-                                                    @PathVariable("bayId") int bayId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(warehouseSlotService.putById(
-                ws,
-                branchId,
-                aisledId,
-                bayId));
-    }
+//    @PutMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
+//    public ResponseEntity<WarehouseSlotDTO> putById(@RequestBody WarehouseSlot ws,
+//                                                    @PathVariable("branchId") Long branchId,
+//                                                    @PathVariable("aisleId") String aisledId,
+//                                                    @PathVariable("bayId") int bayId) {
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(warehouseSlotService.putById(
+//                ws,
+//                branchId,
+//                aisledId,
+//                bayId));
+//    }
 
-    @DeleteMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
-    public ResponseEntity<Void> deleteById(@PathVariable("branchId") Long branchId,
-                                           @PathVariable("aisleId") String aisleId,
-                                           @PathVariable("bayId") int bayId) {
-        warehouseSlotService.deleteById(branchId, aisleId, bayId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+//    @DeleteMapping("/branch/{branchId}/aisle/{aisleId}/bay/{bayId}")
+//    public ResponseEntity<Void> deleteById(@PathVariable("branchId") Long branchId,
+//                                           @PathVariable("aisleId") String aisleId,
+//                                           @PathVariable("bayId") int bayId) {
+//        warehouseSlotService.deleteById(branchId, aisleId, bayId);
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//    }
 }
