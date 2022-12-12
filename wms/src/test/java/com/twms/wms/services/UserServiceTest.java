@@ -201,20 +201,64 @@ public class UserServiceTest {
         );
     }
 
-//    @Test
-//    public void shouldResetPasswordIfEmailIsValid() {
-//        Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.empty());
-//
-//        Assertions.assertDoesNotThrow(
-//                () -> userService.resetPassword(anyString())
-//        );
-//
-//        verify(confirmationTokenService, times(1)).createTokenAndSendEmail(any(User.class), false);
-//    }
+    @Test
+    public void shouldSendConfirmationEmailWhenResetPassword() {
+        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.of(user));
 
-//    @Test shouldReturnUserPageWhenFindByEmail() {
-//        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.of(any(User.class)));
-//
-//    }
+        Assertions.assertDoesNotThrow(
+                () -> userService.resetPassword(anyString())
+        );
 
+        verify(confirmationTokenService, times(1)).createTokenAndSendEmail(user, false);
+    }
+
+    @Test
+    public void shouldReturnUserPageWhenFindByRegisteredEmail() {
+        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.of(user));
+
+        Assertions.assertDoesNotThrow(
+                () -> userService.getUserByEmail(anyString())
+        );
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenFindByUnregistredEmail() {
+        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                EntityNotFoundException.class,
+                () -> { userService.getUserByEmail(anyString()); }
+        );
+
+        verify(userRepository, times(1)).findUserByEmail(anyString());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenGetByInvalidId() {
+        Mockito.when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                EntityNotFoundException.class,
+                () -> { userService.getUserById(anyLong()); }
+        );
+    }
+
+    @Test
+    public void shouldSearchByUsername() {
+        List<User> users = new ArrayList<>();
+        Page<User> expected = new PageImpl<>(users);
+
+        Mockito.when(userRepository.findByUsernameContainingIgnoreCase(anyString(), any(Pageable.class)))
+                .thenReturn(expected);
+
+        Assertions.assertNotNull(userService.getUserFilteredByUsername("any", PageRequest.of(1, 1)));
+    }
+
+    @Test
+    public void shouldFindAllUsers() {
+        List<User> users = new ArrayList<>();
+        Mockito.when(userRepository.findAll()).thenReturn(users);
+
+        Assertions.assertNotNull(userService.getAllUsers());
+    }
 }
