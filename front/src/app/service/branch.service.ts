@@ -13,7 +13,7 @@ export class BranchService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   get() {
-    return this.http.get<IBranch[]>('${environment.api}branch', {
+    return this.http.get<IBranch[]>(`${environment.api}branch`, {
       headers: this.auth.buildHeader(),
     });
   }
@@ -46,7 +46,7 @@ export class BranchService {
   }
 
   create(data: IBranch) {
-    return this.http.post<IBranch>('${environment.api}branch/', data, {
+    return this.http.post<IBranch>(`${environment.api}branch/`, data, {
       headers: this.auth.buildHeader(),
     });
   }
