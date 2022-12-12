@@ -41,9 +41,6 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @Autowired
-//    private OAuthMvcTest oAuthMvcTest;
-
     @MockBean
     private UserService userService;
 
@@ -62,20 +59,18 @@ public class UserControllerTest {
 
         userDTO = new UserDTO(user);
 
-        userJson=  "{\"id\":1,\"username\":\"userTest\",\"password\":\"passwordTest\",\"email\":\"user@email.com\",\"accessLevel\":{\"id\":1,\"authority\":\"ROLE_ADMIN\"},\"enabled\":false}";
-//        userJson = objectMapper.writeValueAsString(user);
+        userJson =  "{\"id\":1,\"username\":\"userTest\",\"password\":\"passwordTest\",\"email\":\"user@email.com\",\"accessLevel\":{\"id\":1,\"authority\":\"ROLE_ADMIN\"},\"enabled\":false}";
     }
 
     @Test
-//    @WithMockUser(username = "admin_user@mail.com", password = "password", roles = {"ADMIN"})
     public void shouldReturnCreatedWhenCreatingUser() throws Exception {
 
         Mockito.when(userService.createUser(any(User.class))).thenReturn(userDTO);
 
         ResultActions result = mockMvc.perform(post("/user/signup")
-                .content(userJson)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value("user@email.com"))
                 .andExpect(jsonPath("$.username").value("userTest"));
     }
@@ -98,14 +93,14 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnUserDTOWhenUpdatingUser() throws Exception {
+    public void shouldReturnFilteredUserDTOWhenUpdatingUser() throws Exception {
 
         Mockito.when(userService.updateUser(any(UserDTO.class), any(Long.class))).thenReturn(userDTO);
 
         ResultActions result = mockMvc.perform(put("/user/" + user.getId().toString())
-                .content(objectMapper.writeValueAsString(userDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(userDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("userTest"));
     }
@@ -121,5 +116,34 @@ public class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].username").value("userTest"));
+    }
+
+    @Test
+    public void shouldReturnAllUserDTOPaginated() throws Exception {
+
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userDTOList.add(userDTO);
+        Page<UserDTO> dtoPage = new PageImpl<>(userDTOList);
+        Mockito.when(userService.getUsersPaginated(any(Pageable.class)))
+                .thenReturn(dtoPage);
+
+        ResultActions result = mockMvc.perform(get("/user/pages?page=0&size=1")
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.content[0].username").value("userTest"));
+        result.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void shouldReturnOkStatusWhenSetPassword() throws Exception {
+        ResultActions result = mockMvc.perform(put("/user/setpassword"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnOkStatusWhenResetPassword() throws Exception {
+        ResultActions result = mockMvc.perform(get("/user/resetpassword?email=" + user.getEmail()))
+                .andExpect(status().isOk());
     }
 }
