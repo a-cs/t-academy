@@ -110,6 +110,7 @@ export class ProductComponent implements OnInit {
         this.isError = false
         this.isLoading = true
 
+
         if (this.searchText.length > 0) {
             this.skuService
                 .getPageable(this.pageIndex, this.pageSize)
@@ -146,6 +147,7 @@ export class ProductComponent implements OnInit {
                       closeButton: true,
                     });
                   });
+
         }
     }
 }
