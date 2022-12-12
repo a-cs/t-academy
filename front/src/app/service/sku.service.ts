@@ -3,6 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import ISku from '../interfaces/ISku';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class SkuService {
 
   getByLikeName(name: string, page: number, size: number) {
     return this.http.get<any>(
-      `http://localhost:8080/sku/search?term=${name}&page=${page}&size=${size}`,
+      `${environment.api}sku/search?term=${name}&page=${page}&size=${size}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -23,38 +24,38 @@ export class SkuService {
 
   getPageable(page: number, size: number) {
     return this.http.get<any>(
-      `http://localhost:8080/sku/pages?page=${page}&size=${size}`,
+      `${environment.api}sku/pages?page=${page}&size=${size}`,
       {
         headers: this.auth.buildHeader(),
       }
     );
   }
   get() {
-    return this.http.get<any>(`http://localhost:8080/sku`, {
+    return this.http.get<any>(`${environment.api}sku`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   getById(id: number) {
-    return this.http.get<ISku>(`http://localhost:8080/sku/${id}`, {
+    return this.http.get<ISku>(`${environment.api}sku/${id}`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   delete(id: number) {
-    return this.http.delete(`http://localhost:8080/sku/${id}`, {
+    return this.http.delete(`${environment.api}sku/${id}`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   update(id: number, data: ISku) {
-    return this.http.put<ISku>(`http://localhost:8080/sku/${id}`, data, {
+    return this.http.put<ISku>(`${environment.api}sku/${id}`, data, {
       headers: this.auth.buildHeader(),
     });
   }
 
   create(data: ISku) {
-    return this.http.post<ISku>('http://localhost:8080/sku', data, {
+    return this.http.post<ISku>('${environment.api}sku', data, {
       headers: this.auth.buildHeader(),
     });
   }

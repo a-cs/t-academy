@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import IMeasurementUnit from '../interfaces/IMeasurementUnit';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class MeasurementUnitService {
 
   get() {
     return this.http.get<IMeasurementUnit[]>(
-      'http://localhost:8080/measurement-unit',
+      '${environment.api}measurement-unit',
       {
         headers: this.auth.buildHeader(),
       }
@@ -22,7 +23,7 @@ export class MeasurementUnitService {
 
   getPageable(page: number, size: number) {
     return this.http.get<IMeasurementUnit[]>(
-      `http://localhost:8080/measurement-unit/pages?page=${page}&size=${size}`,
+      `${environment.api}measurement-unit/pages?page=${page}&size=${size}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -31,7 +32,7 @@ export class MeasurementUnitService {
 
   getById(id: number) {
     return this.http.get<IMeasurementUnit>(
-      `http://localhost:8080/measurement-unit/${id}`,
+      `${environment.api}measurement-unit/${id}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -40,7 +41,7 @@ export class MeasurementUnitService {
 
   getByLikeName(likeName: string) {
     return this.http.get<IMeasurementUnit[]>(
-      `http://localhost:8080/measurement-unit/search?term=${likeName}`,
+      `${environment.api}measurement-unit/search?term=${likeName}`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -48,14 +49,14 @@ export class MeasurementUnitService {
   }
 
   delete(id: number) {
-    return this.http.delete(`http://localhost:8080/measurement-unit/${id}`, {
+    return this.http.delete(`${environment.api}measurement-unit/${id}`, {
       headers: this.auth.buildHeader(),
     });
   }
 
   update(id: number, data: IMeasurementUnit) {
     return this.http.put<IMeasurementUnit>(
-      `http://localhost:8080/measurement-unit/${id}`,
+      `${environment.api}measurement-unit/${id}`,
       data,
       {
         headers: this.auth.buildHeader(),
@@ -65,7 +66,7 @@ export class MeasurementUnitService {
 
   create(data: IMeasurementUnit) {
     return this.http.post<IMeasurementUnit>(
-      'http://localhost:8080/measurement-unit',
+      '${environment.api}measurement-unit',
       data,
       {
         headers: this.auth.buildHeader(),

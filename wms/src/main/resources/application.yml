@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: ${active_profile}
   mail:
     host: smtp.office365.com
     port: 587
