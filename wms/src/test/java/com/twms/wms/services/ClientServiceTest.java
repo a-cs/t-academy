@@ -12,6 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -134,6 +137,32 @@ public class ClientServiceTest {
         Assertions.assertDoesNotThrow(()->clientService.getClientByEmail("teste@mail.com"));
         Mockito.verify(repository, Mockito.times(1)).findByEmail(any());
 
+    }
+
+    @Test
+    public void shouldReturnListOfClientsWhenReadingAllClients(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findAll()).thenReturn(clients);
+
+        Assertions.assertNotNull(clientService.readAllClients());
+    }
+
+    @Test
+    public void shouldReturnPageOfClientsWhenSearchedATerm(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findByNameContainingIgnoreCaseOrCNPJContainingIgnoreCase(any(),any(),any())).thenReturn(new PageImpl<>(clients));
+
+        Assertions.assertNotNull(clientService.searchTerm("any", PageRequest.of(0,1)));
+    }
+    @Test
+    public void shouldReturnPageOfClientsWhenSearchedAll(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(clients));
+
+        Assertions.assertNotNull(clientService.readAllClientsPaginated(PageRequest.of(0,1)));
     }
 
 }

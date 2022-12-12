@@ -4,6 +4,11 @@
 
 }
 
+.center{
+    display: flex;
+    justify-content: center;
+}
+
 .title {
     font-size: 6rem;
     text-align: center;
@@ -38,7 +43,7 @@ app-card-create-sku {
       line-height: normal;
     }
   }
-  
+
   @media (max-width: 540px) {
     .title {
       font-size: 3.5rem;

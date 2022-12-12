@@ -4,6 +4,7 @@ import { tap } from 'rxjs';
 import IUser from 'src/app/interfaces/IUser';
 import { UserService } from 'src/app/service/user.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user',
@@ -11,7 +12,8 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements AfterViewInit {
-
+  isLoading: boolean = false;
+  isError: boolean = false;
   @ViewChild(MatPaginator)
   paginator: MatPaginator
   userList: IUser[]
@@ -29,7 +31,7 @@ export class UserComponent implements AfterViewInit {
 
   pageEvent: PageEvent;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private notification: ToastrService) {
     this.userService.userChanged.subscribe(() => this.getUserList())
   }
 
@@ -51,10 +53,20 @@ export class UserComponent implements AfterViewInit {
   }
 
   getUserList() {
+    this.isLoading = true
     this.userService.getByUsernameLike(this.searchText, this.paginator.pageSize, this.paginator.pageIndex)
       .subscribe(data => {
         this.paginator.length = data.totalElements
         this.userList = data.content
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No serve response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
+        });
       })
   }
 

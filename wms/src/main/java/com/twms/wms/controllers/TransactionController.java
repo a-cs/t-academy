@@ -49,16 +49,16 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transaction));
     }
 
-    @PutMapping("/{idTransaction}")
-    public ResponseEntity<TransactionDTO> putTransaction(@PathVariable("idTransaction") Long idTransaction,
-                                            @RequestBody Transaction transaction){
-        return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateTransaction(idTransaction,transaction));
-    }
-
-    @DeleteMapping("/{idTransaction}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable("idTransaction") Long idTransaction){
-        transactionService.deleteTransaction(idTransaction);
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping("/{idTransaction}")
+//    public ResponseEntity<TransactionDTO> putTransaction(@PathVariable("idTransaction") Long idTransaction,
+//                                            @RequestBody Transaction transaction){
+//        return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateTransaction(idTransaction,transaction));
+//    }
+//
+//    @DeleteMapping("/{idTransaction}")
+//    public ResponseEntity<Void> deleteTransaction(@PathVariable("idTransaction") Long idTransaction){
+//        transactionService.deleteTransaction(idTransaction);
+//        return ResponseEntity.noContent().build();
+//    }
 
 }
