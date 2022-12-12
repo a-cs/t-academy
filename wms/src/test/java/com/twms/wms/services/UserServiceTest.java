@@ -22,10 +22,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class UserServiceTest {
@@ -76,7 +78,7 @@ public class UserServiceTest {
         Assertions.assertNotNull(responseUserDTO);
         Assertions.assertEquals(responseUserDTO, new UserDTO(user));
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
@@ -106,7 +108,7 @@ public class UserServiceTest {
 
         Assertions.assertEquals(new UserDTO(user), userService.getUserByUsername(user.getUsername()));
 
-        Mockito.verify(userRepository, Mockito.times(1)).findUserByUsername(user.getUsername());
+        verify(userRepository, times(1)).findUserByUsername(user.getUsername());
     }
 
 //    @Test
@@ -139,7 +141,56 @@ public class UserServiceTest {
 
         Assertions.assertEquals(new UserDTO(user), userService.updateUserIsEnable(user.getId(), false));
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        verify(userRepository, times(1)).save(user);
 
     }
+
+    @Test
+    public void shouldThrowExceptionIfUsernameIsTaken() {
+        Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
+
+        verify(userRepository, times(0)).save(any(User.class));
+
+        Assertions.assertThrows(SQLIntegrityConstraintViolationException.class,
+                () -> {
+                    userService.createUser(user);
+                }
+        );
+    }
+
+    @Test
+    public void shouldThrowExceptionIfEmailIsTaken() {
+        Mockito.when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        verify(userRepository, times(0)).save(any(User.class));
+
+        Assertions.assertThrows(SQLIntegrityConstraintViolationException.class,
+                () -> { userService.createUser(user); }
+        );
+    }
+
+    @Test
+    public void shoudThrowExceptionIfResetPasswordByUnregisteredEmail() {
+        Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
+
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> userService.resetPassword(anyString())
+        );
+    }
+
+//    @Test
+//    public void shouldResetPasswordIfEmailIsValid() {
+//        Mockito.when(userRepository.findUserByUsername(user.getUsername())).thenReturn(Optional.empty());
+//
+//        Assertions.assertDoesNotThrow(
+//                () -> userService.resetPassword(anyString())
+//        );
+//
+//        verify(confirmationTokenService, times(1)).createTokenAndSendEmail(any(User.class), false);
+//    }
+
+//    @Test shouldReturnUserPageWhenFindByEmail() {
+//        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.of(any(User.class)));
+//
+//    }
 }
