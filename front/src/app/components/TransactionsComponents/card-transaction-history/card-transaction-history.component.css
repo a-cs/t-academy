@@ -39,7 +39,7 @@ span {
 }
 
 .out {
-    border-color: red;
+    border-color: var(--out-color);
     margin-left: 0px;
     animation-name: marginLeft;
     animation-duration: 2s;
@@ -47,11 +47,11 @@ span {
 }
 
 .in{
-    border-color: rgb(95, 255, 47);
+    border-color: var(--in-color);
 }
 
 .inS{
-    border-color: rgb(95, 255, 47);
+    border-color: var(--in-color);
     margin-right: 0px;
     animation-name: marginRight;
     animation-duration: 2s;

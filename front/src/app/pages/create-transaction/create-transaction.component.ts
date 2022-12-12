@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable, startWith } from 'rxjs';
 import IClient from 'src/app/interfaces/IClient';
@@ -25,6 +25,7 @@ export class CreateTransactionComponent implements OnInit {
     firstSku?: ISku
     isUp: boolean = false
     isDown: boolean = false
+    InOut: boolean = true
 
     form: FormGroup
 
@@ -53,18 +54,6 @@ export class CreateTransactionComponent implements OnInit {
 
 
         // this.filteredSkus.subscribe(ele => this.firstSku = ele[0])
-
-        this.form.controls["type"].valueChanges.subscribe(value => {
-            if (value == 'in') {
-                this.isUp = true
-                this.isDown = false
-            }
-            if (value == 'out') {
-                this.isUp = false
-                this.isDown = true
-            }
-        }
-        )
 
     }
 
@@ -105,11 +94,22 @@ export class CreateTransactionComponent implements OnInit {
             sku: [null, [Validators.required]],
             client: [null, [Validators.required]],
             quantity: [0, [Validators.required]],
-            type: ["", [Validators.required]]
+            type: [""]
         })
     }
 
 
+    toggleMenu(): void {
+        this.InOut = !this.InOut;
+    }
+
+    inOutReturn(): string{
+        if(this.InOut == true){
+            return "IN"
+        } else{
+            return "OUT"
+        }
+    }
 
 
     skuFallback() { }
@@ -131,7 +131,7 @@ export class CreateTransactionComponent implements OnInit {
                 user: {
                     id: this.auth.getUserId() as unknown as number
                 },
-                type: this.form.controls["type"].value,
+                type: this.inOutReturn(),
                 client: {
                     id: this.form.controls["client"].value.id,
                 },
