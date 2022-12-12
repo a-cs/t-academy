@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionService } from 'src/app/service/transaction.service';
 import ITransaction from 'src/app/interfaces/ITransaction';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-transaction-history',
@@ -9,6 +10,9 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./transaction-history.component.css']
 })
 export class TransactionHistoryComponent implements OnInit {
+
+  isLoading: boolean = false;
+  isError: boolean = false;
 
   transactions: ITransaction[]
 
@@ -25,9 +29,11 @@ export class TransactionHistoryComponent implements OnInit {
 
   pageEvent: PageEvent;
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService, private notification: ToastrService) { }
 
   ngOnInit(): void {
+    this.isLoading = true
+    this.isError = false
     this.transactionService.getAllPageable(this.pageIndex, this.pageSize).subscribe(
       data => {
         console.log(data)
@@ -35,6 +41,15 @@ export class TransactionHistoryComponent implements OnInit {
         this.length = data.totalElements
         this.pageSize = data.size
         this.pageIndex = data.number
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No serve response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
+        });
       }
     )
   }
