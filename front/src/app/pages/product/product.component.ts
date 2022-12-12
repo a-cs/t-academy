@@ -107,6 +107,8 @@ export class ProductComponent implements OnInit {
         this.length = e.length;
         this.pageSize = e.pageSize;
         this.pageIndex = e.pageIndex;
+        this.isError = false
+        this.isLoading = true
 
         if (this.searchText.length > 0) {
             this.skuService
@@ -116,7 +118,16 @@ export class ProductComponent implements OnInit {
                     this.length = data.totalElements;
                     this.pageSize = data.size;
                     this.pageIndex = data.number;
-                });
+                    this.isLoading = false
+                }, error => {
+                    this.isLoading = false
+                    this.isError = true
+                    this.notification.error(error.error.message, 'Error: No serve response', {
+                      tapToDismiss: true,
+                      disableTimeOut: true,
+                      closeButton: true,
+                    });
+                  });
         } else {
             this.skuService
                 .getByLikeName(this.searchText, this.pageIndex, this.pageSize)
@@ -125,7 +136,16 @@ export class ProductComponent implements OnInit {
                     this.length = data.totalElements;
                     this.pageSize = data.size;
                     this.pageIndex = data.number;
-                });
+                    this.isLoading = false
+                }, error => {
+                    this.isLoading = false
+                    this.isError = true
+                    this.notification.error(error.error.message, 'Error: No serve response', {
+                      tapToDismiss: true,
+                      disableTimeOut: true,
+                      closeButton: true,
+                    });
+                  });
         }
     }
 }

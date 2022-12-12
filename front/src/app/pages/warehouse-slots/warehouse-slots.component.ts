@@ -116,6 +116,8 @@ export class WarehouseSlotsComponent implements OnInit {
     }
 
     handlePageEvent(e: PageEvent) {
+        this.isError = false
+        this.isLoading = true
         this.pageEvent = e;
         this.length = e.length;
         this.pageSize = e.pageSize;
@@ -129,6 +131,15 @@ export class WarehouseSlotsComponent implements OnInit {
                 this.length = data.totalPages;
                 this.pageSize = data.size;
                 this.pageIndex = data.number;
-            });
+                this.isLoading = false
+            }, error => {
+                this.isLoading = false
+                this.isError = true
+                this.notification.error(error.error.message, 'Error: No serve response', {
+                  tapToDismiss: true,
+                  disableTimeOut: true,
+                  closeButton: true,
+                });
+              });
     }
 }

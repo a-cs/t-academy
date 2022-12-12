@@ -14,7 +14,7 @@ export class MeasurementUnitService {
 
   get() {
     return this.http.get<IMeasurementUnit[]>(
-      '${environment.api}measurement-unit',
+      `${environment.api}measurement-unit`,
       {
         headers: this.auth.buildHeader(),
       }
@@ -66,7 +66,7 @@ export class MeasurementUnitService {
 
   create(data: IMeasurementUnit) {
     return this.http.post<IMeasurementUnit>(
-      '${environment.api}measurement-unit',
+      `${environment.api}measurement-unit`,
       data,
       {
         headers: this.auth.buildHeader(),
