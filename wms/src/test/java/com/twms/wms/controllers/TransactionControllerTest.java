@@ -132,26 +132,26 @@ public class TransactionControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @Test
-    public void ShouldReturnCreatedWhenUpdatingTransaction() throws Exception {
-
-        Mockito.when(transactionService.updateTransaction(transaction.getId(), transaction))
-                .thenReturn(transactionDTO);
-
-        ResultActions result = mockMvc.perform(put("/transaction/" + transaction.getId())
-                        .content(transactionJson)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void ShouldReturnNoContentWhenDeletingById() throws Exception {
-
-        Mockito.doNothing().when(transactionService).deleteTransaction(anyLong());
-
-        ResultActions result = mockMvc.perform(delete("/transaction/" + transaction.getId())
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-    }
+//    @Test
+//    public void ShouldReturnCreatedWhenUpdatingTransaction() throws Exception {
+//
+//        Mockito.when(transactionService.updateTransaction(transaction.getId(), transaction))
+//                .thenReturn(transactionDTO);
+//
+//        ResultActions result = mockMvc.perform(put("/transaction/" + transaction.getId())
+//                        .content(transactionJson)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//    }
+//
+//    @Test
+//    public void ShouldReturnNoContentWhenDeletingById() throws Exception {
+//
+//        Mockito.doNothing().when(transactionService).deleteTransaction(anyLong());
+//
+//        ResultActions result = mockMvc.perform(delete("/transaction/" + transaction.getId())
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNoContent());
+//    }
 }
