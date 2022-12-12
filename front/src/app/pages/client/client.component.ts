@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import IClient from 'src/app/interfaces/IClient';
 import { ClientService } from 'src/app/service/client.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client',
@@ -9,6 +10,9 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./client.component.css'],
 })
 export class ClientComponent implements OnInit {
+  isLoading: boolean = false;
+  isError: boolean = false;
+
   clients: IClient[] = [];
   length = 50;
   pageSize = 10;
@@ -22,7 +26,7 @@ export class ClientComponent implements OnInit {
 
   pageEvent: PageEvent;
 
-  constructor(private clientService: ClientService) {
+  constructor(private clientService: ClientService, private notification: ToastrService) {
     this.clientService.clientChanged.subscribe(() => this.getData());
   }
 
@@ -31,11 +35,22 @@ export class ClientComponent implements OnInit {
   }
 
   getData() {
+    this.isLoading = true
+    this.isError = false
     this.clientService.getPageable(0, 10).subscribe((data) => {
       this.clients = data.content;
       this.length = data.totalElements;
       this.pageSize = data.size;
       this.pageIndex = data.number;
+      this.isLoading = false
+    }, error => {
+      this.isLoading = false
+      this.isError = true
+      this.notification.error(error.error.message, 'Error: No serve response', {
+        tapToDismiss: true,
+        disableTimeOut: true,
+        closeButton: true,
+      });
     });
   }
 
@@ -46,6 +61,8 @@ export class ClientComponent implements OnInit {
   searchText: string = '';
 
   onSearchTextEntered(searchValue: string) {
+    this.isLoading = true
+    this.isError = false
     this.searchText = searchValue;
     console.log(this.searchText);
     this.clientService
@@ -55,10 +72,21 @@ export class ClientComponent implements OnInit {
         this.length = data.totalElements;
         this.pageSize = data.size;
         this.pageIndex = data.number;
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No serve response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
+        });
       });
   }
 
   handlePageEvent(e: PageEvent) {
+    this.isLoading = true
+    this.isError = false
     this.pageEvent = e;
     this.length = e.length;
     this.pageSize = e.pageSize;
@@ -72,6 +100,15 @@ export class ClientComponent implements OnInit {
           this.length = data.totalElements;
           this.pageSize = data.size;
           this.pageIndex = data.number;
+          this.isLoading = false
+        }, error => {
+          this.isLoading = false
+          this.isError = true
+          this.notification.error(error.error.message, 'Error: No serve response', {
+            tapToDismiss: true,
+            disableTimeOut: true,
+            closeButton: true,
+          });
         });
     } else {
       this.clientService
@@ -81,7 +118,16 @@ export class ClientComponent implements OnInit {
           this.length = data.totalElements;
           this.pageSize = data.size;
           this.pageIndex = data.number;
+          this.isLoading = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No serve response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
         });
+      });
     }
   }
 }
