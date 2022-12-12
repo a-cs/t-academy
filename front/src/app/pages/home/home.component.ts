@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 
 import { routePermission } from 'src/app/utils/utils';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,9 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,
     public auth: AuthService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(environment.api)
+  }
 
   permissions = routePermission
 

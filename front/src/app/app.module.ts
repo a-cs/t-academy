@@ -68,6 +68,7 @@ import { WarehouseSlotsComponent } from './pages/warehouse-slots/warehouse-slots
 import { CardWarehouseSlotComponent } from './components/WarehouseComponents/card-warehouse-slot/card-warehouse-slot.component';
 
 import { ModalShowMoreTransactionHistoryComponent } from './components/TransactionsComponents/modal-show-more-transaction-history/modal-show-more-transaction-history.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import {
   MatProgressSpinner,
@@ -141,6 +142,7 @@ import {
     NgxMaskModule.forRoot(),
     ToastrModule.forRoot(),
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
   ],
   providers: [ModalConfirmDeleteComponent],
   bootstrap: [AppComponent],

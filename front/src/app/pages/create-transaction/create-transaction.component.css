@@ -3,6 +3,114 @@
   min-height: 78vh;
 }
 
+.content{
+  background-color: rgba(95, 255, 47, 0.02);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  transform: scale(1.4);
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--in-color);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--out-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--in-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+mat-slide-toggle {
+  margin: 8px 0;
+  width: 20px;
+}
+
+
+.InOut{
+  font-size: 2rem;
+  margin-top: 4vh;
+  font-weight: bold;
+}
+
+.margin-left{
+  margin-left: 10%;
+}
+
+.margin-left i, .margin-right i{
+  font-size: 2rem;
+  vertical-align: middle;
+
+}
+
+.margin-left, .margin-right{
+  color: var(--border-color);
+}
+
+.In{
+  color: var(--in-color);
+}
+
+.Out{
+  color: var(--out-color);
+}
+
+
+mat-slide-toggle{
+  transform: scale(2);
+}
+
+.margin-right{
+  margin-right: 10%;
+}
+
 .content {
   margin: 60px auto;
   width: 600px;
@@ -106,29 +214,6 @@ form input:focus-visible{
   background-color: var(--text-secondary-color);
 }
 
-.arrows{
-  position: absolute;
-  right: 10%;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-}
-
-.arrows div{
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  border-top: 8px solid black;
-  transform: rotate(45deg);
-  left: 27.5px;
-  top: 35px
-}
-
-.Up, .Down{
-  background-color: white;
-  transition: 1s ease;
-}
 
 .Up{
   background-color: rgb(11, 210, 11);
@@ -155,5 +240,9 @@ form input:focus-visible{
     flex-direction: column;
     width: 100%;
     align-items: center;
+  }
+
+  .row{
+    flex-direction: row;
   }
 }
