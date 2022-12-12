@@ -3,99 +3,132 @@ import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
 import { AuthService } from 'src/app/service/auth.service';
 import { WarehouseSlotService } from 'src/app/service/warehouse-slot.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-warehouse-slots',
-  templateUrl: './warehouse-slots.component.html',
-  styleUrls: ['./warehouse-slots.component.css']
+    selector: 'app-warehouse-slots',
+    templateUrl: './warehouse-slots.component.html',
+    styleUrls: ['./warehouse-slots.component.css']
 })
 export class WarehouseSlotsComponent implements OnInit {
-  
-  warehouseSlots: IWarehouseSlot[]
-  
-  length = 50;
-  pageSize = 6;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+    isLoading: boolean = false;
+    isError: boolean = true;
 
-  hidePageSize = true;
-  showPageSizeOptions = false;
-  showFirstLastButtons = true;
-  disabled = false;
+    warehouseSlots: IWarehouseSlot[]
 
-  pageEvent: PageEvent;
+    length = 50;
+    pageSize = 6;
+    pageIndex = 0;
+    pageSizeOptions = [5, 10, 25];
 
-  constructor(
-    private warehouseSlotService: WarehouseSlotService,
-    private authService: AuthService,
-  ) { }
+    hidePageSize = true;
+    showPageSizeOptions = false;
+    showFirstLastButtons = true;
+    disabled = false;
 
-  ngOnInit(): void {
-    this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
-    .subscribe(
-      data => {
-        console.log(data)
-        this.warehouseSlots = data.content
-        this.length = data.totalElements
-        this.pageSize = data.size
-        this.pageIndex = data.number
-      }
-    )
-  }
+    pageEvent: PageEvent;
 
-  searchTextSKU: string = '';
-  getSearchTextSKU() {
-    return this.searchTextSKU;
-  }
-  searchTextClient: string = '';
-  getSearchTextClient() {
-    return this.searchTextClient;
-  }
+    constructor(
+        private warehouseSlotService: WarehouseSlotService,
+        private authService: AuthService,
+        private notification: ToastrService
+    ) { }
 
-  branch: number = this.authService.getUserBranchId() || 0;
+    ngOnInit(): void {
+        this.isError = false
+        this.isLoading = true
+        this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+            .subscribe(
+                data => {
+                    console.log(data)
+                    this.warehouseSlots = data.content
+                    this.length = data.totalElements
+                    this.pageSize = data.size
+                    this.pageIndex = data.number
+                    this.isLoading = false
+                }, error => {
+                    this.isLoading = false
+                    this.isError = true
+                    this.notification.error(error.error.message, 'Error: No serve response', {
+                      tapToDismiss: true,
+                      disableTimeOut: true,
+                      closeButton: true,
+                    });
+                  })
+    }
 
-  onSearchTextEnteredSKUWareHouseSlot(searchValue: string){
-    this.searchTextSKU = searchValue;
-    this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
-    .subscribe(
-      data => {
-        console.log(data)
-        this.warehouseSlots = data.content
-        this.length = data.totalElements
-        this.pageSize = data.size
-        this.pageIndex = data.number
-      }
-    )
-  }
+    searchTextSKU: string = '';
+    getSearchTextSKU() {
+        return this.searchTextSKU;
+    }
+    searchTextClient: string = '';
+    getSearchTextClient() {
+        return this.searchTextClient;
+    }
 
-  onSearchTextEnteredClient(searchValue: string){
-    this.searchTextClient = searchValue;
-    this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
-    .subscribe(
-      data => {
-        console.log(data)
-        this.warehouseSlots = data.content
-        this.length = data.totalElements
-        this.pageSize = data.size
-        this.pageIndex = data.number
-      }
-    )
-  }
+    branch: number = this.authService.getUserBranchId() || 0;
 
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+    onSearchTextEnteredSKUWareHouseSlot(searchValue: string) {
+        this.isError = false
+        this.isLoading = true
+        this.searchTextSKU = searchValue;
+        this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+            .subscribe(
+                data => {
+                    this.warehouseSlots = data.content
+                    this.length = data.totalElements
+                    this.pageSize = data.size
+                    this.pageIndex = data.number
+                    this.isLoading = false
+                }, error => {
+                    this.isLoading = false
+                    this.isError = true
+                    this.notification.error(error.error.message, 'Error: No serve response', {
+                      tapToDismiss: true,
+                      disableTimeOut: true,
+                      closeButton: true,
+                    });
+                  })
+    }
 
-    console.log("id = ", this.authService.getUserId())
-    this.warehouseSlotService
-      .getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
-      .subscribe((data) => {
-        this.warehouseSlots = data.content;
-        this.length = data.totalPages;
-        this.pageSize = data.size;
-        this.pageIndex = data.number;
-      });
-  }
+    onSearchTextEnteredClient(searchValue: string) {
+        this.isError = false
+        this.isLoading = true
+        this.searchTextClient = searchValue;
+        this.warehouseSlotService.getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+            .subscribe(
+                data => {
+                    console.log(data)
+                    this.warehouseSlots = data.content
+                    this.length = data.totalElements
+                    this.pageSize = data.size
+                    this.pageIndex = data.number
+                    this.isLoading = false
+                }, error => {
+                    this.isLoading = false
+                    this.isError = true
+                    this.notification.error(error.error.message, 'Error: No serve response', {
+                      tapToDismiss: true,
+                      disableTimeOut: true,
+                      closeButton: true,
+                    });
+                  })
+    }
+
+    handlePageEvent(e: PageEvent) {
+        this.pageEvent = e;
+        this.length = e.length;
+        this.pageSize = e.pageSize;
+        this.pageIndex = e.pageIndex;
+
+        console.log("id = ", this.authService.getUserId())
+        this.warehouseSlotService
+            .getByClientIdByBranchByProductName(this.branch, this.searchTextSKU, this.searchTextClient, this.pageIndex, this.pageSize)
+            .subscribe((data) => {
+                this.warehouseSlots = data.content;
+                this.length = data.totalPages;
+                this.pageSize = data.size;
+                this.pageIndex = data.number;
+            });
+    }
 }
