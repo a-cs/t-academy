@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserComponent implements AfterViewInit {
   isLoading: boolean = false;
+  isError: boolean = false;
   @ViewChild(MatPaginator)
   paginator: MatPaginator
   userList: IUser[]
@@ -52,15 +53,16 @@ export class UserComponent implements AfterViewInit {
   }
 
   getUserList() {
+    this.isLoading = true
     this.userService.getByUsernameLike(this.searchText, this.paginator.pageSize, this.paginator.pageIndex)
       .subscribe(data => {
-        this.isLoading = true
         this.paginator.length = data.totalElements
         this.userList = data.content
         this.isLoading = false
       }, error => {
         this.isLoading = false
-        this.notification.error(error.error.message, 'Error', {
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No serve response', {
           tapToDismiss: true,
           disableTimeOut: true,
           closeButton: true,
