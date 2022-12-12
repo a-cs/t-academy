@@ -56,7 +56,7 @@ export class ClientService {
 
   create(data: IClient) {
     console.log(data);
-    return this.http.post<IClient>('${environment.api}client', data, {
+    return this.http.post<IClient>(`${environment.api}client`, data, {
       headers: this.auth.buildHeader(),
     });
   }

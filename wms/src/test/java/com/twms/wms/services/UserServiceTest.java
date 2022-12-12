@@ -17,12 +17,19 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -117,22 +124,7 @@ public class UserServiceTest {
 //        Assertions.assertThrows(EntityNotFoundException.class,
 //                () ->userService.updateUserAccessLevel(new Role(),-1L, true));
 //    }
-    @Test
-    public void returnUserDTOWithUpdatedAcessLevel(){
-//        Role role = new Role(1L, AccessLevel.ROLE_ADMIN);
-//
-//        User userWithNewRole = new User();
-//        userWithNewRole.setAccessLevel(user.getAccessLevel());
-//
-//        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-//        Mockito.when(roleRepository.findById(role.getId())).thenReturn(Optional.of(role));
-//        Mockito.when(userRepository.save(user)).thenReturn(user);
-//
-//        Assertions.assertEquals(new UserDTO(user), userService.updateUserAccessLevel(role, user.getId(), true));
-//
-//        Mockito.verify(userRepository, Mockito.times(1)).save(user);
 
-    }
     @Test
     public void returnUserDTOWithUpdatedIsDisabled(){
 
@@ -144,6 +136,37 @@ public class UserServiceTest {
         verify(userRepository, times(1)).save(user);
 
     }
+
+    @Test
+    public void returnUpdatedUserDTO(){
+
+        UserDTO userDTO = new UserDTO(user);
+        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+        Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
+
+        Assertions.assertEquals(userDTO, userService.updateUser(userDTO, user.getId()));
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+    }
+
+    @Test
+    public void returnAllUserDTOPaginated(){
+
+        List<User> userList = new ArrayList<>();
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userList.add(user);
+        Page<User> userPage = new PageImpl<>(userList);
+        Page<UserDTO> userDTOPage = new PageImpl<>(userList.stream().map(UserDTO::new).toList());
+        Pageable pageable = PageRequest.of(0,1);
+
+        Mockito.when(userRepository.findAll(pageable)).thenReturn(userPage);
+
+        Assertions.assertEquals(userDTOPage, userService.getUsersPaginated(pageable));
+
+        Mockito.verify(userRepository, Mockito.times(1)).findAll(pageable);
+    }
+
 
     @Test
     public void shouldThrowExceptionIfUsernameIsTaken() {
@@ -193,4 +216,5 @@ public class UserServiceTest {
 //        Mockito.when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.of(any(User.class)));
 //
 //    }
+
 }
