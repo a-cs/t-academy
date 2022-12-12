@@ -25,6 +25,11 @@
     margin-top: 2vh;
 }
 
+.center{
+    display: flex;
+    justify-content: center;
+}
+
 app-card-create-sku {
     --custom-height: 15rem;
     /*--custom-margin: 1rem 2rem;*/

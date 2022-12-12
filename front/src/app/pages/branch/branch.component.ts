@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ModalAddBranchComponent } from 'src/app/components/BranchComponents/modal-add-branch/modal-add-branch.component';
 import IBranch from 'src/app/interfaces/IBranch';
 import { AuthService } from 'src/app/service/auth.service';
@@ -17,7 +18,10 @@ export class BranchComponent implements OnInit {
 
   permissions = buttonPermission;
 
-  constructor(private branchService: BranchService, public auth: AuthService) {
+  isLoading: boolean = false;
+  isError: boolean = false;
+
+  constructor(private branchService: BranchService, public auth: AuthService, private notification: ToastrService) {
     this.branchService.branchChanged.subscribe(() => {
       this.getData();
     });
@@ -28,9 +32,19 @@ export class BranchComponent implements OnInit {
   }
 
   getData() {
+    this.isLoading = true
     this.branchService.get().subscribe((data) => {
       this.branches = data;
-    });
+      this.isLoading = false
+    }, error => {
+      this.isLoading = false
+      this.isError = true
+      this.notification.error(error.error.message, 'Error: No server response', {
+        tapToDismiss: true,
+        disableTimeOut: true,
+        closeButton: true,
+      });
+    })
   }
 
   onSearchTextEntered(searchValue: string) {
