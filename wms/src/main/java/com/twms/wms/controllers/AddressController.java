@@ -32,15 +32,15 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.getById(addressId));
     }
 
-    @PutMapping("/{addressId}")
-    public ResponseEntity<Address> put(@PathVariable("addressId") Long addressId,
-                                       @Valid @RequestBody Address address) {
-        return ResponseEntity.status(HttpStatus.OK).body(addressService.putById(addressId, address));
-    }
-
     @DeleteMapping("/{addressId}")
     public ResponseEntity<Void> delete(@PathVariable("addressId") Long addressId) {
         addressService.deleteById(addressId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+//    @PutMapping("/{addressId}")
+//    public ResponseEntity<Address> put(@PathVariable("addressId") Long addressId,
+//                                       @Valid @RequestBody Address address) {
+//        return ResponseEntity.status(HttpStatus.OK).body(addressService.putById(addressId, address));
+//    }
 }

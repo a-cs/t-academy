@@ -146,16 +146,16 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    public void shouldReturnOkWhenSearching() throws Exception
-//    {
-//        when(service.searchTerm("test", pageableMock)).thenReturn(categoriesPage);
-//
-//        ResultActions result = mockMvc.perform(get("/search")
-//                        .param("term", "test")
-//                        .param("page", "1")
-//                        .param("size", "1")
-//                .accept(MediaType.APPLICATION_JSON));
-//        result.andExpect(status().isOk());
-//    }
+    @Test
+    public void shouldReturnOkWhenSearching() throws Exception
+    {
+        when(service.searchTerm("test", pageableMock)).thenReturn(categoriesPage);
+
+        ResultActions result = mockMvc.perform(get("/category/search")
+                        .param("term", "test")
+                        .param("page", "1")
+                        .param("size", "1")
+                .accept(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+    }
 }
