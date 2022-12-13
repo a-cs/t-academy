@@ -3,11 +3,11 @@
     <div class="title">
         <p>Branches</p>
     </div>
-    <div class="search-bar" [ngStyle]="{ display: isLoading || isError ? 'none' : 'inline'}">
+    <div class="search-bar" [ngStyle]="{ display: hideSearchBar || isError ? 'none' : 'inline'}">
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
     <div class="center" [ngStyle]="{ display: isLoading ? 'flex' : 'none'}">
-        <mat-spinner style="margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="30">
+        <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="60" color="accent">
         </mat-spinner>
     </div>
     <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">

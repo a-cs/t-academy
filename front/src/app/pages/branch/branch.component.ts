@@ -20,6 +20,7 @@ export class BranchComponent implements OnInit {
 
   isLoading: boolean = false;
   isError: boolean = false;
+  hideSearchBar: boolean = false
 
   constructor(private branchService: BranchService, public auth: AuthService, private notification: ToastrService) {
     this.branchService.branchChanged.subscribe(() => {
@@ -33,9 +34,11 @@ export class BranchComponent implements OnInit {
 
   getData() {
     this.isLoading = true
+    this.hideSearchBar = true
     this.branchService.get().subscribe((data) => {
       this.branches = data;
       this.isLoading = false
+      this.hideSearchBar = false
     }, error => {
       this.isLoading = false
       this.isError = true
@@ -48,10 +51,20 @@ export class BranchComponent implements OnInit {
   }
 
   onSearchTextEntered(searchValue: string) {
+    this.isLoading = true
+    this.hideSearchBar = false
     this.searchText = searchValue;
     this.branchService.getByLikeName(this.searchText).subscribe((data) => {
       this.branches = data;
-      console.log(this.branches);
+      this.isLoading = false
+    }, error => {
+      this.isLoading = false
+      this.isError = true
+      this.notification.error(error.error.message, 'Error: No server response', {
+        tapToDismiss: true,
+        disableTimeOut: true,
+        closeButton: true,
+      });
     });
   }
 }

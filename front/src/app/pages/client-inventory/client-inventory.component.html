@@ -2,7 +2,7 @@
 <div class="container">
   <div class="space"></div>
   <div class="top-side">
-    <div class="select">
+    <div class="select" [ngStyle]="{ display: hideSearchBar || isError ? 'none' : ''}">
       <mat-form-field class="estilo" appearance="fill">
         <mat-label>Branches</mat-label>
         <mat-select [formControl]="branchesForm" multiple>
@@ -24,13 +24,14 @@
     </div>
     <span id="bar-position"
       ><app-search-bar
+      [ngStyle]="{ display: hideSearchBar || isError ? 'none' : 'inline'}"
         class="margin-search-bar"
         (searchTextChanged)="onSearchTextEnteredSKUWareHouse($event)"
       ></app-search-bar
     ></span>
   </div>
   <div class="center" [ngStyle]="{ display: isLoading ? 'flex' : 'none'}">
-    <mat-spinner style="margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="30">
+    <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="60" color="accent">
     </mat-spinner>
 </div>
 

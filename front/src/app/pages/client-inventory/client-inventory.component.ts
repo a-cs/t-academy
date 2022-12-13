@@ -34,6 +34,7 @@ export class ClientInventoryComponent implements OnInit {
 
   isLoading: boolean = false;
   isError: boolean = false;
+  hideSearchBar: boolean = false
 
   pageEvent: PageEvent;
 
@@ -47,6 +48,7 @@ export class ClientInventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true
+    this.hideSearchBar = true
     this.warehouseSlotService
       .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
@@ -55,6 +57,7 @@ export class ClientInventoryComponent implements OnInit {
         this.pageSize = data.size
         this.pageIndex = data.number
         this.isLoading = false
+        this.hideSearchBar = false
       }, error => {
         this.isLoading = false
         this.isError = true
@@ -102,6 +105,7 @@ export class ClientInventoryComponent implements OnInit {
     //   console.log("oi")
     // }
     this.isLoading = true
+    this.hideSearchBar = false
     if (this.idList.length >= 0 == false) {
    
       this.warehouseSlotService
