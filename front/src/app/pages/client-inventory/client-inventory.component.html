@@ -29,8 +29,12 @@
       ></app-search-bar
     ></span>
   </div>
+  <div class="center" [ngStyle]="{ display: isLoading ? 'flex' : 'none'}">
+    <mat-spinner style="margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="30">
+    </mat-spinner>
+</div>
 
-  <div class="cards">
+  <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
     <app-card-client-sku
       (click)="openAddDialog(warehouseSlot)"
       *ngFor="let warehouseSlot of client_wareshouses_slots"
@@ -38,7 +42,7 @@
     >
     </app-card-client-sku>
   </div>
-  <div class="center">
+  <div class="center" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex' }">
     <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
         [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
         [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
