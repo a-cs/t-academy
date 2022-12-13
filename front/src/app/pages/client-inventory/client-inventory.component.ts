@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalShowClientInventoryComponent } from 'src/app/components/modal-show-client-inventory/modal-show-client-inventory.component';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client-inventory',
@@ -31,17 +32,23 @@ export class ClientInventoryComponent implements OnInit {
   showFirstLastButtons = true;
   disabled = false;
 
+  isLoading: boolean = false;
+  isError: boolean = false;
+  hideSearchBar: boolean = false
+
   pageEvent: PageEvent;
 
   constructor(
     private warehouseSlotService: WarehouseSlotService,
     private branchService: BranchService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notification: ToastrService
   ) { }
 
   ngOnInit(): void {
-    console.log("id = ", this.authService.getUserId())
+    this.isLoading = true
+    this.hideSearchBar = true
     this.warehouseSlotService
       .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
@@ -49,7 +56,17 @@ export class ClientInventoryComponent implements OnInit {
         this.length = data.totalElements
         this.pageSize = data.size
         this.pageIndex = data.number
-      });
+        this.isLoading = false
+        this.hideSearchBar = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No server response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
+        });
+      })
 
     this.branchService.get().subscribe((res) => {
       this.branches = res;
@@ -87,9 +104,10 @@ export class ClientInventoryComponent implements OnInit {
     // if(searchValue == "" && this.branchesList == null){
     //   console.log("oi")
     // }
-
+    this.isLoading = true
+    this.hideSearchBar = false
     if (this.idList.length >= 0 == false) {
-      console.log("id = ", this.authService.getUserId())
+   
       this.warehouseSlotService
         .getByClientIdByBranchesByProductsName(
           this.authService.getUserId() || 0,
@@ -105,11 +123,20 @@ export class ClientInventoryComponent implements OnInit {
           this.length = client_wareshouses_slots.totalElements;
           this.pageSize = client_wareshouses_slots.size;
           this.pageIndex = client_wareshouses_slots.number;
+          this.isLoading = false
+        }, error => {
+          this.isLoading = false
+          this.isError = true
+          this.notification.error(error.error.message, 'Error: No server response', {
+            tapToDismiss: true,
+            disableTimeOut: true,
+            closeButton: true,
+          });
         });
     } else {
-      console.log(this.idList)
+      
       this.searchText = searchValue;
-      console.log("id = ", this.authService.getUserId())
+      
       this.warehouseSlotService
         .getByClientIdByBranchesByProductsName(
           this.authService.getUserId() || 0,
@@ -119,13 +146,22 @@ export class ClientInventoryComponent implements OnInit {
           this.pageSize
         )
         .subscribe((client_wareshouses_slots) => {
-          console.log(client_wareshouses_slots);
+          
           this.client_wareshouses_slots =
             (client_wareshouses_slots.content as unknown as IWarehouseSlot[]) ||
             [];
           this.length = client_wareshouses_slots.totalElements;
           this.pageSize = client_wareshouses_slots.size;
           this.pageIndex = client_wareshouses_slots.number;
+          this.isLoading = false
+        }, error => {
+          this.isLoading = false
+          this.isError = true
+          this.notification.error(error.error.message, 'Error: No server response', {
+            tapToDismiss: true,
+            disableTimeOut: true,
+            closeButton: true,
+          });
         });
     }
   }
@@ -139,10 +175,11 @@ export class ClientInventoryComponent implements OnInit {
   }
 
   handlePageEvent(e: PageEvent) {
+    this.isLoading = true
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    console.log("id = ", this.authService.getUserId())
+    
     this.warehouseSlotService
       .getByIdClient(this.authService.getUserId() || 0, this.pageIndex, this.pageSize)
       .subscribe((data) => {
@@ -150,6 +187,15 @@ export class ClientInventoryComponent implements OnInit {
         this.length = data.totalElements;
           this.pageSize = data.size;
           this.pageIndex = data.number;
+          this.isLoading = false
+      }, error => {
+        this.isLoading = false
+        this.isError = true
+        this.notification.error(error.error.message, 'Error: No server response', {
+          tapToDismiss: true,
+          disableTimeOut: true,
+          closeButton: true,
+        });
       });
   }
 }

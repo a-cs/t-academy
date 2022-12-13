@@ -1,12 +1,16 @@
 <app-header></app-header>
 <div class="container">
     <div class="title">
-        <p>Branch</p>
+        <p>Branches</p>
     </div>
-    <div class="search-bar">
+    <div class="search-bar" [ngStyle]="{ display: hideSearchBar || isError ? 'none' : 'inline'}">
         <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
     </div>
-    <div class="cards">
+    <div class="center" [ngStyle]="{ display: isLoading ? 'flex' : 'none'}">
+        <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="60" color="accent">
+        </mat-spinner>
+    </div>
+    <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
         <app-card-create-sku *ngIf="auth.validateRole(permissions.addBranch)" [component] = "component"></app-card-create-sku>
         <app-card-branch *ngFor="let branch of branches" [branch]="branch"></app-card-branch>
     </div>

@@ -62,7 +62,7 @@ export class UserComponent implements AfterViewInit {
       }, error => {
         this.isLoading = false
         this.isError = true
-        this.notification.error(error.error.message, 'Error: No serve response', {
+        this.notification.error(error.error.message, 'Error: No server response', {
           tapToDismiss: true,
           disableTimeOut: true,
           closeButton: true,
