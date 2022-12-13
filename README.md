@@ -176,7 +176,7 @@ ng serve
 # Permissions
 
 <div align="center">
-	<img src="./assets/access_levels.png" alt="T-WMS access levels"/>
+	<img src="./assets/access_levels.PNG" alt="T-WMS access levels"/>
 </div>
 
 </br>
