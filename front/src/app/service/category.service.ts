@@ -18,7 +18,7 @@ export class CategoryService {
   ) {}
 
   //get() {
-  //return this.http.get<ICategory[]>('${environment.api}category', {
+  //return this.http.get<ICategory[]>(`${environment.api}category`, {
   //headers: this.auth.buildHeader(),
   //});
   //}
@@ -106,7 +106,7 @@ export class CategoryService {
 
   create(data: ICategory): void {
     this.http
-      .post<ICategory>('${environment.api}category', data, {
+      .post<ICategory>(`${environment.api}category`, data, {
         headers: this.auth.buildHeader(),
       })
       .subscribe(

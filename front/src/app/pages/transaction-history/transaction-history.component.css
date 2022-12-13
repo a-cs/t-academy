@@ -10,6 +10,15 @@
     color: var(--text-secondary-color);
 }
 
+.margin-top{
+    margin-top: 5%;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
 .cards{
     width: 100%;
     display: flex;

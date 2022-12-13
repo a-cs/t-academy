@@ -26,7 +26,7 @@ export class UserService {
 
   get() {
     console.log(this.auth.buildHeader());
-    return this.http.get<IUser[]>('${environment.api}user/all', {
+    return this.http.get<IUser[]>(`${environment.api}user/all`, {
       headers: this.auth.buildHeader(),
     });
   }
