@@ -1,5 +1,6 @@
 package com.twms.wms.services;
 
+import com.twms.wms.dtos.BranchIdsProductIdsFilterDTO;
 import com.twms.wms.dtos.ListIdsFilterDTO;
 import com.twms.wms.dtos.WarehouseSlotDTO;
 import com.twms.wms.entities.*;
@@ -47,6 +48,7 @@ public class WarehouseSlotServiceTest {
 
     @Mock
     private WarehouseSlotRepository repository;
+
 
 
     Branch branch = new Branch();
@@ -208,6 +210,210 @@ public class WarehouseSlotServiceTest {
         when(repository.findByClientIdAndWarehouseSlotIdBranchIn(any(Long.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<WarehouseSlot>()));
 
         Assertions.assertNotNull(service.getByClientIdAndBranches(1L,new ListIdsFilterDTO(),PageRequest.of(1,1)));
+    }
+
+    @Test
+    public void shouldReturnPageWhenSearchClientBranchProducts(){
+        when(repository.findAllByWarehouseSlotIdBranchIdAndSkuNameContainingIgnoreCaseAndWarehouseSlotIdBranchIdAndClientNameContainingIgnoreCaseOrderByArrivalDateAsc(any(Long.class),anyString(),any(Long.class),anyString(),any(Pageable.class))).thenReturn(new PageImpl<>(new ArrayList<WarehouseSlot>()));
+
+        Assertions.assertNotNull(service.getByClientIdAndBranchesandProducts("any","any",1L,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnListOfWareHouseSlotsByTheOldestForEspecificClientAndSkuAndBranch(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        Client client = new Client();
+        client.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+        when(clientService.readClientById(anyLong())).thenReturn(client);
+
+        when(repository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(anyLong(),anyLong(),anyLong())).thenReturn(List.of(warehouseSlot));
+
+        Assertions.assertDoesNotThrow(()->service.getOldestSlotByClientAndSkuAndBranch(1L,1L,1L));
+
+    }
+
+    @Test
+    public void shouldThrowExceptionIfWareHouseSlotsByTheOldestForEspecificClientAndSkuAndBranchDontExist(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        Client client = new Client();
+        client.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+        when(clientService.readClientById(anyLong())).thenReturn(client);
+
+        when(repository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(anyLong(),anyLong(),anyLong())).thenReturn(List.of());
+
+        Assertions.assertThrows(EntityNotFoundException.class,()->service.getOldestSlotByClientAndSkuAndBranch(1L,1L,1L));
+
+    }
+
+    @Test
+    public void shouldReturnFirstEmptyWareHouseSlot(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        Client client = new Client();
+        client.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+
+        when(repository.findFirstBySkuIsNullAndWarehouseSlotIdBranchId(anyLong())).thenReturn(warehouseSlot);
+
+        Assertions.assertDoesNotThrow(()->service.getFirstEmptySlot(1L));
+
+    }
+
+    @Test
+    public void shouldThrowExceptionIfTheresNoEmptyWareHouseSlot(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+
+        when(repository.findAllByClientIdAndWarehouseSlotIdBranchIdAndSkuIdOrderByArrivalDateAsc(anyLong(),anyLong(),anyLong())).thenReturn(List.of());
+
+        Assertions.assertThrows(EntityNotFoundException.class,()->service.getFirstEmptySlot(1L));
+
+    }
+
+    @Test
+    public void shouldChangeWareHouseSlotWhenUpdated(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+        when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(any(Branch.class),anyString(),anyInt())).thenReturn(Optional.of(warehouseSlot));
+        doReturn(new WarehouseSlotDTO()).when(service).post(any(WarehouseSlot.class));
+
+        Assertions.assertDoesNotThrow(()->service.putById(warehouseSlot,1L,"any",1));
+
+    }
+
+    @Test
+    public void shouldThrowExceptionIfTheresNoWareHouseSlotToBeUpdated(){
+        Branch branch = new Branch();
+        branch.setId(1L);
+
+        when(branchService.readBranchById(anyLong())).thenReturn(branch);
+        when(repository.findByWarehouseSlotIdBranchAndWarehouseSlotIdAisleAndWarehouseSlotIdBay(any(Branch.class),anyString(),anyInt())).thenReturn(Optional.empty());
+        doReturn(new WarehouseSlotDTO()).when(service).post(any(WarehouseSlot.class));
+
+        Assertions.assertThrows(EntityNotFoundException.class, ()->service.putById(warehouseSlot,1L,"any",1));
+
+    }
+
+    @Test
+    public void shouldReturnPageOfWareHouseSlotDTOOwnedByGivenUser(){
+        User user = new User();
+        user.setId(1L);
+        user.setEmail("any@who");
+
+        Client client = new Client();
+        client.setId(1L);
+
+        when(userService.getUserById(anyLong())).thenReturn(user);
+        when(clientService.getClientByEmail(anyString())).thenReturn(client);
+        doReturn(new PageImpl<WarehouseSlotDTO>(new ArrayList<>())).when(service).getByClientId(anyLong(),any(Pageable.class));
+
+        Assertions.assertNotNull(service.getByUserId(1L,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPageOfWarehouseSlotDTOByUserBranchANdProductName(){
+        User user = new User();
+        user.setId(1L);
+        user.setEmail("any@who");
+
+        Client client = new Client();
+        client.setId(1L);
+
+        when(userService.getUserById(anyLong())).thenReturn(user);
+        when(clientService.getClientByEmail(anyString())).thenReturn(client);
+        doReturn(new PageImpl<WarehouseSlotDTO>(new ArrayList<>())).when(service).
+                getByClientBranchFilteredByProductName(anyLong(),
+                                                       any(ListIdsFilterDTO.class),
+                                                       anyString(),
+                                                       any(Pageable.class));
+        Assertions.assertNotNull(service.getByUserBranchFilteredByProductName(1L,new ListIdsFilterDTO(),"any",PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatedDTOOnFilteredBranchsIdsAndSkusIds(){
+        BranchIdsProductIdsFilterDTO branchs = new BranchIdsProductIdsFilterDTO();
+        branchs.setBranchIds(List.of(1L,2L));
+        branchs.setProductIds(List.of(1L,2L));
+        when(branchService.getBranchesByIds(any(List.class))).thenReturn(new ArrayList());
+        when(skuService.findAllByIds(any(List.class))).thenReturn(new ArrayList());
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(anyLong(),any(List.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchAndProduct(1L,branchs,PageRequest.of(1,1)));
+
+    }
+    @Test
+    public void shouldReturnPaginatedDTOOnFilteredBranchsIdsAndNoSkusIds(){
+        BranchIdsProductIdsFilterDTO branchs = new BranchIdsProductIdsFilterDTO();
+        branchs.setBranchIds(List.of(1L,2L));
+        branchs.setProductIds(List.of());
+        when(branchService.getBranchesByIds(any(List.class))).thenReturn(new ArrayList());
+        when(skuService.read()).thenReturn(new ArrayList());
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(anyLong(),any(List.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchAndProduct(1L,branchs,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatedDTOOnNOTFilteredBranchsIdsAndSkusIds(){
+        BranchIdsProductIdsFilterDTO branchs = new BranchIdsProductIdsFilterDTO();
+        branchs.setBranchIds(List.of());
+        branchs.setProductIds(List.of());
+        when(branchService.readAllBranchs()).thenReturn(new ArrayList());
+        when(skuService.read()).thenReturn(new ArrayList());
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(anyLong(),any(List.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchAndProduct(1L,branchs,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatedDTOOnFilteredSkusIdsAndBranchsIds(){
+        BranchIdsProductIdsFilterDTO branchs = new BranchIdsProductIdsFilterDTO();
+        branchs.setBranchIds(List.of());
+        branchs.setProductIds(List.of(1L,2L));
+        when(branchService.readAllBranchs()).thenReturn(new ArrayList());
+        when(skuService.findAllByIds(any(List.class))).thenReturn(new ArrayList());
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuIn(anyLong(),any(List.class),any(List.class),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchAndProduct(1L,branchs,PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatesWareHouseSlotDTOByClientBranchAndTerm(){
+        ListIdsFilterDTO filterDTO = new ListIdsFilterDTO(List.of(1L,2L));
+
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(anyLong(),any(List.class),anyString(),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchFilteredByProductName(1L,filterDTO,"any",PageRequest.of(1,1)));
+
+    }
+
+    @Test
+    public void shouldReturnPaginatesWareHouseSlotDTOByClientAndTermWithNoBranch(){
+        ListIdsFilterDTO filterDTO = new ListIdsFilterDTO(List.of());
+
+        when(repository.findByClientIdAndWarehouseSlotIdBranchInAndSkuNameContainingIgnoreCase(anyLong(),any(List.class),anyString(),any(Pageable.class))).thenReturn(new PageImpl(new ArrayList<>()));
+
+        Assertions.assertNotNull(service.getByClientBranchFilteredByProductName(1L,filterDTO,"any",PageRequest.of(1,1)));
 
     }
 
