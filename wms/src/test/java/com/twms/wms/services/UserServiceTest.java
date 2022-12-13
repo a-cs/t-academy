@@ -3,6 +3,7 @@ package com.twms.wms.services;
 import com.twms.wms.dtos.UserDTO;
 import com.twms.wms.email.EmailSender;
 import com.twms.wms.email.EmailService;
+import com.twms.wms.entities.ConfirmationToken;
 import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
@@ -21,11 +22,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -118,12 +121,66 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findUserByUsername(user.getUsername());
     }
 
-//    @Test
-//    public void throwsExceptionWhenUserNotFoundById(){
-//
-//        Assertions.assertThrows(EntityNotFoundException.class,
-//                () ->userService.updateUserAccessLevel(new Role(),-1L, true));
-//    }
+    @Test
+    public void returnVoidWhenSettingNewPassword(){
+        ConfirmationToken token = new ConfirmationToken();
+        token.setExpiredAt(LocalDateTime.now().plusHours(1));
+        token.setUser(user);
+        Mockito.when(confirmationTokenService.getConfirmationToken(token.toString())).thenReturn(token);
+        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        Assertions.assertDoesNotThrow(()->userService.setNewPassword(token.toString(), user.getPassword()));
+
+        verify(userRepository, times(01)).save(any(User.class));
+    }
+
+    @Test
+    public void throwsExceptionWhenTokenIsExpired(){
+
+        ConfirmationToken token = new ConfirmationToken();
+        token.setExpiredAt(LocalDateTime.now().minusHours(1));
+        Mockito.when(confirmationTokenService.getConfirmationToken(token.toString())).thenReturn(token);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () ->userService.setNewPassword(token.toString(), user.getPassword()));
+    }
+
+    @Test
+    public void throwsExceptionWhenTokenHasBeenUsed(){
+
+        ConfirmationToken token = new ConfirmationToken();
+        token.setExpiredAt(LocalDateTime.now().minusHours(1));
+        token.setConfirmedAt(LocalDateTime.now().minusMinutes(30));
+        Mockito.when(confirmationTokenService.getConfirmationToken(token.toString())).thenReturn(token);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () ->userService.setNewPassword(token.toString(), user.getPassword()));
+    }
+
+    @Test
+    public void returnUserDetailOnLoadByUsername(){
+
+        Mockito.when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        Assertions.assertEquals(user, userService.loadUserByUsername(user.getEmail()));
+
+        verify(userRepository, times(01)).findUserByEmail(user.getEmail());
+
+    }
+
+    @Test
+    public void throwsExceptionWhenUserNotFoundByEmail(){
+
+        Mockito.when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(UsernameNotFoundException.class,
+                () -> {
+                    userService.loadUserByUsername(user.getEmail());
+                }
+        );
+
+    }
 
     @Test
     public void returnUserDTOWithUpdatedIsDisabled(){
@@ -151,6 +208,19 @@ public class UserServiceTest {
     }
 
     @Test
+    public void shoudThrowExceptionIfUserNotFoundWhenUpdating() {
+        Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> {
+                    userService.updateUser(new UserDTO(user), user.getId());
+                }
+        );
+
+        Mockito.verify(userRepository, Mockito.times(0)).save(user);
+    }
+
+    @Test
     public void returnAllUserDTOPaginated(){
 
         List<User> userList = new ArrayList<>();
@@ -166,6 +236,7 @@ public class UserServiceTest {
 
         Mockito.verify(userRepository, Mockito.times(1)).findAll(pageable);
     }
+
 
 
     @Test
