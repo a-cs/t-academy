@@ -16,7 +16,7 @@
           <label for="email">Email</label>
           <div class="input">
             <input type="text" placeholder="Type your email" name="email" formControlName="email" #email>
-            <button type="button" class="icon" (click)="email.focus()">
+            <button type="button" tabindex="-1" class="icon" (click)="email.focus()">
               <i class="material-icons">mail</i>
             </button>
           </div>
@@ -27,7 +27,7 @@
           <label for="password">Password</label>
           <div class="input">
             <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password" formControlName="password" #password>
-            <button type="button" class="icon" (click)="togglePasswordVisibility(password)">
+            <button type="button" tabindex="-1" class="icon" (click)="togglePasswordVisibility(password)">
               <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
             </button>
           </div>
@@ -40,7 +40,12 @@
         </div>
       </div>
 
-      <button [disabled]="form.invalid" id="loginButton">{{isLogin ? "Login now" : "Forgot my password"}}</button>
+      <button [disabled]="form.invalid" id="loginButton">
+      
+        <mat-spinner [ngStyle]="{ display: isLoading ? 'flex' : 'none' }"
+          [diameter]="30" style="margin-right: 5%;">
+        </mat-spinner>
+      {{isLogin ? "Login now" : "Forgot my password"}}</button>
       <!-- <button id="loginButton">Login now</button> -->
     </form>
   </div>
