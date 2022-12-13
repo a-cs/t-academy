@@ -10,6 +10,10 @@
     grid-template-rows: repeat(1, 100%);
 }
 
+.card button {
+    color: var(--text-tittle-color);
+}
+
 .left-side{
     grid-column-start: 1;
     grid-column-end: 1;
