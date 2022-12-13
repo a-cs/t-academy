@@ -24,6 +24,7 @@ export class ModalAddSkuComponent implements OnInit {
   filteredUnits: Observable<IMeasurementUnit[]>;
   firstCategory: ICategory;
   firstUnit: IMeasurementUnit;
+  isWait: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -122,12 +123,14 @@ export class ModalAddSkuComponent implements OnInit {
       category: this.form.value.category,
       measurementUnit: this.form.value.measurementUnit,
     };
+    this.isWait = true;
     this.skuService.create(newSku).subscribe(
       (respose) => {},
       (error) => {
         this.notification.error(error.error.message, 'Error', {
           progressBar: true,
         });
+        this.isWait = false;
       },
       () => {
         this.notification.success(
@@ -137,6 +140,7 @@ export class ModalAddSkuComponent implements OnInit {
             progressBar: true,
           }
         );
+        this.isWait = false;
         this.skuService.skuChanged.emit();
         this.dialogRef.close();
       }

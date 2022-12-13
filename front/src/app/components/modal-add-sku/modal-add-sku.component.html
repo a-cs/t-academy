@@ -33,6 +33,13 @@
 
   <div class="buttons">
     <button mat-dialog-close mat-raised-button class="cancelButton"> Cancel</button>
-    <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Create</button>
+    <button [disabled]="form.invalid || isWait" mat-raised-button class="sucessButton"><span
+      >Create
+      <mat-spinner
+        style="margin-left: 10px"
+        [ngStyle]="{ display: isWait ? 'inline' : 'none' }"
+        [diameter]="30"
+      ></mat-spinner>
+    </span></button>
   </div>
 </form>

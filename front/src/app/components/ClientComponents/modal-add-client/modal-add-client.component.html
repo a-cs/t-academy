@@ -100,7 +100,7 @@
       Cancel
     </button>
     <button
-      [disabled]="createForm.invalid"
+      [disabled]="createForm.invalid || isWait"
       mat-raised-button
       class="sucessButton"
     >

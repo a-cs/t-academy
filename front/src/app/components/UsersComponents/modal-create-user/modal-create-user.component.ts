@@ -24,6 +24,7 @@ export class ModalCreateUserComponent implements OnInit {
   branchList: IBranch[]
   firstBranch: IBranch
   filteredBranches: Observable<IBranch[]>
+  isWait: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA)
   public user: IUser,
@@ -99,6 +100,7 @@ export class ModalCreateUserComponent implements OnInit {
       accessLevel: this.form.value.role,
       branch: this.form.value.branch
     }
+    this.isWait = true;
     this.userService.createUser(userInfo).subscribe(
       response => {
        },
@@ -106,6 +108,7 @@ export class ModalCreateUserComponent implements OnInit {
         this.notificationService.error(error.error.message, 'Error!', {
           progressBar: true,
         });
+        this.isWait = false;
       },
 
       () => {
@@ -113,6 +116,7 @@ export class ModalCreateUserComponent implements OnInit {
           'Success!',
           { progressBar: true }
         )
+        this.isWait = false;
         this.userService.userChanged.emit()
         this.dialogRef.close()
       }

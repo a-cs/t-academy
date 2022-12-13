@@ -14,6 +14,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ModalAddBranchComponent implements OnInit {
   form: FormGroup;
   branch: IBranch;
+  isWait: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -131,12 +132,14 @@ export class ModalAddBranchComponent implements OnInit {
 
     this.totalDigits = 2 + this.aisleDigits + this.bayDigits
     if (this.totalDigits < 5) {
+      this.isWait = true;
       this.branchService.create(newBranch).subscribe(
         (response) => { },
         (error) => {
           this.notification.error(error.error.message, 'Error!', {
             progressBar: true,
           });
+          this.isWait = false;
         },
         () => {
           this.notification.success(
@@ -144,6 +147,7 @@ export class ModalAddBranchComponent implements OnInit {
             'Created!',
             { progressBar: true }
           );
+          this.isWait = false;
           this.branchService.branchChanged.emit();
           this.dialogRef.close();
         }

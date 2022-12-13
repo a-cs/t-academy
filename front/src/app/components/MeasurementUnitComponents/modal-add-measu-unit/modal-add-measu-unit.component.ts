@@ -13,7 +13,7 @@ import { MeasurementUnitService } from 'src/app/service/measurement-unit.service
 export class ModalAddMeasuUnitComponent implements OnInit {
   form: FormGroup;
   measurementUnit: IMeasurementUnit;
-
+  isWait: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private measurementUnitService: MeasurementUnitService,
@@ -48,12 +48,14 @@ export class ModalAddMeasuUnitComponent implements OnInit {
       description: this.form.value.description.toLowerCase(),
       symbol: this.form.value.symbol.toLowerCase(),
     };
+    this.isWait = true;
     this.measurementUnitService.create(newMeasurementUnit).subscribe(
       (respose) => {},
       (error) => {
         this.notification.error(error.error.message, 'Error', {
           progressBar: true,
         });
+        this.isWait = false;
       },
       () => {
         this.notification.success(
@@ -65,6 +67,7 @@ export class ModalAddMeasuUnitComponent implements OnInit {
             progressBar: true,
           }
         );
+        this.isWait = false;
         this.measurementUnitService.measurementUnitChanged.emit();
         this.dialogRef.close();
       }
