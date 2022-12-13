@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  isLoading: boolean = false;
+  isError: boolean = false;
   form: FormGroup;
   showPassword: boolean = false;
   isLogin: boolean = true;
@@ -40,16 +42,19 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.isLoading = true
+    this.isError = false
     let email = this.form.controls['email'].value;
     if (this.isLogin) {
       let password = this.form.controls['password'].value;
       this.userService.login(email, password).subscribe(
         (response) => {
-          console.log('res!', response);
           localStorage.setItem('T-WMS_token', response.access_token);
           this.router.navigate(['']);
+          this.isLoading = false
         },
         (error) => {
+          this.isLoading = false
           this.notificationService.error('Login or password invalid', 'Error!', {
             progressBar: true,
           });
@@ -59,13 +64,14 @@ export class LoginComponent implements OnInit {
       this.userService.forgotPassword(email).subscribe(
         (response) => { },
         (error) => {
-
+          this.isLoading = false
           this.notificationService.error(error.error.message, 'Error!', {
             progressBar: true,
           });
         },
 
         () => {
+          this.isLoading = false
           this.notificationService.success(`En email was sent to your email address`,
             'Success!',
             { progressBar: true }
