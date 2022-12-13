@@ -137,12 +137,9 @@ public class UserService implements UserDetailsService {
 
     public UserDTO updateUser(UserDTO user, Long userId) {
         User savedUser = this.getUserById(userId);
-        if(userRepository.existsById(userId)){
-            User updatedUser = new User(user);
-            updatedUser.setPassword(savedUser.getPassword());
-            return new UserDTO(userRepository.save(updatedUser));
-        }
-        throw new UsernameNotFoundException("User not found.");
+        User updatedUser = new User(user);
+        updatedUser.setPassword(savedUser.getPassword());
+        return new UserDTO(userRepository.save(updatedUser));
     }
 
     public Page<UserDTO> getUsersPaginated(Pageable pageable) {
