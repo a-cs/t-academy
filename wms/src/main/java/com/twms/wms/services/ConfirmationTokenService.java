@@ -20,8 +20,10 @@ public class ConfirmationTokenService {
     ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired
     EmailService emailSender;
+
     @Autowired
     EmailLayout emailLayout;
+
 
     public void saveConfirmationToken(ConfirmationToken confirmationToken){
         confirmationTokenRepository.save(confirmationToken);
@@ -42,8 +44,10 @@ public class ConfirmationTokenService {
                 LocalDateTime.now().plusHours(2),
                 user
         );
+
         String emailbody = isNewUser ? emailLayout.buildNewUserEmail(new UserDTO(user), token) :
                 emailLayout.buildPasswordRecoverEmail(new UserDTO(user), token);
+
         emailSender.send(user.getEmail(), emailbody);
         this.saveConfirmationToken(confirmationToken);
     }

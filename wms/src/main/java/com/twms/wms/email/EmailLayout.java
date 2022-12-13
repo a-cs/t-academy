@@ -39,9 +39,11 @@ public class EmailLayout {
             "                <p> Set your new password by clicking on the link below.</p>\n" +
             "            <a href='"+url+"confirmation?token="+ token + "' style='border-radius:32px;padding: 12px 48px;font-size: 24px;text-decoration: none;color: white;width: 100%;'>\n" +
             "                    <p class='email-link' style='border-radius:32px;padding:12px 60px;margin: 30px;height: 40px;cursor: pointer;width: fit-content;background-color: #E20074;line-height: 40px;'>Reset password</p></a>\n" +
+
             "        </div>\n" +
             "    </div>\n";
     }
+
 
     public String buildPasswordRecoverEmail(UserDTO user, String token){
 
@@ -65,6 +67,7 @@ public class EmailLayout {
                         "            <p>We've received a password change request for you at <a href='"+url+"' target='_blank'>T-wms</a> platform.</p>\n" +
                         "                <p> Set your new password by clicking on the link below.</p>\n" +
                         "            <a href='"+url+"confirmation?token="+ token + "' style='border-radius:32px;padding: 12px 48px;font-size: 24px;text-decoration: none;color: white;width: 100%;'>\n" +
+
                         "                    <p class='email-link' style='border-radius:32px;padding:12px 60px;margin: 30px;height: 40px;cursor: pointer;width: fit-content;background-color: #E20074;line-height: 40px;'>Set new password</p></a>\n" +
                         "        </div>\n" +
                         "    </div>\n";

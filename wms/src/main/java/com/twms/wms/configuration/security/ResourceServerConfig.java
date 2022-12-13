@@ -23,16 +23,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private Environment env;
 
-
-    private static final String[] PUBLIC = {"/oauth/token"};
-
-    private static final String[] ROLE_CLIENT_GET = {"/branch", "/warehouseSlot/client/**"};
-    private static final String[] ROLE_CLIENT_POST = {"/warehouseSlot/client/**"};
-    private static final String[] OPERATOR = {"/sku/**", "/measurement-unit/**", "/category/**"};
-    private static final String[] MANAGER = {"/sku/**", "/measurement-unit/**", "/category/**", "/client/**", "/user/**"};
-    private static final String[] MANAGER_GET = {"/branch/**"};
-    private static final String[] ADMIN = {"/**"};
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore);
@@ -51,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .cors().and()
                     .authorizeRequests()
                     .antMatchers("/user/setpassword", "/user/resetpassword").permitAll()
-                    .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/branch/**").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/warehouseSlot/client/filtered").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers("/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
@@ -75,7 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .cors().and()
                     .authorizeRequests()
                     .antMatchers("/user/setpassword", "/user/resetpassword").permitAll()
-                    .antMatchers(HttpMethod.GET, "/branch").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+                    .antMatchers(HttpMethod.GET, "/branch/**").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/warehouseSlot/client/filtered").hasAnyRole("MANAGER", "ADMIN")
                     .antMatchers("/warehouseSlot/client/**").hasAnyRole("CLIENT", "ADMIN")
                     .antMatchers(HttpMethod.GET, "/sku/**").hasAnyRole("OPERATOR", "MANAGER", "ADMIN")
@@ -94,6 +84,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
 
                     .anyRequest().hasRole("ADMIN");
+
         }
     }
 
