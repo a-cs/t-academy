@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class BranchServiceTest {
@@ -58,6 +60,43 @@ public class BranchServiceTest {
         Assertions.assertNotNull(service.createBranch(branch));
 
         Mockito.verify(repository, Mockito.times(1)).save(branch);
+    }
+    @Test
+    public void shouldThrowExceptionIfAddressIsNull() {
+        Branch branch = new Branch();
+        branch.setName("Teste");
+        List<Branch> branchList = new ArrayList<>();
+        branchList.add(branch);
+        Mockito.when(repository.findByName(any(String.class))).thenReturn(branchList);
+
+        verify(repository, times(0)).save(any(Branch.class));
+
+        Assertions.assertThrows(SQLIntegrityConstraintViolationException.class,
+                () -> {
+                    service.createBranch(branch);
+                }
+        );
+    }
+
+    @Test
+    public void shouldThrowExceptionIfBranchNameIsTaken() {
+        Branch branch = new Branch();
+        branch.setName("Teste");
+
+        Address address = new Address();
+        address.setId(1L);
+
+        branch.setAddress(address);
+
+        Mockito.when(addressService.getById(any(Long.class))).thenReturn(null);
+
+        verify(repository, times(0)).save(any(Branch.class));
+
+        Assertions.assertThrows(SQLIntegrityConstraintViolationException.class,
+                () -> {
+                    service.createBranch(branch);
+                }
+        );
     }
 
     @Test
