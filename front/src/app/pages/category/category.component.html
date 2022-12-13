@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container">
+  <div class="title">
+    <p>Category</p>
+  </div>
+  <div class="search-bar" [ngStyle]="{ display: isError ? 'none' : 'inline'}">
+    <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
+  </div>
+  <div class="center">
+    <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }" [diameter]="60" color="accent"></mat-spinner>
+  </div>
+
+  <p *ngFor="let c of categories" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}"></p>
+
+  <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
+    <app-category-item-create-card *ngIf="auth.validateRole(btnPermission.addCategory)" (onItemAdded)="getCategories()">
+    </app-category-item-create-card>
+    <app-category-item-card (onItemUpdatedOrDeleted)="getCategories()" *ngFor="let c of categories" [category]="c">
+    </app-category-item-card>
+  </div>
+  <div class="center" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
+    <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+      [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="container">
+    <div class="title">
+        <p>User</p>
+    </div>
+    <div class="search-bar" [ngStyle]="{ display: isError ? 'none' : 'inline'}">
+        <app-search-bar (searchTextChanged)="onSearchTextEntered($event)"></app-search-bar>
+    </div>
+    <div class="center">
+        <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }"
+          [diameter]="60" color="accent"></mat-spinner>
+    </div>
+    <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
+        <app-card-create-user></app-card-create-user>
+        <app-card-user *ngFor="let user of userList" [user]="user"></app-card-user>
+    </div>
+    <div class="center" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex' }">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+            [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+            [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
+<app-footer></app-footer>

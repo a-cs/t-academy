@@ -1,0 +1,37 @@
+<div class="top">
+  <div class="title">
+    <p class="capitalize">Category</p>
+  </div>
+</div>
+
+<form [formGroup]="createForm" (ngSubmit)="createNewCategory()">
+  <div class="row">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      placeholder="Type a name"
+      name="name"
+      formControlName="name"
+    />
+  </div>
+
+  <div class="buttons">
+    <button mat-dialog-close mat-raised-button class="cancelButton">
+      Cancel
+    </button>
+    <button
+      [disabled]="createForm.invalid || isWait"
+      mat-raised-button
+      class="sucessButton"
+    >
+    <span
+    >Create
+    <mat-spinner
+      style="margin-left: 10px"
+      [ngStyle]="{ display: isWait ? 'inline' : 'none' }"
+      [diameter]="30"
+    ></mat-spinner>
+  </span>
+    </button>
+  </div>
+</form>

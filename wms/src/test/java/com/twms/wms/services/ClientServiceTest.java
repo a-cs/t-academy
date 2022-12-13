@@ -3,9 +3,7 @@ package com.twms.wms.services;
 import com.twms.wms.dtos.UserDTO;
 import com.twms.wms.entities.*;
 import com.twms.wms.enums.AccessLevel;
-import com.twms.wms.repositories.ClientRepository;
-import com.twms.wms.repositories.RoleRepository;
-import com.twms.wms.repositories.UserRepository;
+import com.twms.wms.repositories.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +11,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,6 +26,7 @@ import static org.mockito.ArgumentMatchers.eq;
 @ExtendWith(SpringExtension.class)
 public class ClientServiceTest {
     @InjectMocks
+    @Spy
     private ClientService clientService;
 
     @Mock
@@ -41,6 +44,7 @@ public class ClientServiceTest {
 
         client.setName("Teste");
         client.setCNPJ("00623904000173");
+        client.setEmail("client@email.com");
 
         User user = new User();
         user.setUsername("userTest");
@@ -51,7 +55,7 @@ public class ClientServiceTest {
 
         client.setAddress(address);
 
-        Mockito.when(userService.createClientUser(client.getCNPJ())).thenReturn(user);
+        Mockito.when(userService.createClientUser(client.getCNPJ(), client.getEmail())).thenReturn(user);
 
         Mockito.when(repository.findByCNPJ(client.getCNPJ())).thenReturn(new ArrayList<Client>());
 
@@ -95,17 +99,70 @@ public class ClientServiceTest {
     @Test
     public void shouldReturnModifiedClientWhenUpdate(){
         Client client = new Client();
+        Address address = new Address();
+        ClientService clientService1 = Mockito.spy(clientService);
+
+        address.setId(1L);
 
         client.setName("Teste");
         client.setCNPJ("00623904000173");
         client.setId(1L);
+        client.setAddress(address);
 
+
+        Mockito.doReturn(client).when(clientService).readClientById(any());
+        //Mockito.when(repository.findById(any())).thenReturn((Optional<Client>) Optional.of(client));
+        Mockito.when(addressService.post(any())).thenReturn(new Address());
         Mockito.when(clientService.saveClient(any())).thenReturn(client);
-        Mockito.when(repository.findById(client.getId())).thenReturn(Optional.of(client));
 
         Assertions.assertDoesNotThrow(()->clientService.updateClient(client.getId(), client));
         Mockito.verify(repository, Mockito.times(1)).save(client);
 
+    }
+
+    @Test
+    public void shouldReturnClientWhenSearchedByEmail(){
+        Client client = new Client();
+        Address address = new Address();
+
+        address.setId(1L);
+
+        client.setName("Teste");
+        client.setCNPJ("00623904000173");
+        client.setId(1L);
+        client.setAddress(address);
+
+        Mockito.when(repository.findByEmail(any())).thenReturn(client);
+
+        Assertions.assertDoesNotThrow(()->clientService.getClientByEmail("teste@mail.com"));
+        Mockito.verify(repository, Mockito.times(1)).findByEmail(any());
+
+    }
+
+    @Test
+    public void shouldReturnListOfClientsWhenReadingAllClients(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findAll()).thenReturn(clients);
+
+        Assertions.assertNotNull(clientService.readAllClients());
+    }
+
+    @Test
+    public void shouldReturnPageOfClientsWhenSearchedATerm(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findByNameContainingIgnoreCaseOrCNPJContainingIgnoreCase(any(),any(),any())).thenReturn(new PageImpl<>(clients));
+
+        Assertions.assertNotNull(clientService.searchTerm("any", PageRequest.of(0,1)));
+    }
+    @Test
+    public void shouldReturnPageOfClientsWhenSearchedAll(){
+        List<Client> clients = new ArrayList<>();
+
+        Mockito.when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(clients));
+
+        Assertions.assertNotNull(clientService.readAllClientsPaginated(PageRequest.of(0,1)));
     }
 
 }

@@ -1,0 +1,51 @@
+.container {
+    min-height: 110vh;
+    width: 100%;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    font-size: 6rem;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    color: var(--text-secondary-color);
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar {
+    margin-top: 2vh;
+}
+
+app-card-create-sku {
+    --custom-height: 15rem;
+    /*--custom-margin: 1rem 2rem;*/
+    --custom-i-font: 12rem;
+}
+
+@media (max-width: 740px) {
+    .title {
+      font-size: 5rem;
+      line-height: normal;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .title {
+      font-size: 3.5rem;
+      line-height: normal;
+    }
+  }

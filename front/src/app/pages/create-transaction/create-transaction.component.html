@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="container">
+
+  <div class="content">
+
+    <div class="top">
+      <div class="title">
+        <p class="capitalize">Create Transaction</p>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="createTransaction()">
+      <div class="row">
+        <label for="sku">Product</label>
+        <input type="text" placeholder="Select a sku" matInput name="selectedSkuId" formControlName="sku"
+          [matAutocomplete]="skuAutoComplete" (blur)="skuFallback()">
+        <mat-autocomplete #skuAutoComplete="matAutocomplete" [displayWith]="displaySku">
+          <mat-option *ngFor="let sku of filteredSkus | async" [value]="sku">
+            {{sku.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div class="row">
+        <label for="client">Client</label>
+        <input type="text" placeholder="Select a client" matInput name="selectedClientId" formControlName="client"
+          [matAutocomplete]="clientAutoComplete" (blur)="clientFallback()">
+        <mat-autocomplete #clientAutoComplete="matAutocomplete" [displayWith]="displayClient">
+          <mat-option *ngFor="let client of filteredClients | async" [value]="client">
+            {{client.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div class="row">
+        <label for="quantity">Quantity</label>
+        <input type="number" min="0" placeholder="Type a quantity" formControlName="quantity">
+      </div>
+
+
+      <div class="row InOut">
+        <span class="margin-left" [ngClass]="InOut ? 'In' : ''"><i class="material-icons">arrow_circle_down</i>In</span>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="InOut" (click)="toggleMenu()">
+          <span class="slider round"></span>
+        </label>
+        <span class="margin-right" [ngClass]="InOut ? '' : 'Out'">
+          <i class="material-icons">arrow_circle_up</i>Out
+        </span>
+      </div>
+
+
+
+      <div class="buttons">
+        <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Create Transaction</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

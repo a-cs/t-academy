@@ -1,5 +1,6 @@
 package com.twms.wms.dtos;
 
+import com.twms.wms.entities.Branch;
 import com.twms.wms.entities.Role;
 import com.twms.wms.entities.User;
 import com.twms.wms.enums.AccessLevel;
@@ -13,13 +14,20 @@ public class UserDTO {
 
     private Long id;
     private String username;
-    private Set<Role> accessLevel = new HashSet<>();
+    private String email;
+    private Branch branch;
+    private boolean enabled;
+    private Role accessLevel;
+//    private Set<Role> accessLevel = new HashSet<>();
 
     public UserDTO() {
     }
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
+        this.email = user.getEmail();
         this.accessLevel = user.getAccessLevel();
+        this.branch = user.getBranch();
+        this.enabled = user.isEnabled();
     }
 }

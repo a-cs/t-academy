@@ -1,0 +1,62 @@
+<div class="top">
+    <button mat-icon-button *ngIf="auth.validateRole(permissions.updateBranch) && showUpdateButton" class="edit" (click)="clickOnEdit()">
+        <mat-icon>mode_edit</mat-icon>
+    </button>
+    <div class="title">
+        <p class="capitalize">Branch</p>
+    </div>
+    
+    <button mat-icon-button *ngIf="showDeleteButton" (click)="openConfirmDialog()">
+        <mat-icon>delete_forever</mat-icon>
+    </button>
+</div>
+<form [formGroup]="form" (ngSubmit)="update()">
+    <div class="row">
+        <label for="name">Name</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="name" type="text" placeholder="Type a name" name="name" formControlName="name">
+    </div>
+
+    <div class="row">
+        <label for="street">Street</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="street" type="text" placeholder="Type a street" name="street" formControlName="street">
+    </div>
+
+    <div class="row">
+        <label for="number">Number</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="number" type="number" placeholder="Type a number" name="number" formControlName="number">
+    </div>
+    <div class="row">
+        <label for="city">City</label>
+        <input id="city" type="text" placeholder="Type a city" name="city" formControlName="city">
+    </div>
+    <div class="row">
+        <label for="state">State</label>
+        <input
+        [ngClass]="isReadOnly ? 'readonly' : ''"
+        type="text" placeholder="Type the state" name="state" formControlName="state"
+        [readonly]="showUpdateButton"
+          [matAutocomplete]="stateAutoComplete" (blur)="stateFallback()" >
+        <mat-autocomplete #stateAutoComplete="matAutocomplete" >
+          <mat-option *ngFor="let state of filteredStates | async" [value]="state" (mousedown)="stateOnCLick()" >
+            {{state}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    <div class="row">
+        <label for="zip_code">Zip code</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="zip_code" type="text" placeholder="Type a zip code" name="zip_code" formControlName="zip_code" mask="00000-000">
+    </div>
+    <div class="row">
+        <label for="max_rows">Total of aisles</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="max_rows" type="number" placeholder="Type number of aisles" name="max_rows" formControlName="max_rows">
+    </div>
+    <div class="row">
+        <label for="max_columns">Total of bays</label>
+        <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" id="max_columns" type="number" placeholder="Type number of bays" name="max_columns" formControlName="max_columns">
+    </div>
+
+    <div *ngIf="showButtons" class="buttons">
+        <button mat-dialog-close mat-raised-button class="cancelButton"> Cancel</button>
+        <button [disabled]="form.invalid" mat-raised-button class="sucessButton">Update</button>
+    </div>
+</form>

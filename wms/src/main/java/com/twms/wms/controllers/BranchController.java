@@ -5,9 +5,9 @@ import com.twms.wms.services.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -26,6 +26,11 @@ public class BranchController {
         return ResponseEntity.status(HttpStatus.OK).body(branchService.readBranchById(branchId));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Branch>> search(@RequestParam String term) {
+        return ResponseEntity.status(HttpStatus.OK).body(branchService.searchTerm(term));
+    }
+
     @PostMapping
     public ResponseEntity<Branch> createBranch(@RequestBody Branch branch){
         return ResponseEntity.status(HttpStatus.CREATED).body(branchService.createBranch(branch));
@@ -38,7 +43,7 @@ public class BranchController {
     }
 
     @DeleteMapping("/{branchId}")
-    public ResponseEntity<Void> deleteBranch(@PathVariable("branchId") Long branchId){
+    public ResponseEntity<Void> deleteBranch(@PathVariable("branchId") Long branchId) throws SQLIntegrityConstraintViolationException {
         branchService.deleteBranch(branchId);
         return ResponseEntity.noContent().build();
     }

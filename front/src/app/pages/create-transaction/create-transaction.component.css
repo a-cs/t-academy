@@ -1,0 +1,248 @@
+.container {
+  width: 100%;
+  min-height: 110vh;
+}
+
+.content{
+  background-color: rgba(95, 255, 47, 0.02);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  transform: scale(1.4);
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--in-color);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--out-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--in-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+mat-slide-toggle {
+  margin: 8px 0;
+  width: 20px;
+}
+
+
+.InOut{
+  font-size: 2rem;
+  margin-top: 4vh;
+  font-weight: bold;
+}
+
+.margin-left{
+  margin-left: 10%;
+}
+
+.margin-left i, .margin-right i{
+  font-size: 2rem;
+  vertical-align: middle;
+
+}
+
+.margin-left, .margin-right{
+  color: var(--border-color);
+}
+
+.In{
+  color: var(--in-color);
+}
+
+.Out{
+  color: var(--out-color);
+}
+
+
+mat-slide-toggle{
+  transform: scale(2);
+}
+
+.margin-right{
+  margin-right: 10%;
+}
+
+.content {
+  margin: 60px auto;
+  width: 600px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.title{
+  font-size: 2rem;
+  line-height: 3.25rem;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--primary-color);
+  width: 60%;
+  border: 3px var(--primary-color) solid;
+  border-radius: 32px;
+  padding: 8px 0px;
+}
+
+.title p {
+  margin: 0;
+}
+
+form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* height: fit-content; */
+  width: 96%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+form label {
+  color: var(--text-secondary-color);
+  font-size: 1.5rem;
+  line-height: 3.25rem;
+}
+
+form input, form select {
+  width: 80%;
+  font-size: 1.5rem;
+  line-height: 3.25rem;
+  text-align: center;
+  color: var(--footer-color);
+  background-color: var(--border-color);
+  border: none;
+  border-radius: 32px;
+  padding: 2px 2px;
+  margin-bottom: 2rem;
+}
+
+form select{
+  padding: 16px 2px;
+}
+
+form input:focus-visible{
+  border: 2px var(--secondary-color) solid;
+}
+
+.buttons {
+  margin-top: 4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons button {
+  width: 100%;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  line-height: 3.25rem;
+  border-radius: 32px;
+  color: var(--text-tittle-color);
+  padding: 4px 0;
+}
+
+.buttons .sucessButton{
+  background-color: var(--sucess-color);
+}
+
+.buttons .sucessButton:hover{
+  background-color: var(--sucess-color-lighter);
+}
+
+.buttons .sucessButton:disabled{
+  background-color: var(--text-secondary-color);
+}
+
+
+.Up{
+  background-color: rgb(11, 210, 11);
+}
+
+.Down{
+  background-color: red;
+}
+
+.upwardArrow, .downwardArrow{
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 2px solid black;
+}
+
+@media (max-width: 700px) {
+  .content {
+    /* margin: 60px auto; */
+    width: 90%;
+  }
+
+  .row{
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .row{
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,54 @@
+.container{
+    min-height: 110vh;
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 6rem;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    color: var(--text-secondary-color);
+  }
+
+  .title p {
+    margin: 0;
+  }
+
+  label{
+    font-size: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 1%;
+  }
+
+
+  .cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 665px) {
+  .title {
+    font-size: 5rem;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 540px) {
+  .title {
+    font-size: 3.5rem;
+    line-height: normal;
+  }
+}

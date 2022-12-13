@@ -1,3 +1,21 @@
 spring:
   profiles:
-    active: test
+    active: ${active_profile}
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: ${emailSender_address}
+    password: ${emailSender_password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: false
+    test-connection: false
+client-authorization:
+  id: ${clientInfo.id}
+  secret: ${clientInfo.secret}

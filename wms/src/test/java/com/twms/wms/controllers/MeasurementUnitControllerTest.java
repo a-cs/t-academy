@@ -12,19 +12,24 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.persistence.EntityNotFoundException;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = "test")
 public class MeasurementUnitControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -38,12 +43,16 @@ public class MeasurementUnitControllerTest {
     Long existingId;
     Long nonExistingId;
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         existingId = 1L;
         nonExistingId = 2L;
 
-        Mockito.doNothing().when(measurementUnitService).delete(existingId);
-        Mockito.doThrow(EntityNotFoundException.class).when(measurementUnitService).delete(nonExistingId);
+
+            Mockito.doNothing().when(measurementUnitService).delete(existingId);
+            //Mockito.when()
+            Mockito.doThrow(EntityNotFoundException.class).when(measurementUnitService).delete(nonExistingId);
+
+
     }
 
     @Test
@@ -77,6 +86,13 @@ public class MeasurementUnitControllerTest {
     }
 
     @Test
+    public void shouldReturnOkWhenGetPageableCategories() throws Exception {
+        ResultActions result = mockMvc.perform(get("/measurement-unit/pages")
+                .accept(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+    }
+
+    @Test
     public void shouldThrowEntityNotFoundExceptionWhenDeletingNonExistentID() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 delete("/measurement-unit/{id}", nonExistingId));
@@ -101,6 +117,15 @@ public class MeasurementUnitControllerTest {
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(jsonPath("$.description").exists());
         resultActions.andExpect(jsonPath("$.description").value("Kilogram"));
+    }
 
+    @Test
+    public void shouldReturnOkWhenSearchByName() throws Exception {
+        List<MeasurementUnit> expected = new ArrayList<>();
+        Mockito.when(measurementUnitService.searchTerm(anyString())).thenReturn(expected);
+
+        mockMvc.perform(get("/measurement-unit/search")
+                .param("term", anyString()))
+                .andExpect(status().isOk());
     }
 }

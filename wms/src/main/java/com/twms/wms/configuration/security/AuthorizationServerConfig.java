@@ -1,5 +1,6 @@
 package com.twms.wms.configuration.security;
 
+import com.twms.wms.components.CustomTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableAuthorizationServer
@@ -26,6 +29,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtAccessTokenConverter accessTokenConverter;
     @Autowired
     private TokenStore tokenStore;
+
+
 //    =============  Client credentials
     @Value("${client-authorization.id}")
     private String clientId;
@@ -51,9 +56,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)
-                .tokenStore(tokenStore)
-                .accessTokenConverter(accessTokenConverter);
-
+        endpoints.tokenStore(tokenStore)
+                .accessTokenConverter(accessTokenConverter)
+                .authenticationManager(authenticationManager);
     }
 }

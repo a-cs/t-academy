@@ -1,0 +1,139 @@
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+}
+
+a{
+    cursor: pointer;
+}
+li > i{
+    height: 3rem;
+    vertical-align: middle;
+    padding-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-right: 1rem;
+}
+
+.right-side{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.right-side .user {
+    margin-right: 5rem;
+    color: var(--background-color);
+    font-size: 2.6rem;
+}
+
+.user i {
+    font-size: 4rem;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.logo{
+    color: white;
+    font-size: 5rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.burguer{
+    cursor: pointer;
+    color: var(--background-color);
+}
+
+.burguer-icon{
+    font-size: 5rem;
+}
+
+.line{
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    margin-bottom: 2rem;
+}
+
+ul{
+    list-style-type: none;
+}
+
+ul a {
+  cursor: pointer;
+}
+
+.menu{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 0px) {
+    .menu{
+        display: none;
+        text-align: center;
+    }
+
+    .menu.is-open{
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 10vh;
+        height: fit-content;
+        width: 35%;
+        background-color: var(--primary-color);
+        border-radius: 0 0 0 32px;
+        color: var(--text-primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 8px 8px 200px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+    }
+
+    .menu.is-open li{
+        height: fit-content;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: white;
+        line-height: 3rem;
+        text-align: center;
+    }
+
+    .userMobile{
+        display: none;
+    }
+
+    @media (max-width: 1000px) {
+        .user {
+            display: none;
+        }
+
+        .userMobile {   
+            color: var(--background-color);
+            font-size: 2.6rem;
+            display: list-item;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            vertical-align: middle;
+        }
+        
+
+
+
+        .menu.is-open{
+            height: fit-content;
+            width: 85%;
+            
+        }
+    }
+
+}

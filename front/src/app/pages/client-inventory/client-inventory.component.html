@@ -1,0 +1,45 @@
+<app-header></app-header>
+<div class="container">
+  <div class="space"></div>
+  <div class="top-side">
+    <div class="select" [ngStyle]="{ display: hideSearchBar || isError ? 'none' : ''}">
+      <mat-form-field class="estilo" appearance="fill">
+        <mat-label>Branches</mat-label>
+        <mat-select [formControl]="branchesForm" multiple>
+          <mat-select-trigger>
+            {{ firstBranch || "" }}
+            <span *ngIf="(branchesForm.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{ (branchesForm.value?.length || 0) - 1 }}
+              {{ branchesForm.value?.length === 2 ? "other" : "others" }})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let branch of branches" [value]="branch">{{
+            branch.name
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <span id="bar-position"><app-search-bar [ngStyle]="{ display: hideSearchBar || isError ? 'none' : 'inline'}"
+        class="margin-search-bar" (searchTextChanged)="onSearchTextEnteredSKUWareHouse($event)"></app-search-bar></span>
+  </div>
+  <div class="center" [ngStyle]="{ display: isLoading ? 'flex' : 'none'}">
+    <mat-spinner style="margin-top: 60px;margin-left: 10px" [ngStyle]="{ display: isLoading ? 'inline' : 'none' }"
+      [diameter]="60" color="accent">
+    </mat-spinner>
+  </div>
+
+  <div class="cards" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex'}">
+    <app-card-client-sku (click)="openAddDialog(warehouseSlot)" *ngFor="let warehouseSlot of client_wareshouses_slots"
+      [warehouseSlot]="warehouseSlot">
+    </app-card-client-sku>
+  </div>
+  <div class="center" [ngStyle]="{ display: isLoading || isError ? 'none' : 'flex' }">
+    <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+      [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex" aria-label="Select page">
+      >
+    </mat-paginator>
+  </div>
+</div>
+<app-footer></app-footer>

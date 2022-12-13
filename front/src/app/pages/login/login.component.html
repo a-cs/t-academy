@@ -1,0 +1,52 @@
+<div class="{{isLogin ? 'container' : 'container reverse'}}">
+  <div class="left-content">
+    <img src="../../../assets/images/loginImg.svg" alt="Login Image">
+
+  </div>
+
+  <div class="right-content">
+
+    <img class="logo" src="../../../assets/images/TWMS_logo.svg" alt="Logo T-WMS">
+    <div class="title">{{isLogin ? "Login into your account" : "Forgot your password?"}}</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="group">
+
+        <div class="row">
+          <label for="email">Email</label>
+          <div class="input">
+            <input type="text" placeholder="Type your email" name="email" formControlName="email" #email>
+            <button type="button" tabindex="-1" class="icon" (click)="email.focus()">
+              <i class="material-icons">mail</i>
+            </button>
+          </div>
+          <p *ngIf="form.controls['email'].errors?.['required']">Email is required</p>
+
+        </div>
+        <div *ngIf="isLogin" class="row">
+          <label for="password">Password</label>
+          <div class="input">
+            <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" name="password" formControlName="password" #password>
+            <button type="button" tabindex="-1" class="icon" (click)="togglePasswordVisibility(password)">
+              <i class="material-icons">{{showPassword ? 'lock_open' : 'lock'}}</i>
+            </button>
+          </div>
+          <p *ngIf="form.controls['password'].errors?.['required']">Password is required</p>
+          <p *ngIf="form.controls['password'].errors?.['minlength']">Password needs at least 5 characters</p>
+          <p *ngIf="form.controls['password'].errors?.['maxlength']">Password needs at most 20 characters</p>
+        </div>
+        <div id="forgotLink">
+          <a (click)="toggleLogin()" id="forgotPassword">{{isLogin ? "Forgot Password?" : "Click here to login."}}</a>
+        </div>
+      </div>
+
+      <button [disabled]="form.invalid" id="loginButton">
+      
+        <mat-spinner [ngStyle]="{ display: isLoading ? 'flex' : 'none' }"
+          [diameter]="30" style="margin-right: 5%;">
+        </mat-spinner>
+      {{isLogin ? "Login now" : "Forgot my password"}}</button>
+      <!-- <button id="loginButton">Login now</button> -->
+    </form>
+  </div>
+</div>
