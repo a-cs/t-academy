@@ -13,7 +13,7 @@ export const routePermission = {
   users: ["ROLE_ADMIN","ROLE_MANAGER"],
   transactionHistory: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"],
   createTransaction: ["ROLE_MANAGER","ROLE_OPERATOR"],
-  warehouseSlot: ["ROLE_OPERATOR", "ROLE_MANAGER", "ROLE_ADMIN"]
+  warehouseSlot: ["ROLE_OPERATOR", "ROLE_MANAGER"]
 }
 
 export const buttonPermission ={
