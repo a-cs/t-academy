@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoryCreateFormComponent implements OnInit {
   createForm: FormGroup;
-
+  isWait: boolean = false;
   constructor(
     private categoryService: CategoryService,
     private dialogRef: MatDialogRef<CategoryCreateFormComponent>,
@@ -53,7 +53,9 @@ export class CategoryCreateFormComponent implements OnInit {
     const newCategory: ICategory = {
       name: categoryName,
     };
+    this.isWait = true;
     this.categoryService.create(newCategory);
+    this.isWait = false;
     this.dialogRef.close(formSubmmited);
   }
 }
