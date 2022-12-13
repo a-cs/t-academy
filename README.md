@@ -188,7 +188,7 @@ ng serve
 | Client     | :heavy_check_mark::eyes: | :x: |     :x:              |      :x:             |      :x:             |      :x:             |      :x:             |      :x:             |      :x:             |      :x:             |
 | Operator |  :x: | :heavy_check_mark::eyes: | :heavy_check_mark::eyes: |      :heavy_check_mark::eyes:            |      :x:              |      :x:             |      :x:             |      :heavy_check_mark::eyes::postbox:            |      :heavy_check_mark::eyes:             |      :heavy_check_mark::eyes:             |
 | Manager      | :x: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::eyes: |      :heavy_check_mark::eyes::postbox:             |      :heavy_check_mark::eyes:             |      :heavy_check_mark::eyes:             |
-| Admin      | :x: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: |      :x:             |      :heavy_check_mark::eyes:             |      :heavy_check_mark::eyes:             |
+| Admin      | :x: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: | :heavy_check_mark::crown: |      :x:             |      :heavy_check_mark::eyes:             |      :x:             |
 
 </div>
 
