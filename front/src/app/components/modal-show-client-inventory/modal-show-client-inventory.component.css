@@ -76,3 +76,8 @@ form input {
 form input:focus-visible{
     border: 2px var(--secondary-color) solid;
 }
+
+form input.readonly:focus-visible {
+    outline: none;
+    border: none;
+  }

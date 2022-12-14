@@ -5,7 +5,7 @@
     <div class="left">
         <p><b>Description: </b> <span class="capitalize">{{sku.name || ""}}</span> </p>
         <p><b>Category: </b><span class="capitalize">{{sku.category.name || ""}}</span> </p>
-        <p><b>Unit: </b><span class="capitalize">{{sku.measurementUnit.symbol || ""}}</span> </p>
+        <p><b>Unit: </b><span>{{sku.measurementUnit.symbol || ""}}</span> </p>
     </div>
     <button (click) ="openUpdateDialog(sku)">Show more</button>
 </div>

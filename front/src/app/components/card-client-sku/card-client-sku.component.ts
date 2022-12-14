@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
+import { capitalize } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-card-client-sku',
@@ -9,6 +10,8 @@ import IWarehouseSlot from 'src/app/interfaces/IWarehouseSlot';
 export class CardClientSkuComponent implements OnInit {
   @Input() warehouseSlot: IWarehouseSlot
   constructor() { }
+
+  capitalize = capitalize
 
   ngOnInit(): void {
   }

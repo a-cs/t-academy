@@ -12,12 +12,12 @@
             <input type="email" placeholder="user@email.com" name="email" formControlName="email">
         </div>
         <div class="branch row">
-            <label for="branch">branch</label>
-            <input type="text" placeholder="Select a Branch" matInput name="selectedBranchId" formControlName="branch"
+            <label for="branch">Branch</label>
+            <input class="capitalize" type="text" placeholder="Select a Branch" matInput name="selectedBranchId" formControlName="branch"
                 [matAutocomplete]="branchAutoComplete" (blur)="branchFallback()">
             <mat-autocomplete #branchAutoComplete="matAutocomplete" [displayWith]="displayBranch">
                 <mat-option *ngFor="let branch of filteredBranches | async" [value]="branch" (mousedown)="branchOnCLick()">
-                    {{branch.name}}
+                    <span class="capitalize">{{branch.name}}</span>
                 </mat-option>
             </mat-autocomplete>
         </div>

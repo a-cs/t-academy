@@ -8,32 +8,32 @@
     <form [formGroup]="form">
         <div class="row">
           <label for="name">Sku Name</label>
-          <input readonly id="name" type="text" placeholder="Missing Information" name="name" formControlName="name">
+          <input [ngClass]="isReadOnly ? 'readonly' : ''" class="capitalize" readonly id="name" type="text" placeholder="Missing Information" name="name" formControlName="name">
         </div>
     
         <div class="row">
             <label for="Branch name">Branch name</label>
-            <input readonly id="branchName" type="text" placeholder="Missing Information" name="branchName" formControlName="branchName">
+            <input [ngClass]="isReadOnly ? 'readonly' : ''" class="capitalize" readonly id="branchName" type="text" placeholder="Missing Information" name="branchName" formControlName="branchName">
         </div>
 
         <div class="row">
             <label for="Quantity">Quantity</label>
-            <input readonly id="quantity" type="text" placeholder="Missing Information" name="quantity" formControlName="quantity">
+            <input [ngClass]="isReadOnly ? 'readonly' : ''" readonly id="quantity" type="text" placeholder="Missing Information" name="quantity" formControlName="quantity">
         </div>
 
         <div class="row">
             <label for="AisleBay">Aisle | Bay</label>
-            <input readonly id="aisleBay" type="text" placeholder="Missing Information" name="aisleBay" formControlName="aisleBay">
+            <input [ngClass]="isReadOnly ? 'readonly' : ''" readonly id="aisleBay" type="text" placeholder="Missing Information" name="aisleBay" formControlName="aisleBay">
         </div>
 
         <div class="row">
             <label for="Measurement Unity">Measurement Unity</label>
-            <input readonly readonly id="measurementUnity" type="text" placeholder="Missing Information" name="measurementUnity" formControlName="measurementUnity">
+            <input [ngClass]="isReadOnly ? 'readonly' : ''" readonly readonly id="measurementUnity" type="text" placeholder="Missing Information" name="measurementUnity" formControlName="measurementUnity">
         </div>
 
         <div class="row">
             <label for="Arrival Date">Arrival Date</label>
-            <input readonly id="arrivalDate" type="text" placeholder="Missing Information" name="arrivalDate" formControlName="arrivalDate">
+            <input [ngClass]="isReadOnly ? 'readonly' : ''" readonly id="arrivalDate" type="text" placeholder="Missing Information" name="arrivalDate" formControlName="arrivalDate">
         </div>
       
     </form>

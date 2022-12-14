@@ -10,7 +10,7 @@
         <p><span class="capitalize">{{user.username || ""}}</span></p>
     </div>
     <div class="useremail">
-        <p><span class="capitalize">{{user.email || ""}}</span></p>
+        <p><span>{{user.email || ""}}</span></p>
     </div>
     <form [formGroup]="form" (ngSubmit)="update()" class="user-role">
         <label for="role">Role</label>

@@ -10,6 +10,7 @@ import { MeasurementUnitService } from '../../service/measurement-unit.service';
 import { SkuService } from '../../service/sku.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { capitalize } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-modal-add-sku',
@@ -25,6 +26,8 @@ export class ModalAddSkuComponent implements OnInit {
   firstCategory: ICategory;
   firstUnit: IMeasurementUnit;
   isWait: boolean = false;
+
+  capitalize = capitalize
 
   constructor(
     private categoryService: CategoryService,
@@ -103,7 +106,7 @@ export class ModalAddSkuComponent implements OnInit {
 
   displayUnit(unit: IMeasurementUnit): string {
     return unit && unit.description
-      ? `${unit.description} - ${unit.symbol}`
+      ? `${capitalize(unit.description)} - ${unit.symbol}`
       : '';
   }
 

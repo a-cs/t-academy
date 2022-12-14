@@ -13,6 +13,8 @@ export class ModalShowClientInventoryComponent implements OnInit {
   form: FormGroup
   wareHouseSlot: IWarehouseSlot
 
+  isReadOnly = true;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: IWarehouseSlot,
     private formBuilder: FormBuilder,
     private warehouseSlotService: WarehouseSlotService,

@@ -12,12 +12,12 @@
 <form [formGroup]="form" (ngSubmit)="update()">
   <div class="row">
     <label for="name">Name</label>
-    <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" type="text" placeholder="Type a name" name="name" formControlName="name">
+    <input class="capitalize" [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" type="text" placeholder="Type a name" name="name" formControlName="name">
   </div>
 
   <div class="row">
     <label for="category">Category</label>
-    <input [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" type="text" placeholder="Select a category" matInput name="selectedCategoryId" formControlName="category"
+    <input class="capitalize" [ngClass]="isReadOnly ? 'readonly' : ''" [readonly]="isReadOnly" type="text" placeholder="Select a category" matInput name="selectedCategoryId" formControlName="category"
       [matAutocomplete]="categoryAutoComplete" (blur)="categoryFallback()">
     <mat-autocomplete #categoryAutoComplete="matAutocomplete" [displayWith]="displayCategory">
       <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
@@ -32,7 +32,7 @@
       [matAutocomplete]="unitAutoComplete" (blur)="unitFallback()">
     <mat-autocomplete #unitAutoComplete="matAutocomplete" [displayWith]="displayUnit">
       <mat-option *ngFor="let unit of filteredUnits | async" [value]="unit">
-        {{unit.description}} - {{unit.symbol}}
+        <span class="capitalize">{{unit.description}}</span> - {{unit.symbol}}
       </mat-option>
     </mat-autocomplete>
   </div>

@@ -6,12 +6,12 @@
 <form [formGroup]="form" (ngSubmit)="create()">
   <div class="row">
     <label for="name">Name</label>
-    <input type="text" placeholder="Type a name" name="name" formControlName="name">
+    <input class="capitalize" type="text" placeholder="Type a name" name="name" formControlName="name">
   </div>
 
   <div class="row">
     <label for="category">Category</label>
-    <input type="text" placeholder="Select a category" matInput name="selectedCategoryId" formControlName="category"
+    <input class="capitalize" type="text" placeholder="Select a category" matInput name="selectedCategoryId" formControlName="category"
       [matAutocomplete]="categoryAutoComplete" (blur)="categoryFallback()">
     <mat-autocomplete #categoryAutoComplete="matAutocomplete" [displayWith]="displayCategory">
       <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
@@ -26,7 +26,7 @@
       [matAutocomplete]="unitAutoComplete" (blur)="unitFallback()">
     <mat-autocomplete #unitAutoComplete="matAutocomplete" [displayWith]="displayUnit">
       <mat-option *ngFor="let unit of filteredUnits | async" [value]="unit">
-        {{unit.description}} - {{unit.symbol}}
+        {{capitalize(unit.description)}} - {{unit.symbol}}
       </mat-option>
     </mat-autocomplete>
   </div>

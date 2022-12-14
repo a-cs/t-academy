@@ -17,7 +17,7 @@ import { MatAutocomplete } from '@angular/material/autocomplete';
 import { SkuService } from '../../service/sku.service';
 import { Router } from '@angular/router';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-import { buttonPermission } from 'src/app/utils/utils';
+import { buttonPermission, capitalize } from 'src/app/utils/utils';
 import { AuthService } from 'src/app/service/auth.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -137,30 +137,25 @@ export class ModalUpdateSkuComponent {
 
   displayUnit(unit: IMeasurementUnit): string {
     return unit && unit.description
-      ? `${unit.description} - ${unit.symbol}`
+      ? `${capitalize(unit.description)} - ${unit.symbol}`
       : '';
   }
 
   categoryFallback() {
-    console.log('cat', this.firstCategory);
     this.form.controls['category'].setValue(this.firstCategory);
   }
 
   unitFallback() {
-    console.log('unit', this.firstUnit);
     this.form.controls['measurementUnit'].setValue(this.firstUnit);
   }
 
   update() {
-    console.log(this.form.value);
-    console.log('form error', this.form.errors);
     const newSku: ISku = {
       id: this.sku.id,
       name: this.form.value.name,
       category: this.form.value.category,
       measurementUnit: this.form.value.measurementUnit,
     };
-    //this.skuService.update(this.sku.id as number, newSku).subscribe(response => { window.location.reload() }, error => { console.log("err!", error) })
     this.skuService.update(this.sku.id as number, newSku).subscribe(
       (response) => {},
       (error) => {
@@ -179,19 +174,7 @@ export class ModalUpdateSkuComponent {
       }
     );
 
-    // window.location.reload()
   }
-
-  //openConfirmDialog() {
-  //const dialogRef = this.dialog.open(ModalConfirmComponent, {
-  //width: '600px',
-  //height: '600px',
-  //data: {
-  //observable: this.skuService.delete(this.sku.id as number),
-  //object: 'SKU',
-  //},
-  //});
-  //}
 
   openConfirmDialog() {
     const confirmDialogRef = this.dialog.open(ModalConfirmDeleteComponent, {

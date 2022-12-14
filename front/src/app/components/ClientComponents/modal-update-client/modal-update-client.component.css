@@ -16,6 +16,16 @@
     border-radius: 32px;
     padding: 8px 0px;
   }
+
+  .secont-title{
+    font-size: 1.8rem;
+    line-height: 3.25rem;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--primary-color);
+    width: 60%;
+    padding: 8px 0px;
+  }
   
   .top .mat-icon {
     font-size: 3.5rem;

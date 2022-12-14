@@ -43,10 +43,12 @@ a {
   display: inline-block;
 }
 
-.capitalize::first-letter {
+.capitalize {
   text-transform: capitalize;
 }
-
+input::placeholder {
+  text-transform: none;
+}
 html,
 body {
   height: 100%;
